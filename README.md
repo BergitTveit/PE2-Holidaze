@@ -1,50 +1,111 @@
-# React + TypeScript + Vite
+Holidaze
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Holidaze is a modern accommodation booking platform that connects property managers with travelers. Built with React, TypeScript, and Tailwind CSS, this application provides a seamless experience for booking and managing venues.
+🌟 Features
+For Travelers
 
-Currently, two official plugins are available:
+    Browse and search available venues
+    View detailed venue information with photo galleries
+    Check venue availability through an interactive calendar
+    Create and manage bookings
+    View booking history
+    User profile management
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+For Venue Managers
 
-## Expanding the ESLint configuration
+    Create and list new venues
+    Manage venue details and availability
+    View and handle booking requests
+    Track venue performance
+    Manage multiple properties
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+💻 Tech Stack
 
-- Configure the top-level `parserOptions` property like this:
+    React + TypeScript
+    Redux Toolkit
+    Tailwind CSS
+    React Hook Form + Zod
+    React Router
+    Axios
+    Vite
+    Lucide React
+    Inter (base) & Playfair Display (headings)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+🚀 Getting Started
+Prerequisites
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+    Node.js (version 14 or higher)
+    npm or yarn
+    Git
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Installation
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+    Clone the repository
+
+git clone https://github.com/BergitTveit/PE2-Holidaze.git
+
+    Install dependencies
+
+npm install
+
+    Create .env file based on .env.example
+
+VITE_API_URL=https://api.noroff.dev/api/v1/holidaze
+
+    Start the development server
+
+npm run dev
+
+📝 API Documentation
+
+This project uses the Noroff API. Documentation can be found at:
+
+    API Documentation
+    Swagger Documentation
+
+🎨 Design
+
+The application features a modern, luxurious design with:
+
+    Clean and minimalistic user interface
+    Modern iconography using Lucide React
+    Elegant typography with Inter & Playfair Display
+    Responsive layout for all devices
+    Accessible design patterns
+    Consistent brand styling and visual hierarchy
+
+🛠 Project Structure
+
+src/
+├── assets/
+├── components/
+│ ├── common/ # Shared components
+│ ├── auth/ # Authentication related components
+│ ├── venues/ # Venue related components
+│ └── bookings/ # Booking related components
+├── features/
+│ ├── auth/ # Authentication redux slice
+│ ├── venues/ # Venues redux slice
+│ └── bookings/ # Bookings redux slice
+├── pages/ # Page components
+├── services/ # API services
+├── store/ # Redux store configuration
+├── types/ # TypeScript types
+└── utils/ # Utility functions
+
+🚀 Deployment
+
+The project is deployed on Netlify. View the live site at [your-project-url].
+
+👥 Contact
+
+Your Name - [bergittveit@yahoo.com] Project Link: https://github.com/BergitTveit/PE2-Holidaze
+
+🙏 Acknowledgments
+
+    Noroff School of Technology
+    React Documentation
+    Tailwind CSS
+    Lucide Icons
+    Inter Font
+    Playfair Display Font
