@@ -1,4 +1,7 @@
 Holidaze
+## Deployed Site
+
+You can view the deployed site at: [Holidaze-rentals](https://holidaze-rentals.netlify.app/)
 
 Holidaze is a modern accommodation booking platform that connects property managers with travelers. Built with React, TypeScript, and Tailwind CSS, this application provides a seamless experience for booking and managing venues.
 🌟 Features
