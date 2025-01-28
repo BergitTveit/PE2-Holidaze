@@ -1,4 +1,8 @@
-// src/types/index.ts
+export * from './profile';
+export * from './auth';
+
+//move out of index
+
 export interface Venue {
   id: string;
   name: string;
