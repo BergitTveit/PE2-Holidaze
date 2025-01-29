@@ -1,27 +1,29 @@
 import { Routes, Route } from 'react-router-dom';
-// import { ProtectedRoutes } from './ProtectedRoutes';
-import Layout from '../components/layout/Layout';
-import { Home } from '../pages/Home';
-import { VenueList } from '../pages/VenueList';
+import { ProtectedRoutes } from './ProtectedRoutes';
 
+import Layout from '../components/layout/Layout';
+import HomePage from '../pages/Home';
+import ProfilePage from '../pages/Profile';
+import LoginPage from '../pages/Login';
+import RegisterPage from '../pages/Register';
+
+import { VenueList } from '../pages/VenueList';
 export const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        {/* Public Routes */}
-        <Route index element={<Home />} />
+        <Route index element={<HomePage />} />
+        <Route path="login" element={<LoginPage />} />
         <Route path="venues" element={<VenueList />} />
-        {/* <Route path="venues/:id" element={<VenueDetails />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register/customer" element={<CustomerRegister />} />
-          <Route path="register/manager" element={<ManagerRegister />} /> */}
+        <Route path="register" element={<RegisterPage />} />
+        {/* <Route path="venues/:id" element={<VenueDetails />} />*/}
 
         {/* Customer Routes */}
-        {/* <Route element={<ProtectedRoutes />}>
-            <Route path="profile" element={<Profile />} />
-            <Route path="bookings" element={<Bookings />} />
-            <Route path="avatar" element={<UpdateAvatar />} />
-          </Route> */}
+        <Route element={<ProtectedRoutes />}>
+          <Route path="profile/:username" element={<ProfilePage />} />
+          {/* <Route path="bookings" element={<Bookings />} /> */}
+          {/* <Route path="avatar" element={<UpdateAvatar />} /> */}
+        </Route>
 
         {/* Manager Routes */}
         {/* <Route element={<ProtectedRoutes requireManager />}>
