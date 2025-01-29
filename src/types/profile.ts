@@ -77,3 +77,7 @@ export interface ProfileState {
   isLoading: boolean;
   error: string | null;
 }
+
+export type UpdateProfileData = Partial<
+  Pick<Profile, 'bio' | 'avatar' | 'banner' | 'venueManager'>
+>;
