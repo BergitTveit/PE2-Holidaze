@@ -1,17 +1,22 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
 import { fetchProfile } from '../../store/slices/profileSlice';
 
 import LogoutButton from '../auth/LogoutButton';
+import Button from '../common/Buttons';
+import Modal from '../common/Modal';
 import Loader from '../common/Loader';
+import { UpdateProfileForm } from './UpdateProfileForm';
 
 const Profile = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { username } = useParams();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
   const { profile, isLoading, error } = useAppSelector((state) => state.profile);
+  const isOwnProfile = user?.name === username;
 
   if (!username && user?.name) {
     return <Navigate to={`/profile/${user.name}`} replace />;
@@ -22,8 +27,6 @@ const Profile = () => {
       dispatch(fetchProfile(username));
     }
   }, [dispatch, username]);
-
-  const isOwnProfile = user?.name === username;
 
   if (isLoading) {
     return (
@@ -86,11 +89,21 @@ const Profile = () => {
 
           {isOwnProfile && (
             <div className="mt-4">
+              <Button
+                onClick={() => setIsModalOpen(true)}
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded"
+              >
+                Edit Profile
+              </Button>
               <LogoutButton />
             </div>
           )}
         </div>
       </div>
+
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Edit Profile">
+        <UpdateProfileForm onSuccess={() => setIsModalOpen(false)} />
+      </Modal>
     </div>
   );
 };
