@@ -55,14 +55,12 @@ export const UpdateProfileForm = ({ onSuccess }: UpdateProfileFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      {/* Bio Section */}
       <div>
         <label className="block text-sm font-medium mb-2">Bio</label>
         <textarea {...register('bio')} className="w-full p-2 border rounded-md" rows={4} />
         {errors.bio && <p className="text-red-500 text-sm mt-1">{errors.bio.message}</p>}
       </div>
 
-      {/* Avatar Section */}
       <div>
         <label className="block text-sm font-medium mb-2">Avatar</label>
         <div className="flex items-center space-x-4">
@@ -79,6 +77,10 @@ export const UpdateProfileForm = ({ onSuccess }: UpdateProfileFormProps) => {
             {...register('avatar.url')}
             className="flex-1 p-2 border rounded-md"
           />
+
+          {errors.avatar?.url && (
+            <p className="text-red-500 text-sm mt-1">{errors.avatar.url.message}</p>
+          )}
         </div>
         <input
           type="text"
@@ -89,7 +91,6 @@ export const UpdateProfileForm = ({ onSuccess }: UpdateProfileFormProps) => {
         {errors.avatar && <p className="text-red-500 text-sm mt-1">{errors.avatar.message}</p>}
       </div>
 
-      {/* Banner Section */}
       <div>
         <label className="block text-sm font-medium mb-2">Banner</label>
         <div className="space-y-2">
@@ -106,6 +107,10 @@ export const UpdateProfileForm = ({ onSuccess }: UpdateProfileFormProps) => {
             {...register('banner.url')}
             className="w-full p-2 border rounded-md"
           />
+          {errors.banner?.url && (
+            <p className="text-red-500 text-sm mt-1">{errors.banner.url.message}</p>
+          )}
+
           <input
             type="text"
             placeholder="Banner alt text"
@@ -116,7 +121,6 @@ export const UpdateProfileForm = ({ onSuccess }: UpdateProfileFormProps) => {
         {errors.banner && <p className="text-red-500 text-sm mt-1">{errors.banner.message}</p>}
       </div>
 
-      {/* Venue Manager Toggle */}
       <div>
         <label className="flex items-center space-x-2">
           <input
@@ -128,10 +132,8 @@ export const UpdateProfileForm = ({ onSuccess }: UpdateProfileFormProps) => {
         </label>
       </div>
 
-      {/* Error Display */}
       {error && <div className="text-red-500 text-sm">{error}</div>}
 
-      {/* Submit Button */}
       <button
         type="submit"
         disabled={isLoading}
