@@ -1,72 +1,83 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { AuthState } from '../../types/auth';
+import { AxiosError } from 'axios';
+
 import api from '../../services/api';
 
+import { User } from '../../types';
+import { AuthState, LoginCredentials, RegisterCredentials } from '../../types/auth';
+
+// check import pattern for types
+
 const initialState: AuthState = {
- user: null,
- isLoading: false,
- error: null,
+  user: null,
+  isLoading: false,
+  error: null,
 };
 
-export const loginUser = createAsyncThunk(
- 'auth/login',
- async (credentials: { email: string; password: string }) => {
-   const response = await api.post('/auth/login', credentials);
-   return response.data;
- }
+export const loginUser = createAsyncThunk<User, LoginCredentials>(
+  'auth/login',
+  async (credentials) => {
+    const response = await api.post('/auth/login', credentials);
+    return response.data.data;
+  }
 );
 
-export const registerUser = createAsyncThunk(
- 'auth/register',
- async (data: { 
-   name: string; 
-   email: string; 
-   password: string; 
-   venueManager: boolean; 
- }) => {
-   const response = await api.post('/auth/register', data);
-   return response.data;
- }
-);
+export const registerUser = createAsyncThunk<
+  User,
+  RegisterCredentials,
+  {
+    rejectValue: string;
+  }
+>('auth/register', async (data, { rejectWithValue }) => {
+  try {
+    const response = await api.post('/auth/register', data);
+    return response.data.data;
+  } catch (error: unknown) {
+    let errorMessage = 'Registration failed';
+
+    if (error instanceof AxiosError && error.response) {
+      errorMessage = error.response.data?.errors?.[0]?.message || errorMessage;
+    }
+    return rejectWithValue(errorMessage);
+  }
+});
 
 const authSlice = createSlice({
- name: 'auth',
- initialState,
- reducers: {
-   logout: (state) => {
-     state.user = null;
-     localStorage.removeItem('user');
-   },
- },
- extraReducers: (builder) => {
-   builder
-     .addCase(loginUser.pending, (state) => {
-       state.isLoading = true;
-       state.error = null;
-     })
-     .addCase(loginUser.fulfilled, (state, action) => {
-       state.isLoading = false;
-       state.user = action.payload;
-       localStorage.setItem('user', JSON.stringify(action.payload));
-     })
-     .addCase(loginUser.rejected, (state, action) => {
-       state.isLoading = false;
-       state.error = action.error.message || 'Login failed';
-     })
-     .addCase(registerUser.pending, (state) => {
-       state.isLoading = true;
-       state.error = null;
-     })
-     .addCase(registerUser.fulfilled, (state, action) => {
-       state.isLoading = false;
-       state.user = action.payload;
-       localStorage.setItem('user', JSON.stringify(action.payload));
-     })
-     .addCase(registerUser.rejected, (state, action) => {
-       state.isLoading = false;
-       state.error = action.error.message || 'Registration failed';
-     });
- },
+  name: 'auth',
+  initialState,
+  reducers: {
+    logout: (state) => {
+      state.user = null;
+      state.error = null;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Login failed';
+      })
+      .addCase(registerUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      });
+  },
 });
 
 export const { logout } = authSlice.actions;
