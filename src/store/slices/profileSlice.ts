@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../services/api';
-import { Profile } from '../../types';
+import { Profile } from '../../types/profile';
 import { UpdateProfileData } from '../../types/profile';
+import { API_PROFILES } from '../../services/apiConstants';
 
 interface ProfileState {
   profile: Profile | null;
@@ -14,20 +15,18 @@ const initialState: ProfileState = {
   error: null,
 };
 
-export const fetchProfile = createAsyncThunk('profile/fetch', async (name: string) => {
-  const response = await api.get(`/holidaze/profiles/${name}`);
+export const fetchProfile = createAsyncThunk<Profile, string>('profile/fetch', async (name) => {
+  const response = await api.get(`${API_PROFILES}/${name}`);
   return response.data.data;
 });
-// check syntax/structure for strict typing
 
-export const updateProfile = createAsyncThunk(
+export const updateProfile = createAsyncThunk<Profile, { name: string; data: UpdateProfileData }>(
   'profile/update',
-  async ({ name, data }: { name: string; data: UpdateProfileData }) => {
-    const response = await api.put(`/holidaze/profiles/${name}`, data);
+  async ({ name, data }) => {
+    const response = await api.put(`${API_PROFILES}/${name}`, data);
     return response.data.data;
   }
 );
-
 const profileSlice = createSlice({
   name: 'profile',
   initialState,
