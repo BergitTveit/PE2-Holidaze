@@ -20,4 +20,3 @@ export const ProtectedRoutes = ({ requireManager = false }: Props) => {
 
   return <Outlet />;
 };
-

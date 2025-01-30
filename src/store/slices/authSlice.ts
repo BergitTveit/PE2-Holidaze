@@ -3,8 +3,9 @@ import { AxiosError } from 'axios';
 
 import api from '../../services/api';
 
-import { User } from '../../types';
+import { User } from '../../types/auth';
 import { AuthState, LoginCredentials, RegisterCredentials } from '../../types/auth';
+import { API_LOGIN, API_REGISTER } from '../../services/apiConstants';
 
 // check import pattern for types
 
@@ -17,7 +18,7 @@ const initialState: AuthState = {
 export const loginUser = createAsyncThunk<User, LoginCredentials>(
   'auth/login',
   async (credentials) => {
-    const response = await api.post('/auth/login', credentials);
+    const response = await api.post(API_LOGIN, credentials);
     return response.data.data;
   }
 );
@@ -30,7 +31,7 @@ export const registerUser = createAsyncThunk<
   }
 >('auth/register', async (data, { rejectWithValue }) => {
   try {
-    const response = await api.post('/auth/register', data);
+    const response = await api.post(API_REGISTER, data);
     return response.data.data;
   } catch (error: unknown) {
     let errorMessage = 'Registration failed';
