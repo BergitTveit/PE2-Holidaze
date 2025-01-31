@@ -17,12 +17,3 @@ export interface Profile {
   };
 }
 
-export interface ProfileState {
-  profile: Profile | null;
-  isLoading: boolean;
-  error: string | null;
-}
-
-export type UpdateProfileData = Partial<
-  Pick<Profile, 'bio' | 'avatar' | 'banner' | 'venueManager'>
->;
