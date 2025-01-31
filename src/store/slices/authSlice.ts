@@ -1,13 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
-
 import api from '../../services/api';
-
 import { User } from '../../types/auth';
-import { AuthState, LoginCredentials, RegisterCredentials } from '../../types/auth';
+import { LoginCredentials, RegisterCredentials } from '../../schemas/auth';
 import { API_LOGIN, API_REGISTER } from '../../services/apiConstants';
 
-// check import pattern for types
+export interface AuthState {
+  user: User | null;
+  isLoading: boolean;
+  error: string | null;
+}
 
 const initialState: AuthState = {
   user: null,
