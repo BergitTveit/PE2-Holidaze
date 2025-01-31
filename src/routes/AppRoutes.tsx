@@ -8,6 +8,7 @@ import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
 import VenuesPage from '../pages/VenuesPage';
 import IdVenuePage from '../pages/IdVenuePage';
+import CreateVenuePage from '../pages/CreateVenuePage';
 
 export const AppRoutes = () => {
   return (
@@ -24,11 +25,11 @@ export const AppRoutes = () => {
           {/* <Route path="bookings" element={<Bookings />} /> */}
         </Route>
 
-        {/* <Route element={<ProtectedRoutes requireManager />}>
-            <Route path="venues/create" element={<CreateVenue />} />
-            <Route path="venues/:id/edit" element={<EditVenue />} />
-            <Route path="venues/:id/bookings" element={<VenueBookings />} />
-          </Route> */}
+        <Route element={<ProtectedRoutes requireManager />}>
+          <Route path="venues/create" element={<CreateVenuePage />} />
+          {/* <Route path="venues/:id/edit" element={<EditVenue />} />
+            <Route path="venues/:id/bookings" element={<VenueBookings />} /> */}
+        </Route>
       </Route>
     </Routes>
   );
