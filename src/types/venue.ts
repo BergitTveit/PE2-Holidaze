@@ -1,3 +1,4 @@
+import { Booking } from './booking';
 import { Media } from './media';
 
 export interface Venue {
@@ -13,6 +14,7 @@ export interface Venue {
   meta: Meta;
   venueLocation: IVenueLocation;
   owner: VenueOwner;
+  bookings: Booking[];
   _count: {
     bookings: number;
   };
