@@ -24,7 +24,7 @@ export const fetchVenues = createAsyncThunk<Venue[], void>('venues/fetchVenues',
 });
 
 export const fetchVenueById = createAsyncThunk<Venue, string>('venues/fetchById', async (id) => {
-  const response = await api.get(`${API_VENUES}/${id}`);
+  const response = await api.get(`${API_VENUES}/${id}?_bookings=true`);
   return response.data.data;
 });
 
