@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import api from '../../services/api';
 import { Venue } from '../../types/venue';
+
 import { API_VENUES } from '../../services/apiConstants';
+import { CreateVenueDTO } from '../../schemas/addVenue';
 
 interface VenuesState {
   data: Venue[];
@@ -25,6 +27,11 @@ export const fetchVenues = createAsyncThunk<Venue[], void>('venues/fetchVenues',
 
 export const fetchVenueById = createAsyncThunk<Venue, string>('venues/fetchById', async (id) => {
   const response = await api.get(`${API_VENUES}/${id}?_bookings=true`);
+  return response.data.data;
+});
+
+export const addVenue = createAsyncThunk<Venue, CreateVenueDTO>('venues/addVenue', async (data) => {
+  const response = await api.post(`${API_VENUES}`, data);
   return response.data.data;
 });
 
@@ -59,6 +66,18 @@ const venuesSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message || 'Failed to fetch venue';
         state.currentVenue = null;
+      })
+      .addCase(addVenue.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(addVenue.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data.push(action.payload);
+      })
+      .addCase(addVenue.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Failed to create venues';
       });
   },
 });
