@@ -4,11 +4,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
-import { loginUser, registerUser } from '../../store/slices/authSlice';
+import { registerUser, loginUser } from '../../store/slices/authSlice';
 
-import { registerSchema, RegisterFormData } from '../../schemas/auth';
-
-import { RegisterCredentials, LoginCredentials } from '../../types/auth';
+import { registerSchema, RegisterFormData, LoginCredentials } from '../../schemas/auth';
 
 import Loader from '../common/Loader';
 
@@ -16,25 +14,29 @@ export const RegisterForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isLoading, error } = useAppSelector((state) => state.auth);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
+    defaultValues: {
+      venueManager: false,
+    },
   });
 
   const onSubmit = async (data: RegisterFormData) => {
-    const { confirmPassword, ...registerData } = data;
-    const registerResult = await dispatch(registerUser(registerData as RegisterCredentials));
+    const { confirmPassword, ...credentials } = data;
+    const registerResult = await dispatch(registerUser(credentials));
 
     if (registerUser.fulfilled.match(registerResult)) {
       const loginCredentials: LoginCredentials = {
         email: data.email,
         password: data.password,
       };
-
       const loginResult = await dispatch(loginUser(loginCredentials));
+
       if (loginUser.fulfilled.match(loginResult)) {
         navigate(`/profile/${loginResult.payload.name}`);
       }

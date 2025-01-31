@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
 import { loginUser } from '../../store/slices/authSlice';
 
-import { loginSchema, LoginFormData } from '../../schemas/auth';
+import { loginSchema, LoginCredentials } from '../../schemas/auth';
 
 import Loader from '../common/Loader';
 
@@ -19,11 +19,11 @@ export const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData>({
+  } = useForm<LoginCredentials>({
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = async (data: LoginCredentials) => {
     const result = await dispatch(loginUser(data));
     if (loginUser.fulfilled.match(result)) {
       navigate(`/profile/${result.payload.name}`);
