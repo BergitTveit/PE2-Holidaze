@@ -1,10 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import SearchBar from '../components/common/SearchBar';
-import { useAppSelector } from '../hooks/useStore';
+import { useAppDispatch, useAppSelector } from '../hooks/useStore';
+import { useEffect } from 'react';
+import { fetchVenues } from '../store/slices/venuesSlice';
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { data: venues } = useAppSelector((state) => state.venues);
+
+  useEffect(() => {
+    dispatch(fetchVenues());
+  }, [dispatch]);
 
   const handleSearch = (query: string) => {
     if (query.trim()) {
