@@ -5,33 +5,27 @@ import { fetchVenues } from '../store/slices/venuesSlice';
 import { useAppDispatch, useAppSelector } from '../hooks/useStore';
 import Loader from '../components/common/Loader';
 import SearchBar from '../components/common/SearchBar';
-import useDebounce from '../hooks/useDebounce';
 
 const VenuesPage = () => {
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const { data: venues, isLoading, error } = useAppSelector((state) => state.venues);
   const searchTerm = searchParams.get('search') || '';
-  const debouncedSearch = useDebounce(searchTerm, 300);
 
   useEffect(() => {
     dispatch(fetchVenues());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (debouncedSearch) {
-      setSearchParams({ search: debouncedSearch });
+  const handleSearch = (query: string) => {
+    if (query) {
+      setSearchParams({ search: query });
     } else {
       setSearchParams({});
     }
-  }, [debouncedSearch, setSearchParams]);
-
-  const handleSearch = (query: string) => {
-    setSearchParams(query ? { search: query } : {});
   };
 
   const handleChange = (query: string) => {
-    setSearchParams(query ? { search: query } : {});
+    handleSearch(query);
   };
 
   const filteredVenues = venues.filter((venue) =>
@@ -53,6 +47,7 @@ const VenuesPage = () => {
         onChange={handleChange}
         venues={venues}
         initialValue={searchTerm}
+        showDropdown={false}
       />
 
       {filteredVenues.length === 0 ? (
@@ -68,7 +63,3 @@ const VenuesPage = () => {
 };
 
 export default VenuesPage;
-
-//
-
-//

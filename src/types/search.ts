@@ -5,4 +5,5 @@ export interface SearchProps {
   onChange?: (query: string) => void;
   venues: Venue[];
   initialValue?: string;
+  showDropdown?: boolean;
 }

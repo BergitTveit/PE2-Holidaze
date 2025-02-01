@@ -8,7 +8,7 @@ import { SearchInput } from './SearchInput';
 import { SearchBarList } from './SearchBarList';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 
-const SearchBar = ({ onSubmit, onChange, venues, initialValue = '' }: SearchProps) => {
+const SearchBar = ({ onSubmit, onChange, venues, initialValue = '',showDropdown = true  }: SearchProps) => {
   const searchRef = useRef<HTMLDivElement>(null);
   const {
     searchTerm,
@@ -41,7 +41,7 @@ const SearchBar = ({ onSubmit, onChange, venues, initialValue = '' }: SearchProp
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.target.value;
       setSearchTerm(value);
-      setIsOpen(true);
+      setIsOpen(showDropdown);
       setHighlightedIndex(-1);
       onChange?.(value);
     },
