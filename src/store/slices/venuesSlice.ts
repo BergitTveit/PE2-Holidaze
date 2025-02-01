@@ -10,6 +10,7 @@ interface VenuesState {
   currentVenue: Venue | null;
   isLoading: boolean;
   error: string | null;
+  searchTerm: string;
 }
 
 const initialState: VenuesState = {
@@ -17,6 +18,7 @@ const initialState: VenuesState = {
   currentVenue: null,
   isLoading: false,
   error: null,
+  searchTerm: '',
 };
 
 export const fetchVenues = createAsyncThunk<Venue[], void>('venues/fetchVenues', async () => {
@@ -38,7 +40,11 @@ export const addVenue = createAsyncThunk<Venue, CreateVenueDTO>('venues/addVenue
 const venuesSlice = createSlice({
   name: 'venues',
   initialState,
-  reducers: {},
+  reducers: {
+    setSearchQuery: (state, action) => {
+      state.searchTerm = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchVenues.pending, (state) => {
@@ -82,4 +88,5 @@ const venuesSlice = createSlice({
   },
 });
 
+export const { setSearchQuery } = venuesSlice.actions;
 export default venuesSlice.reducer;
