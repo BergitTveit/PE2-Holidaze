@@ -86,67 +86,6 @@ export const AddVenueForm = () => {
         )}
       </div>
 
-      <div className="space-y-2">
-        <h3 className="text-sm font-medium">Amenities</h3>
-        <div className="space-y-2">
-          <label className="flex items-center">
-            <input type="checkbox" {...register('meta.wifi')} className="border-gray-300" />
-            <span className="ml-2">WiFi</span>
-          </label>
-          <label className="flex items-center">
-            <input type="checkbox" {...register('meta.parking')} className="border-gray-300" />
-            <span className="ml-2">Parking</span>
-          </label>
-          <label className="flex items-center">
-            <input type="checkbox" {...register('meta.breakfast')} className="border-gray-300" />
-            <span className="ml-2">Breakfast</span>
-          </label>
-          <label className="flex items-center">
-            <input type="checkbox" {...register('meta.pets')} className="border-gray-300" />
-            <span className="ml-2">Pets Allowed</span>
-          </label>
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <h3 className="text-sm font-medium">Location</h3>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div>
-            <label htmlFor="address" className="block text-sm font-medium">
-              Address
-            </label>
-            <input
-              {...register('location.address')}
-              type="text"
-              id="address"
-              className="mt-1 block w-full border-gray-300 shadow-sm"
-            />
-          </div>
-          <div>
-            <label htmlFor="city" className="block text-sm font-medium">
-              City
-            </label>
-            <input
-              {...register('location.city')}
-              type="text"
-              id="city"
-              className="mt-1 block w-full border-gray-300 shadow-sm"
-            />
-          </div>
-          <div>
-            <label htmlFor="country" className="block text-sm font-medium">
-              Country
-            </label>
-            <input
-              {...register('location.country')}
-              type="text"
-              id="country"
-              className="mt-1 block w-full border-gray-300 shadow-sm"
-            />
-          </div>
-        </div>
-      </div>
-
       <button
         type="submit"
         disabled={isLoading}
