@@ -22,12 +22,12 @@ import { mediaSchema } from './shared/media';
 //   lng: z.number().min(-180).max(180),
 // });
 
-// const metaSchema = z.object({
-//   wifi: z.boolean(),
-//   parking: z.boolean(),
-//   breakfast: z.boolean(),
-//   pets: z.boolean(),
-// });
+const metaSchema = z.object({
+  wifi: z.boolean(),
+  parking: z.boolean(),
+  breakfast: z.boolean(),
+  pets: z.boolean(),
+});
 
 export const addVenueSchema = z.object({
   name: z.string().min(1, 'Required'),
@@ -35,6 +35,7 @@ export const addVenueSchema = z.object({
   media: z.array(mediaSchema).optional(),
   price: z.number().min(1, 'Price must be at least 1'),
   maxGuests: z.number().min(1, 'Must have at least 1 maximum guest'),
+  meta: metaSchema,
 });
 
 export type CreateVenueDTO = z.infer<typeof addVenueSchema>;

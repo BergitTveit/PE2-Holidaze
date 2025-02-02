@@ -18,12 +18,12 @@ export const AddVenueForm = () => {
   } = useForm<CreateVenueDTO>({
     resolver: zodResolver(addVenueSchema),
     defaultValues: {
-      // meta: {
-      //   wifi: false,
-      //   parking: false,
-      //   breakfast: false,
-      //   pets: false,
-      // },
+      meta: {
+        wifi: false,
+        parking: false,
+        breakfast: false,
+        pets: false,
+      },
       media: [{ url: '', alt: '' }],
       // location: {
       //   address: '',
@@ -48,7 +48,7 @@ export const AddVenueForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {error && <div className="bg-red-100 text-red-700 p-3 rounded">{error}</div>}
 
-      {/* Basic Info */}
+      {/* Basic Info: name and descirption */}
       <div className="space-y-4">
         <div>
           <label htmlFor="name" className="block text-sm font-medium">
@@ -109,6 +109,7 @@ export const AddVenueForm = () => {
         </div>
       </div>
 
+      {/* image*/}
       <div className="space-y-2">
         <h3 className="text-lg font-medium">Images</h3>
         {/* Here you might want to add a dynamic image field array using useFieldArray from react-hook-form */}
@@ -137,6 +138,57 @@ export const AddVenueForm = () => {
           {errors.media?.[0]?.alt && (
             <span className="text-red-500 text-sm">{errors.media[0].alt.message}</span>
           )}
+        </div>
+      </div>
+
+      {/* wifi, pets etc section */}
+      <div className="space-y-2">
+        <h3 className="text-lg font-medium">Amenities</h3>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="flex items-center">
+            <input
+              {...register('meta.wifi')}
+              type="checkbox"
+              id="wifi"
+              className="h-4 w-4 border-gray-300 rounded"
+            />
+            <label htmlFor="wifi" className="ml-2 block text-sm">
+              WiFi
+            </label>
+          </div>
+          <div className="flex items-center">
+            <input
+              {...register('meta.parking')}
+              type="checkbox"
+              id="parking"
+              className="h-4 w-4 border-gray-300 rounded"
+            />
+            <label htmlFor="parking" className="ml-2 block text-sm">
+              Parking
+            </label>
+          </div>
+          <div className="flex items-center">
+            <input
+              {...register('meta.breakfast')}
+              type="checkbox"
+              id="breakfast"
+              className="h-4 w-4 border-gray-300 rounded"
+            />
+            <label htmlFor="breakfast" className="ml-2 block text-sm">
+              Breakfast
+            </label>
+          </div>
+          <div className="flex items-center">
+            <input
+              {...register('meta.pets')}
+              type="checkbox"
+              id="pets"
+              className="h-4 w-4 border-gray-300 rounded"
+            />
+            <label htmlFor="pets" className="ml-2 block text-sm">
+              Pets Allowed
+            </label>
+          </div>
         </div>
       </div>
 
