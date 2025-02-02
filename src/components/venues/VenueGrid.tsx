@@ -2,7 +2,7 @@ import { Venue } from '../../types/venue';
 import VenueCard from './VenueCard';
 
 interface VenueGridProps {
-  venues: Venue[];  
+  venues: Venue[];
 }
 
 const VenueGrid = ({ venues }: VenueGridProps) => {
