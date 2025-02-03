@@ -25,15 +25,12 @@ export const AddVenueForm = () => {
         pets: false,
       },
       media: [{ url: '', alt: '' }],
-      // location: {
-      //   address: '',
-      //   city: '',
-      //   zip: '',
-      //   country: '',
-      //   continent: '',
-      //   lat: 0,
-      //   lng: 0,
-      // },
+      location: {
+        address: '',
+        city: '',
+        zip: '',
+        country: '',
+      },
     },
   });
 
@@ -188,6 +185,64 @@ export const AddVenueForm = () => {
             <label htmlFor="pets" className="ml-2 block text-sm">
               Pets Allowed
             </label>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <h3 className="text-lg font-medium">Location</h3>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <label htmlFor="location.address" className="block text-sm font-medium">
+              Address
+            </label>
+            <input
+              {...register('location.address')}
+              type="text"
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+            />
+            {errors.location?.address && (
+              <span className="text-red-500 text-sm">{errors.location.address.message}</span>
+            )}
+          </div>
+          <div>
+            <label htmlFor="location.city" className="block text-sm font-medium">
+              City
+            </label>
+            <input
+              {...register('location.city')}
+              type="text"
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+            />
+            {errors.location?.city && (
+              <span className="text-red-500 text-sm">{errors.location.city.message}</span>
+            )}
+          </div>
+          <div>
+            <label htmlFor="location.zip" className="block text-sm font-medium">
+              Zip Code
+            </label>
+            <input
+              {...register('location.zip')}
+              type="text"
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+            />
+            {errors.location?.zip && (
+              <span className="text-red-500 text-sm">{errors.location.zip.message}</span>
+            )}
+          </div>
+          <div>
+            <label htmlFor="location.country" className="block text-sm font-medium">
+              Country
+            </label>
+            <input
+              {...register('location.country')}
+              type="text"
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+            />
+            {errors.location?.country && (
+              <span className="text-red-500 text-sm">{errors.location.country.message}</span>
+            )}
           </div>
         </div>
       </div>
