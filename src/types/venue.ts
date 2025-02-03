@@ -12,7 +12,7 @@ export interface Venue {
   created: string;
   updated: string;
   meta: Meta;
-  venueLocation: IVenueLocation;
+  location: IVenueLocation;
   owner: VenueOwner;
   bookings: Booking[];
   _count: {
