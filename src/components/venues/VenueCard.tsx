@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
+import { Hotel } from 'lucide-react';
+import { Venue } from '../../types/venue';
+
 import ImageComponent from '../common/Image';
 import VenueTitle from './VenueTitle';
 import VenuePrice from './VenuePrice';
 import VenueMaxGuests from './VenueMaxGuests';
 import VenueMeta from './VenueMeta';
 import VenueRating from './VenueRating';
-import { Venue } from '../../types/venue';
-import { Hotel } from 'lucide-react';
 
 interface VenueCardProps {
   venue: Venue;
