@@ -16,11 +16,17 @@ const metaSchema = z.object({
 });
 
 export const addVenueSchema = z.object({
-  name: z.string().min(1, 'Required'),
-  description: z.string().min(1, 'Required'),
+  name: z.string().min(1, 'Required, your venue needs a title'),
+  description: z.string().min(1, 'Required: Please include a description of your venue'),
   media: z.array(mediaSchema).optional(),
-  price: z.number().min(1, 'Price must be at least 1'),
-  maxGuests: z.number().min(1, 'Must have at least 1 maximum guest'),
+  price: z
+    .number()
+    .min(1, 'Price must be at least 1')
+    .max(10000, 'Price cannot be more than 10.000'),
+  maxGuests: z
+    .number()
+    .min(1, 'Must have at least 1 maximum guest')
+    .max(100, 'Venues have a limit on a 100 guests.'),
   meta: metaSchema,
   location: locationSchema.optional(),
 });
