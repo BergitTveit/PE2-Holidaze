@@ -1,19 +1,18 @@
-import { Media } from './media';
-import { Booking } from './booking';
-import { Venue } from './venue';
+import { IMedia } from './media';
+import { IBooking } from './booking';
+import { IVenue } from './venue';
 
-export interface Profile {
+export interface IProfile {
   name: string;
   email: string;
   bio: string;
-  avatar: Media;
-  banner: Media;
+  avatar: IMedia;
+  banner: IMedia;
   venueManager: boolean;
-  venues: Venue[];
-  bookings: Booking[];
+  venues: IVenue[];
+  bookings: IBooking[];
   _count: {
     venues: number;
     bookings: number;
   };
 }
-

@@ -1,26 +1,26 @@
-import { Booking } from './booking';
-import { Media } from './media';
+import { IBooking } from './booking';
+import { IMedia } from './media';
 
-export interface Venue {
+export interface IVenue {
   id: string;
   name: string;
   description: string;
-  media: Media[];
+  media: IMedia[];
   price: number;
   maxGuests: number;
   rating: number;
   created: string;
   updated: string;
-  meta: Meta;
+  meta: IMeta;
   location: IVenueLocation;
-  owner: VenueOwner;
-  bookings: Booking[];
+  owner: IVenueOwner;
+  bookings: IBooking[];
   _count: {
     bookings: number;
   };
 }
 
-export interface Meta {
+export interface IMeta {
   wifi: boolean;
   parking: boolean;
   breakfast: boolean;
@@ -37,10 +37,10 @@ export interface IVenueLocation {
   lng: number;
 }
 
-export interface VenueOwner {
+export interface IVenueOwner {
   name: string;
   email: string;
   bio: string;
-  avatar: Media;
-  banner: Media;
+  avatar: IMedia;
+  banner: IMedia;
 }
