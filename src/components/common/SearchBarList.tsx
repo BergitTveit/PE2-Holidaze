@@ -1,10 +1,10 @@
-import { Venue } from '../../types/venue';
+import { IVenue } from '../../types/venue';
 import SearchBarItem from './SearchBarItem';
 
 interface SearchBarListProps {
-  venues: Venue[];
+  venues: IVenue[];
   highlightedIndex: number;
-  onSelect: (venue: Venue) => void;
+  onSelect: (venue: IVenue) => void;
   onHighlight: (index: number) => void;
 }
 
