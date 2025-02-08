@@ -1,4 +1,4 @@
-import { IVenueLocation } from '../../types/venue'; // Adjust import path as needed
+import { IVenueLocation } from '../../types/venue'; 
 
 interface VenueLocationProps {
   venueLocation: IVenueLocation;

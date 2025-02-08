@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Hotel } from 'lucide-react';
-import { Venue } from '../../types/venue';
+import { IVenue } from '../../types/venue';
 
 import ImageComponent from '../common/Image';
 import VenueTitle from './VenueTitle';
@@ -10,7 +10,7 @@ import VenueMeta from './VenueMeta';
 import VenueRating from './VenueRating';
 
 interface VenueCardProps {
-  venue: Venue;
+  venue: IVenue;
 }
 
 const VenueCard = ({ venue }: VenueCardProps) => (

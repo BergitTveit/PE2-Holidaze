@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Media } from '../../types/media';
+import { IMedia } from '../../types/media';
 import ImageComponent from '../common/Image';
 import Button from '../common/Buttons';
 
 interface VenueGalleryProps {
-  images: Media[];
+  images: IMedia[];
 }
 
 const VenueGallery = ({ images }: VenueGalleryProps) => {

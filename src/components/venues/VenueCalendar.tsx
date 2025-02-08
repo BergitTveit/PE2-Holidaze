@@ -1,12 +1,12 @@
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Booking } from '../../types/booking';
+import { IBooking } from '../../types/booking';
 import { useState } from 'react';
 import { isWithinInterval } from 'date-fns';
 import clsx from 'clsx';
 
 interface VenueCalendarProps {
-  bookings?: Booking[];
+  bookings?: IBooking[];
   className?: string;
 }
 

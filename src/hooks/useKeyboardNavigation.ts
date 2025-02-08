@@ -1,14 +1,14 @@
 import { useCallback } from 'react';
-import { Venue } from '../types/venue';
+import { IVenue } from '../types/venue';
 
 interface UseKeyboardNavigationProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   highlightedIndex: number;
   setHighlightedIndex: React.Dispatch<React.SetStateAction<number>>;
-  items: Venue[];
+  items: IVenue[];
   onSubmit: () => void;
-  onSelect: (venue: Venue) => void;
+  onSelect: (venue: IVenue) => void;
 }
 
 export const useKeyboardNavigation = ({

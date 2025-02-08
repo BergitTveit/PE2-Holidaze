@@ -1,7 +1,7 @@
-import { Meta } from '../../types/venue'; // Ensure Meta type is correctly imported
+import { IMeta } from '../../types/venue'; 
 
 interface VenueMetaProps {
-  meta: Meta; // Type of venue meta
+  meta: IMeta; 
 }
 
 const VenueMeta = ({ meta }: VenueMetaProps) => (

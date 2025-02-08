@@ -1,9 +1,9 @@
-import { Venue } from '../../types/venue';
+import { IVenue } from '../../types/venue';
 import { Hotel } from 'lucide-react';
 import ImageComponent from '../common/Image';
 
 interface SearchBarItemProps {
-  venue: Venue;
+  venue: IVenue;
   isHighlighted: boolean;
   onSelect: () => void;
   onHighlight: () => void;
