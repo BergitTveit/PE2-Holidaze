@@ -3,7 +3,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
 import { Plus, Wifi, Car, Coffee, Dog } from 'lucide-react';
-import { addVenue } from '../../store/slices/venuesSlice';
+
 import { addVenueSchema, CreateVenueDTO } from '../../schemas/addVenue';
 import Loader from '../common/Loader';
 import TextInput from '../common/TextInput';
