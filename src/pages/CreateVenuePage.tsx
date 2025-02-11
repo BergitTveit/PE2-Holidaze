@@ -1,4 +1,4 @@
-import { AddVenueForm } from '../components/venues/AddVenueForm';
+import { AddVenueForm } from '../components/venues/addVenueForm';
 
 const CreateVenuePage = () => {
   return (
