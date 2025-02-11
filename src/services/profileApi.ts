@@ -31,7 +31,7 @@ export const profilesApi = baseApi.injectEndpoints({
         params: { _bookings: true, _venues: true },
       }),
       transformResponse: (response: { data: IProfile }) => response.data,
-      providesTags: (_result, _error, name) => [{ type: 'Profile', id: name }],
+      providesTags: ['Profile'],
     }),
     getProfileVenues: builder.query<ApiResponse<IVenue[]>, string>({
       query: (name) => getProfileVenuesUrl(name),
