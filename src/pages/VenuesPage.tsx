@@ -20,10 +20,14 @@ const VenuesPage = () => {
         query: searchTerm,
         page: currentPage,
         limit: 12,
+        sort: 'created',
+        sortOrder: 'desc',
       })
     : useGetVenuesQuery({
         page: currentPage,
         limit: 12,
+        sort: 'created',
+        sortOrder: 'desc',
       });
 
   const handlePageChange = (newPage: number) => {

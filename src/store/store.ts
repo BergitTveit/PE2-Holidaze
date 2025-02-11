@@ -1,5 +1,6 @@
 // store.ts
 import { configureStore } from '@reduxjs/toolkit';
+
 import {
   persistStore,
   persistReducer,
@@ -15,10 +16,9 @@ import authReducer from './slices/authSlice';
 import { baseApi } from '../services/baseApi';
 
 const persistConfig = {
-  key: 'root',
+  key: 'auth',
   storage,
-  whitelist: ['auth'],
-  serialize: true,
+  whitelist: ['accessToken', 'userName'],
 };
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);

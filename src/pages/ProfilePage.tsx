@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+
 import { useGetProfileByNameQuery } from '../services/profileApi';
+
 import { UpdateProfileForm } from '../components/profile/UpdateProfileForm';
 import Profile from '../components/profile/Profile';
 import Modal from '../components/common/Modal';
@@ -8,6 +10,7 @@ import Modal from '../components/common/Modal';
 const ProfilePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { username } = useParams();
+
   const {
     data: profile,
     isLoading,

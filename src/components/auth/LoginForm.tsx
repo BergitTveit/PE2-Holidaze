@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
 import { zodResolver } from '@hookform/resolvers/zod';
+
 import { useAppDispatch } from '../../hooks/useStore';
 import { setCredentials } from '../../store/slices/authSlice';
 import { useLoginMutation } from '../../services/authApi';
 import { LoginCredentials, loginSchema } from '../../schemas/auth';
 import { useApiError } from '../../hooks/useApiError';
+
 import AuthInput from '../common/authInput';
 import Button from '../common/Buttons';
 import Loader from '../common/Loader';
@@ -30,7 +32,12 @@ export const LoginForm = () => {
     clearError();
     try {
       const loginResult = await login(data).unwrap();
-      dispatch(setCredentials(loginResult));
+      dispatch(
+        setCredentials({
+          accessToken: loginResult.accessToken,
+          userName: loginResult.name,
+        })
+      );
       navigate(`/profile/${loginResult.name}`, { replace: true });
     } catch (error: unknown) {
       handleError(error as FetchBaseQueryError | SerializedError, 'Login');

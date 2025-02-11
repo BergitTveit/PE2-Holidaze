@@ -1,5 +1,7 @@
 import { useAppSelector } from '../../hooks/useStore';
+
 import { IProfile } from '../../types/profile';
+
 import ProfileHeader from './ProfileHeader';
 import ProfileInfo from './ProfileInfo';
 import Button from '../common/Buttons';
@@ -9,9 +11,10 @@ interface ProfileProps {
   profile: IProfile;
   onEditClick: () => void;
 }
+
 const Profile = ({ profile, onEditClick }: ProfileProps) => {
-  const { user } = useAppSelector((state) => state.auth);
-  const isOwnProfile = user?.name === profile.name;
+  const { userName } = useAppSelector((state) => state.auth);
+  const isOwnProfile = userName === profile.name;
 
   return (
     <div className="max-w-2xl mx-auto p-4">

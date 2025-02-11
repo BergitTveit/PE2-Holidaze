@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
 import { zodResolver } from '@hookform/resolvers/zod';
+
 import { useAppDispatch } from '../../hooks/useStore';
 import { setCredentials } from '../../store/slices/authSlice';
 import { useLoginMutation, useRegisterMutation } from '../../services/authApi';
 import { RegisterCredentials, RegisterFormData, registerSchema } from '../../schemas/auth';
 import { useApiError } from '../../hooks/useApiError';
+
 import AuthInput from '../common/authInput';
 import TextInput from '../common/TextInput';
 import CheckboxInput from '../common/CheckBox';
@@ -39,7 +41,13 @@ export const RegisterForm = () => {
         password: data.password,
       }).unwrap();
 
-      dispatch(setCredentials(loginResult));
+      dispatch(
+        setCredentials({
+          accessToken: loginResult.accessToken,
+          userName: loginResult.name,
+        })
+      );
+
       navigate(`/profile/${registerResult.name}`, { replace: true });
     } catch (error: unknown) {
       handleError(error as FetchBaseQueryError | SerializedError, 'Registration');

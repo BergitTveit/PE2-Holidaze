@@ -1,26 +1,44 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../hooks/useStore';
 import { Loader } from 'lucide-react';
+import { useGetProfileByNameQuery } from '../services/profileApi';
 
 interface Props {
   requireManager?: boolean;
 }
 
 export const ProtectedRoutes = ({ requireManager = false }: Props) => {
-  const auth = useAppSelector((state) => state.auth);
   const location = useLocation();
-  const token = localStorage.getItem('accessToken');
+  const { userName, accessToken, _persist } = useAppSelector((state) => state.auth);
 
-  if (token && !auth._persist?.rehydrated) {
-    return <Loader />;
+  const { data: profile, isLoading } = useGetProfileByNameQuery(userName ?? '', {
+    skip: !requireManager || !accessToken || !userName || !_persist?.rehydrated,
+  });
+
+  if (!_persist?.rehydrated) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader className="animate-spin" />
+      </div>
+    );
   }
 
-  if (!auth.user && auth._persist?.rehydrated) {
+  if (!accessToken || !userName) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (requireManager && auth.user && !auth.user.venueManager) {
-    return <Navigate to="/" replace />;
+  if (requireManager) {
+    if (isLoading) {
+      return (
+        <div className="flex justify-center items-center h-screen">
+          <Loader className="animate-spin" />
+        </div>
+      );
+    }
+
+    if (!profile?.venueManager) {
+      return <Navigate to="/" replace />;
+    }
   }
 
   return <Outlet />;
