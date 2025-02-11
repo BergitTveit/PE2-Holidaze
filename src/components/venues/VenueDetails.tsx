@@ -11,6 +11,7 @@ import VenueMeta from './VenueMeta';
 import VenuePrice from './VenuePrice';
 import VenueMaxGuests from './VenueMaxGuests';
 import VenueCalendar from './VenueCalendar';
+import VenueLocation from './VenueLocation';
 
 const VenueDetails = () => {
   const { id } = useParams();
@@ -49,6 +50,9 @@ const VenueDetails = () => {
             <VenuePrice price={currentVenue.price} />
             <VenueMaxGuests maxGuests={currentVenue.maxGuests} />
           </div>
+        </section>
+        <section>
+          <VenueLocation venueLocation={currentVenue.location} />
         </section>
         <section className="mt-6">
           <VenueCalendar bookings={currentVenue.bookings} />

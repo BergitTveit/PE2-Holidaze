@@ -35,7 +35,7 @@ const SearchBarItem = ({ venue, isHighlighted, onSelect, onHighlight }: SearchBa
         {venue.name}
       </span>
       <span className={`text-sm truncate ${isHighlighted ? 'text-white/90' : 'text-gray-500'}`}>
-        {venue.venueLocation?.country || ''}
+        {venue.location?.country || ''}
       </span>
     </div>
   </li>

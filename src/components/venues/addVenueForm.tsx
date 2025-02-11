@@ -1,10 +1,17 @@
 import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
+import { Plus, Wifi, Car, Coffee, Dog } from 'lucide-react';
 import { addVenue } from '../../store/slices/venuesSlice';
 import { addVenueSchema, CreateVenueDTO } from '../../schemas/addVenue';
 import Loader from '../common/Loader';
+import TextInput from '../common/TextInput';
+import NumberInput from '../common/NumberInput';
+import MediaInput from '../common/MediaInput';
+import Button from '../common/Buttons';
+import TextareaInput from '../common/TextareaInput';
+import CheckboxInput from '../common/CheckBox';
 
 export const AddVenueForm = () => {
   const dispatch = useAppDispatch();
@@ -13,10 +20,33 @@ export const AddVenueForm = () => {
 
   const {
     register,
+    control,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<CreateVenueDTO>({
     resolver: zodResolver(addVenueSchema),
+    defaultValues: {
+      meta: {
+        wifi: false,
+        parking: false,
+        breakfast: false,
+        pets: false,
+      },
+      media: [{ url: '', alt: '' }],
+      location: {
+        address: '',
+        city: '',
+        zip: '',
+        country: '',
+      },
+    },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'media',
   });
 
   const onSubmit = async (data: CreateVenueDTO) => {
@@ -27,133 +57,143 @@ export const AddVenueForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      {error && <div className="bg-red-100 text-red-700">{error}</div>}
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      {error && <div className="bg-red-100 text-red-700 p-3 rounded">{error}</div>}
 
-      <div>
-        <label htmlFor="name" className="block text-sm font-medium">
-          Venue Name
-        </label>
-        <input
-          {...register('name')}
-          type="text"
-          id="name"
-          className="mt-1 block w-full border-gray-300 shadow-sm"
+      <div className="space-y-4">
+        <TextInput
+          label="Venue Name"
+          name="name"
+          register={register}
+          error={errors.name?.message}
         />
-        {errors.name && <span className="text-red-500 text-sm">{errors.name.message}</span>}
-      </div>
 
-      <div>
-        <label htmlFor="description" className="block text-sm font-medium">
-          Description
-        </label>
-        <textarea
-          {...register('description')}
-          id="description"
-          rows={4}
-          className="mt-1 block w-full border-gray-300 shadow-sm"
-        />
-        {errors.description && (
-          <span className="text-red-500 text-sm">{errors.description.message}</span>
-        )}
-      </div>
-
-      <div>
-        <label htmlFor="price" className="block text-sm font-medium">
-          Price per night
-        </label>
-        <input
-          {...register('price', { valueAsNumber: true })}
-          type="number"
-          id="price"
-          className="mt-1 block w-full border-gray-300 shadow-sm"
-        />
-        {errors.price && <span className="text-red-500 text-sm">{errors.price.message}</span>}
-      </div>
-
-      <div>
-        <label htmlFor="maxGuests" className="block text-sm font-medium">
-          Maximum Guests
-        </label>
-        <input
-          {...register('maxGuests', { valueAsNumber: true })}
-          type="number"
-          id="maxGuests"
-          className="mt-1 block w-full border-gray-300 shadow-sm"
-        />
-        {errors.maxGuests && (
-          <span className="text-red-500 text-sm">{errors.maxGuests.message}</span>
-        )}
-      </div>
-
-      <div className="space-y-2">
-        <h3 className="text-sm font-medium">Amenities</h3>
-        <div className="space-y-2">
-          <label className="flex items-center">
-            <input type="checkbox" {...register('meta.wifi')} className="border-gray-300" />
-            <span className="ml-2">WiFi</span>
-          </label>
-          <label className="flex items-center">
-            <input type="checkbox" {...register('meta.parking')} className="border-gray-300" />
-            <span className="ml-2">Parking</span>
-          </label>
-          <label className="flex items-center">
-            <input type="checkbox" {...register('meta.breakfast')} className="border-gray-300" />
-            <span className="ml-2">Breakfast</span>
-          </label>
-          <label className="flex items-center">
-            <input type="checkbox" {...register('meta.pets')} className="border-gray-300" />
-            <span className="ml-2">Pets Allowed</span>
-          </label>
+        <div>
+          <TextareaInput
+            label="Description"
+            name="description"
+            register={register}
+            error={errors.description?.message}
+          />
         </div>
       </div>
 
+      <div className="grid grid-cols-2 gap-4">
+        <NumberInput
+          label="Price per night"
+          name="price"
+          register={register}
+          error={errors.price?.message}
+        />
+        <NumberInput
+          label="Maximum Guests"
+          name="maxGuests"
+          register={register}
+          error={errors.maxGuests?.message}
+        />
+      </div>
+
+      <div className="space-y-4">
+        <h3 className="text-lg font-medium">Media</h3>
+        {fields.map((field, index) => (
+          <div key={field.id} className="flex gap-4">
+            <MediaInput
+              label={`Image ${index + 1}`}
+              value={watch(`media.${index}`)}
+              onChange={(media) => {
+                media ? setValue(`media.${index}`, media) : remove(index);
+              }}
+              error={{
+                url: errors.media?.[index]?.url?.message,
+                alt: errors.media?.[index]?.alt?.message,
+              }}
+            />
+          </div>
+        ))}
+        <Button type="button" onClick={() => append({ url: '', alt: '' })}>
+          <Plus className="h-4 w-4" /> Add Media
+        </Button>
+      </div>
+
       <div className="space-y-2">
-        <h3 className="text-sm font-medium">Location</h3>
+        <h3 className="text-lg font-medium">Amenities</h3>
+        <div className="grid grid-cols-2 gap-4">
+          <CheckboxInput
+            label={
+              <div className="flex items-center gap-2">
+                <Wifi size={16} /> WiFi
+              </div>
+            }
+            name="meta.wifi"
+            register={register}
+          />
+          <CheckboxInput
+            label={
+              <div className="flex items-center gap-2">
+                <Car size={16} /> Parking
+              </div>
+            }
+            name="meta.parking"
+            register={register}
+          />
+          <CheckboxInput
+            label={
+              <div className="flex items-center gap-2">
+                <Coffee size={16} /> Breakfast
+              </div>
+            }
+            name="meta.breakfast"
+            register={register}
+          />
+          <CheckboxInput
+            label={
+              <div className="flex items-center gap-2">
+                <Dog size={16} /> Pets Allowed
+              </div>
+            }
+            name="meta.pets"
+            register={register}
+          />
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <h3 className="text-lg font-medium">Location</h3>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div>
-            <label htmlFor="address" className="block text-sm font-medium">
-              Address
-            </label>
-            <input
-              {...register('location.address')}
-              type="text"
-              id="address"
-              className="mt-1 block w-full border-gray-300 shadow-sm"
-            />
-          </div>
-          <div>
-            <label htmlFor="city" className="block text-sm font-medium">
-              City
-            </label>
-            <input
-              {...register('location.city')}
-              type="text"
-              id="city"
-              className="mt-1 block w-full border-gray-300 shadow-sm"
-            />
-          </div>
-          <div>
-            <label htmlFor="country" className="block text-sm font-medium">
-              Country
-            </label>
-            <input
-              {...register('location.country')}
-              type="text"
-              id="country"
-              className="mt-1 block w-full border-gray-300 shadow-sm"
-            />
-          </div>
+          <TextInput
+            label="Address"
+            name="location.address"
+            register={register}
+            error={errors.location?.address?.message}
+          />
+          <TextInput
+            label="City"
+            name="location.city"
+            register={register}
+            error={errors.location?.city?.message}
+          />
+          <TextInput
+            label="Zip Code"
+            name="location.zip"
+            register={register}
+            error={errors.location?.zip?.message}
+          />
+          <TextInput
+            label="Country"
+            name="location.country"
+            register={register}
+            error={errors.location?.country?.message}
+          />
         </div>
       </div>
 
-      <button
+      <Button
         type="submit"
         disabled={isLoading}
-        className="w-full bg-blue-600 text-white py-2 px-4 hover:bg-blue-700 disabled:opacity-50"
+        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50"
       >
         {isLoading ? <Loader /> : 'Create Venue'}
-      </button>
+      </Button>
     </form>
   );
 };

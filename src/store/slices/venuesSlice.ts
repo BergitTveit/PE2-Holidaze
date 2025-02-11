@@ -22,8 +22,7 @@ const initialState: VenuesState = {
 };
 
 export const fetchVenues = createAsyncThunk<Venue[], void>('venues/fetchVenues', async () => {
-  const response = await api.get(API_VENUES);
-
+  const response = await api.get(`${API_VENUES}?sort=created&sortOrder=desc`);
   return response.data.data;
 });
 
