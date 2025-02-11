@@ -1,146 +1,126 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
-import { updateProfile } from '../../store/slices/profileSlice';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { SerializedError } from '@reduxjs/toolkit';
+import { useGetProfileByNameQuery, useUpdateProfileMutation } from '../../services/profileApi';
 import { UpdateProfileFormData, updateProfileSchema } from '../../schemas/updateProfile';
+import { useApiError } from '../../hooks/useApiError';
+import Button from '../common/Buttons';
+import CheckboxInput from '../common/CheckBox';
 import Loader from '../common/Loader';
+import MediaInput from '../common/MediaInput';
+import TextareaInput from '../common/TextareaInput';
 
 interface UpdateProfileFormProps {
   onSuccess?: () => void;
 }
 
 export const UpdateProfileForm = ({ onSuccess }: UpdateProfileFormProps) => {
-  const dispatch = useAppDispatch();
-  const { profile, isLoading, error } = useAppSelector((state) => state.profile);
+  const { username } = useParams();
+  const { error, handleError, clearError } = useApiError();
+  const {
+    data: profile,
+    isLoading: isProfileLoading,
+    isError,
+  } = useGetProfileByNameQuery(username!, {
+    skip: !username,
+  });
+  const [updateProfile, { isLoading: isSubmitting }] = useUpdateProfileMutation();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-
+    setValue,
     watch,
+    reset,
   } = useForm<UpdateProfileFormData>({
     resolver: zodResolver(updateProfileSchema),
     defaultValues: {
-      bio: profile?.bio || '',
-      venueManager: profile?.venueManager || false,
-      avatar: profile?.avatar,
-      banner: profile?.banner,
+      bio: '',
+      venueManager: false,
+      avatar: { url: '', alt: '' },
+      banner: { url: '', alt: '' },
     },
   });
 
-  const avatarUrl = watch('avatar.url');
-  const bannerUrl = watch('banner.url');
+  useEffect(() => {
+    if (profile) {
+      reset({
+        bio: profile.bio,
+        venueManager: profile.venueManager,
+        avatar: profile.avatar,
+        banner: profile.banner,
+      });
+    }
+  }, [profile, reset]);
+
+  if (isProfileLoading || isSubmitting) return <Loader />;
+  if (isError) return <div>Error loading profile</div>;
+  if (!profile) return null;
 
   const onSubmit = async (data: UpdateProfileFormData) => {
+    if (!username) return;
+    clearError();
     try {
-      await dispatch(
-        updateProfile({
-          name: profile?.name || '',
-          data,
-        })
-      ).unwrap();
+      await updateProfile({ name: username, data }).unwrap();
       onSuccess?.();
-    } catch (error) {
-      console.error('Failed to update profile:', error);
+    } catch (err) {
+      handleError(err as FetchBaseQueryError | SerializedError, 'Profile Update');
     }
   };
 
-  if (isLoading)
-    return (
-      <div>
-        <Loader />
-      </div>
-    );
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div>
-        <label className="block text-sm font-medium mb-2">Bio</label>
-        <textarea {...register('bio')} className="w-full p-2 border rounded-md" rows={4} />
-        {errors.bio && <p className="text-red-500 text-sm mt-1">{errors.bio.message}</p>}
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium mb-2">Avatar</label>
-        <div className="flex items-center space-x-4">
-          {avatarUrl && (
-            <img
-              src={avatarUrl}
-              alt="Avatar preview"
-              className="w-12 h-12 rounded-full object-cover"
-            />
-          )}
-          <input
-            type="url"
-            placeholder="Avatar URL"
-            {...register('avatar.url')}
-            className="flex-1 p-2 border rounded-md"
-          />
-
-          {errors.avatar?.url && (
-            <p className="text-red-500 text-sm mt-1">{errors.avatar.url.message}</p>
-          )}
+      {error.message && (
+        <div className="bg-red-100 text-red-700 border border-red-400 px-4 py-3 rounded-md">
+          {error.message}
         </div>
-        <input
-          type="text"
-          placeholder="Avatar alt text"
-          {...register('avatar.alt')}
-          className="mt-2 w-full p-2 border rounded-md"
-        />
-        {errors.avatar && <p className="text-red-500 text-sm mt-1">{errors.avatar.message}</p>}
-      </div>
+      )}
 
-      <div>
-        <label className="block text-sm font-medium mb-2">Banner</label>
-        <div className="space-y-2">
-          {bannerUrl && (
-            <img
-              src={bannerUrl}
-              alt="Banner preview"
-              className="w-full h-32 object-cover rounded-md"
-            />
-          )}
-          <input
-            type="url"
-            placeholder="Banner URL"
-            {...register('banner.url')}
-            className="w-full p-2 border rounded-md"
-          />
-          {errors.banner?.url && (
-            <p className="text-red-500 text-sm mt-1">{errors.banner.url.message}</p>
-          )}
+      <TextareaInput<UpdateProfileFormData>
+        label="Bio"
+        name="bio"
+        register={register}
+        error={errors.bio?.message}
+        rows={4}
+      />
 
-          <input
-            type="text"
-            placeholder="Banner alt text"
-            {...register('banner.alt')}
-            className="w-full p-2 border rounded-md"
-          />
-        </div>
-        {errors.banner && <p className="text-red-500 text-sm mt-1">{errors.banner.message}</p>}
-      </div>
+      <MediaInput
+        label="Avatar"
+        value={watch('avatar') || { url: '', alt: '' }}
+        onChange={(value) => setValue('avatar', value || { url: '', alt: '' })}
+        error={{
+          url: errors.avatar?.url?.message,
+          alt: errors.avatar?.alt?.message,
+        }}
+      />
 
-      <div>
-        <label className="flex items-center space-x-2">
-          <input
-            type="checkbox"
-            {...register('venueManager')}
-            className="rounded border-gray-300"
-          />
-          <span className="text-sm font-medium">I want to be a venue manager</span>
-        </label>
-      </div>
+      <MediaInput
+        label="Banner"
+        value={watch('banner') || { url: '', alt: '' }}
+        onChange={(value) => setValue('banner', value || { url: '', alt: '' })}
+        error={{
+          url: errors.banner?.url?.message,
+          alt: errors.banner?.alt?.message,
+        }}
+      />
 
-      {error && <div className="text-red-500 text-sm">{error}</div>}
+      <CheckboxInput<UpdateProfileFormData>
+        label="I want to be a venue manager"
+        name="venueManager"
+        register={register}
+      />
 
-      <button
+      <Button
         type="submit"
-        disabled={isLoading}
-        className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:bg-blue-300"
+        disabled={isSubmitting}
+        className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
       >
-        {isLoading ? <Loader /> : 'Update Profile'}
-      </button>
+        {isSubmitting ? <Loader /> : 'Update Profile'}
+      </Button>
     </form>
   );
 };

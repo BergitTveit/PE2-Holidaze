@@ -1,84 +1,46 @@
-import { useEffect, useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/useStore';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
-import { fetchProfile } from '../../store/slices/profileSlice';
+import { IProfile } from '../../types/profile';
 
-import LogoutButton from '../auth/LogoutButton';
-import Button from '../common/Buttons';
-import Modal from '../common/Modal';
-import Loader from '../common/Loader';
-import { UpdateProfileForm } from './UpdateProfileForm';
 import ProfileHeader from './ProfileHeader';
 import ProfileInfo from './ProfileInfo';
+import Button from '../common/Buttons';
+import LogoutButton from '../auth/LogoutButton';
 
-const Profile = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { username } = useParams();
-  const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.auth);
-  const { profile, isLoading, error } = useAppSelector((state) => state.profile);
-  const isOwnProfile = user?.name === username;
+interface ProfileProps {
+  profile: IProfile;
+  onEditClick: () => void;
+}
 
-  if (!username && user?.name) {
-    return <Navigate to={`/profile/${user.name}`} replace />;
-  }
-
-  useEffect(() => {
-    if (username) {
-      dispatch(fetchProfile(username));
-    }
-  }, [dispatch, username]);
-
-  if (isLoading) {
-    return (
-      <div>
-        <Loader />
-      </div>
-    );
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!profile) {
-    return <div>No profile found</div>;
-  }
+const Profile = ({ profile, onEditClick }: ProfileProps) => {
+  const { userName } = useAppSelector((state) => state.auth);
+  const isOwnProfile = userName === profile.name;
 
   return (
     <div className="max-w-2xl mx-auto p-4">
       <div className="bg-white shadow overflow-hidden">
         <ProfileHeader profile={profile} />
-
         <ProfileInfo profile={profile} />
-
         {profile.venueManager && (
-          <div className="mt-4 p-2 bg-blue-50 text-blue-700 rounded">Venue Manager Account</div>
-        )}
+          <div className="mt-4 p-2 bg-blue-50 text-blue-700 ">Venue Manager Account</div>
+        )}{' '}
         {isOwnProfile && (
           <div className="mt-4">
-            <Button
-              onClick={() => setIsModalOpen(true)}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded"
-            >
+            <Button onClick={onEditClick} className="w-full bg-blue-500 text-white py-2 ">
+              {' '}
               Edit Profile
             </Button>
             <LogoutButton />
           </div>
         )}
-
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Edit Profile">
-          <UpdateProfileForm onSuccess={() => setIsModalOpen(false)} />
-        </Modal>
       </div>
 
       <div className="mt-6 grid grid-cols-2 gap-4">
-        <div className="bg-gray-50 p-4 rounded">
+        <div className="bg-gray-50 p-4 ">
           <p className="text-gray-600">Venues</p>
           <p className="text-2xl font-bold">{profile._count?.venues || 0}</p>
         </div>
-        <div className="bg-gray-50 p-4 rounded">
+        <div className="bg-gray-50 p-4 ">
           <p className="text-gray-600">Bookings</p>
           <p className="text-2xl font-bold">{profile._count?.bookings || 0}</p>
         </div>

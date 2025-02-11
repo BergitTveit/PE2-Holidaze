@@ -1,26 +1,44 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../hooks/useStore';
-import Loader from '../components/common/Loader';
+import { Loader } from 'lucide-react';
+import { useGetProfileByNameQuery } from '../services/profileApi';
 
 interface Props {
   requireManager?: boolean;
 }
 
 export const ProtectedRoutes = ({ requireManager = false }: Props) => {
-  const { user } = useAppSelector((state) => state.auth);
-  const { profile, isLoading } = useAppSelector((state) => state.profile);
   const location = useLocation();
+  const { userName, accessToken, _persist } = useAppSelector((state) => state.auth);
 
-  if (!user) {
+  const { data: profile, isLoading } = useGetProfileByNameQuery(userName ?? '', {
+    skip: !requireManager || !accessToken || !userName || !_persist?.rehydrated,
+  });
+
+  if (!_persist?.rehydrated) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader className="animate-spin" />
+      </div>
+    );
+  }
+
+  if (!accessToken || !userName) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (requireManager && isLoading) {
-    return <Loader />;
-  }
+  if (requireManager) {
+    if (isLoading) {
+      return (
+        <div className="flex justify-center items-center h-screen">
+          <Loader className="animate-spin" />
+        </div>
+      );
+    }
 
-  if (requireManager && !profile?.venueManager) {
-    return <Navigate to="/" replace />;
+    if (!profile?.venueManager) {
+      return <Navigate to="/" replace />;
+    }
   }
 
   return <Outlet />;

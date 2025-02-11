@@ -1,17 +1,17 @@
-import { Venue, VenueOwner } from './venue';
+import { IVenue, IVenueOwner } from './venue';
 
-export interface Booking {
+export interface IBooking {
   id: string;
   dateFrom: string;
   dateTo: string;
   guests: number;
   created: string;
   updated: string;
-  venue: Venue;
-  customer: VenueOwner;
+  venue: IVenue;
+  customer: IVenueOwner;
 }
 
-export interface BookingCreate {
+export interface IBookingCreate {
   dateFrom: string;
   dateTo: string;
   guests: number;

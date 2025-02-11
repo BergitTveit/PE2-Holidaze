@@ -1,61 +1,51 @@
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
-import { fetchVenueById } from '../../store/slices/venuesSlice';
-
+import { useGetVenueByIdQuery } from '../../services/venuesApi';
 import Loader from '../common/Loader';
 import VenueTitle from './VenueTitle';
 import VenueGallery from './VenueGallery';
-import VenueDescription from './VenueDescription';
 import VenueMeta from './VenueMeta';
+import VenueDescription from './VenueDescription';
 import VenuePrice from './VenuePrice';
 import VenueMaxGuests from './VenueMaxGuests';
-import VenueCalendar from './VenueCalendar';
 import VenueLocation from './VenueLocation';
+import VenueCalendar from './VenueCalendar';
 
 const VenueDetails = () => {
   const { id } = useParams();
-  const dispatch = useAppDispatch();
-  const { currentVenue, isLoading, error } = useAppSelector((state) => state.venues);
+  const {
+    data: venue,
+    isLoading,
+    error,
+  } = useGetVenueByIdQuery(id!, {
+    skip: !id,
+  });
 
-  useEffect(() => {
-    if (id) {
-      dispatch(fetchVenueById(id));
-    }
-  }, [dispatch, id]);
-
-  if (isLoading) {
-    return <Loader />;
-  }
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-  if (!currentVenue) {
-    return <div>Venue not found</div>;
-  }
+  if (isLoading) return <Loader />;
+  if (error) return <div>Error loading venue</div>;
+  if (!venue) return <div>Venue not found</div>;
 
   return (
     <div className="container mx-auto px-4 py-8">
       <header>
-        <VenueTitle title={currentVenue.name} className="text-3xl font-bold mb-4" as="h1" />
+        <VenueTitle title={venue.name} className="text-3xl font-bold mb-4" as="h1" />
       </header>
       <main>
         <section>
-          <VenueGallery images={currentVenue.media} />
+          <VenueGallery images={venue.media} />
         </section>
         <section>
-          <VenueMeta meta={currentVenue.meta} />{' '}
-          <VenueDescription description={currentVenue.description} />
+          <VenueMeta meta={venue.meta} />
+          <VenueDescription description={venue.description} />
           <div className="mt-4">
-            <VenuePrice price={currentVenue.price} />
-            <VenueMaxGuests maxGuests={currentVenue.maxGuests} />
+            <VenuePrice price={venue.price} />
+            <VenueMaxGuests maxGuests={venue.maxGuests} />
           </div>
         </section>
         <section>
-          <VenueLocation venueLocation={currentVenue.location} />
+          <VenueLocation venueLocation={venue.location} />
         </section>
         <section className="mt-6">
-          <VenueCalendar bookings={currentVenue.bookings} />
+          <VenueCalendar bookings={venue.bookings} />
         </section>
       </main>
     </div>

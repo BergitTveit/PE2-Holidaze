@@ -1,12 +1,5 @@
-import { UseFormRegister, FieldValues, Path } from 'react-hook-form';
-
-interface TextInputProps<T extends FieldValues> {
-  label: string;
-  name: Path<T>;
-  register: UseFormRegister<T>;
-  error?: string;
-  className?: string;
-}
+import { FieldValues, } from 'react-hook-form';
+import { BaseInputProps } from '../../types/baseInput';
 
 const TextInput = <T extends FieldValues>({
   label,
@@ -14,7 +7,7 @@ const TextInput = <T extends FieldValues>({
   register,
   error,
   className = '',
-}: TextInputProps<T>) => {
+}: BaseInputProps<T>) => {
   return (
     <div className={className}>
       <label htmlFor={name} className="block text-sm">

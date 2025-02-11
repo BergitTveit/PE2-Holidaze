@@ -1,37 +1,75 @@
-import { useState, useCallback } from 'react';
-import { Venue } from '../types/venue';
+import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useSearchVenuesQuery, useGetVenueSuggestionsQuery } from '../services/venuesApi';
 
-interface UseSearchProps {
-  venues: Venue[];
-  initialValue?: string;
-  maxSuggestions?: number;
-}
-
-export const useSearch = ({ venues, initialValue = '', maxSuggestions = 15 }: UseSearchProps) => {
-  const [searchTerm, setSearchTerm] = useState(initialValue);
+export const useVenueSearch = (navigate?: (url: string) => void) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [inputValue, setInputValue] = useState(searchParams.get('search') || '');
+  const searchTerm = searchParams.get('search') || '';
+  const currentPage = Number(searchParams.get('page')) || 1;
 
-  const filteredVenues =
-    searchTerm.trim().length > 0
-      ? venues
-          .filter((venue) => venue.name.toLowerCase().includes(searchTerm.toLowerCase().trim()))
-          .slice(0, maxSuggestions)
-      : [];
+  const {
+    data: venues,
+    isLoading,
+    isFetching,
+  } = useSearchVenuesQuery(
+    {
+      query: searchTerm,
+      page: currentPage,
+      limit: 12,
+    },
+    {
+      skip: !searchTerm.trim(),
+    }
+  );
 
-  const resetSearch = useCallback(() => {
-    setHighlightedIndex(-1);
+  const { data: suggestions = [] } = useGetVenueSuggestionsQuery(inputValue, {
+    skip: !inputValue.trim() || !isOpen || !navigate,
+  });
+
+  const handleSearch = (query: string, shouldNavigate: boolean = false) => {
+    if (navigate && shouldNavigate) {
+      navigate(`/venues?search=${encodeURIComponent(query)}&page=1`);
+    } else {
+      setSearchParams({ search: query, page: '1' });
+    }
     setIsOpen(false);
-  }, []);
+    setHighlightedIndex(-1);
+  };
+
+  const handleInputChange = (value: string) => {
+    setInputValue(value);
+    if (!navigate) {
+      handleSearch(value, false);
+    }
+    setIsOpen(true);
+    setHighlightedIndex(-1);
+  };
+
+  const handlePageChange = (page: number) => {
+    setSearchParams((current) => ({
+      ...Object.fromEntries(current),
+      page: String(page),
+    }));
+  };
 
   return {
     searchTerm,
-    setSearchTerm,
+    currentPage,
+    venues: venues?.data || [],
+    meta: venues?.meta,
+    inputValue,
+    handleInputChange,
+    suggestions,
+    isLoading,
+    isFetching,
     isOpen,
     setIsOpen,
     highlightedIndex,
     setHighlightedIndex,
-    filteredVenues,
-    resetSearch,
+    handleSearch,
+    handlePageChange,
   };
 };

@@ -1,22 +1,24 @@
 import { useNavigate } from 'react-router-dom';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
+import { useCreateVenueMutation } from '../../services/venuesApi';
+import { useApiError } from '../../hooks/useApiError';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { SerializedError } from '@reduxjs/toolkit';
 import { Plus, Wifi, Car, Coffee, Dog } from 'lucide-react';
-import { addVenue } from '../../store/slices/venuesSlice';
 import { addVenueSchema, CreateVenueDTO } from '../../schemas/addVenue';
-import Loader from '../common/Loader';
-import TextInput from '../common/TextInput';
-import NumberInput from '../common/NumberInput';
-import MediaInput from '../common/MediaInput';
 import Button from '../common/Buttons';
-import TextareaInput from '../common/TextareaInput';
 import CheckboxInput from '../common/CheckBox';
+import Loader from '../common/Loader';
+import MediaInput from '../common/MediaInput';
+import NumberInput from '../common/NumberInput';
+import TextareaInput from '../common/TextareaInput';
+import TextInput from '../common/TextInput';
 
 export const AddVenueForm = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isLoading, error } = useAppSelector((state) => state.venues);
+  const [createVenue, { isLoading }] = useCreateVenueMutation();
+  const { error, handleError, clearError } = useApiError();
 
   const {
     register,
@@ -50,16 +52,22 @@ export const AddVenueForm = () => {
   });
 
   const onSubmit = async (data: CreateVenueDTO) => {
-    const result = await dispatch(addVenue(data));
-    if (addVenue.fulfilled.match(result)) {
-      navigate(`/venue/${result.payload.id}`);
+    clearError();
+    try {
+      const result = await createVenue(data).unwrap();
+      navigate(`/venue/${result.id}`);
+    } catch (err) {
+      handleError(err as FetchBaseQueryError | SerializedError, 'Create Venue');
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      {error && <div className="bg-red-100 text-red-700 p-3 rounded">{error}</div>}
-
+      {error.message && (
+        <div className="bg-red-100 text-red-700 border border-red-400 px-4 py-3">
+          {error.message}
+        </div>
+      )}
       <div className="space-y-4">
         <TextInput
           label="Venue Name"

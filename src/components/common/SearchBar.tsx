@@ -1,51 +1,43 @@
-import { Venue } from '../../types/venue';
 import { Search } from 'lucide-react';
 import Button from './Buttons';
-import { useSearch } from '../../hooks/useSearch';
 import { useCallback, useEffect, useRef } from 'react';
-import { SearchProps } from '../../types/search';
+import { IVenue } from '../../types/venue';
 import { SearchInput } from './SearchInput';
 import { SearchBarList } from './SearchBarList';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
+import { useVenueSearch } from '../../hooks/useSearch';
 
-const SearchBar = ({ onSubmit, onChange, venues, initialValue = '',showDropdown = true  }: SearchProps) => {
+const SearchBar = ({ navigate }: { navigate?: (url: string) => void }) => {
   const searchRef = useRef<HTMLDivElement>(null);
   const {
-    searchTerm,
-    setSearchTerm,
+    inputValue,
+    suggestions,
     isOpen,
     setIsOpen,
     highlightedIndex,
     setHighlightedIndex,
-    filteredVenues,
-    resetSearch,
-  } = useSearch({ venues, initialValue });
+    handleSearch,
+    handleInputChange,
+  } = useVenueSearch(navigate);
 
   const handleSubmit = useCallback(() => {
-    if (searchTerm.trim()) {
-      onSubmit(searchTerm.trim());
-      resetSearch();
+    if (inputValue.trim()) {
+      handleSearch(inputValue.trim(), true);
     }
-  }, [searchTerm, onSubmit, resetSearch]);
+  }, [inputValue, handleSearch]);
 
   const handleVenueSelect = useCallback(
-    (venue: Venue) => {
-      setSearchTerm(venue.name);
-      onSubmit(venue.name);
-      resetSearch();
+    (venue: IVenue) => {
+      handleSearch(venue.name, true);
     },
-    [onSubmit, setSearchTerm, resetSearch]
+    [handleSearch]
   );
 
-  const handleInputChange = useCallback(
+  const onInputChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      const value = event.target.value;
-      setSearchTerm(value);
-      setIsOpen(showDropdown);
-      setHighlightedIndex(-1);
-      onChange?.(value);
+      handleInputChange(event.target.value);
     },
-    [setSearchTerm, setIsOpen, setHighlightedIndex, onChange]
+    [handleInputChange]
   );
 
   const { handleKeyDown } = useKeyboardNavigation({
@@ -53,7 +45,7 @@ const SearchBar = ({ onSubmit, onChange, venues, initialValue = '',showDropdown 
     setIsOpen,
     highlightedIndex,
     setHighlightedIndex,
-    items: filteredVenues,
+    items: suggestions,
     onSubmit: handleSubmit,
     onSelect: handleVenueSelect,
   });
@@ -64,37 +56,37 @@ const SearchBar = ({ onSubmit, onChange, venues, initialValue = '',showDropdown 
         setIsOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [setIsOpen]);
 
   return (
     <div className="relative w-full" ref={searchRef}>
-      <div className="relative  flex gap-2">
+      <div className="relative flex gap-2">
         <div className="relative flex-1">
           <SearchInput
-            value={searchTerm}
-            onChange={handleInputChange}
+            value={inputValue}
+            onChange={onInputChange}
             onKeyDown={handleKeyDown}
             onFocus={() => setIsOpen(true)}
             placeholder="Search for your dream venue..."
             highlightedVenue={
-              highlightedIndex >= 0 ? `venue-${filteredVenues[highlightedIndex]?.id}` : undefined
+              highlightedIndex >= 0 ? `venue-${suggestions[highlightedIndex]?.id}` : undefined
             }
           />
         </div>
         <Button
           onClick={handleSubmit}
-          className="px-6 py-3 bg-blue-500 text-white  hover:bg-blue-600 transition-colors flex items-center gap-2"
+          className="px-6 py-3 bg-blue-500 text-white transition-colors flex items-center gap-2"
         >
           <Search size={20} />
           <span>Search</span>
         </Button>
       </div>
-      {isOpen && searchTerm && (
+
+      {isOpen && inputValue && suggestions.length > 0 && (
         <SearchBarList
-          venues={filteredVenues}
+          venues={suggestions}
           highlightedIndex={highlightedIndex}
           onSelect={handleVenueSelect}
           onHighlight={setHighlightedIndex}

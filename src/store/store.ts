@@ -1,4 +1,6 @@
+// store.ts
 import { configureStore } from '@reduxjs/toolkit';
+
 import {
   persistStore,
   persistReducer,
@@ -10,15 +12,13 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-
 import authReducer from './slices/authSlice';
-import profileReducer from './slices/profileSlice';
-import venuesReducer from './slices/venuesSlice';
+import { baseApi } from '../services/baseApi';
 
 const persistConfig = {
   key: 'auth',
   storage,
-  whitelist: ['user'],
+  whitelist: ['accessToken', 'userName'],
 };
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);
@@ -26,15 +26,14 @@ const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
-    profile: profileReducer,
-    venues: venuesReducer,
+    [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(baseApi.middleware),
 });
 
 export const persistor = persistStore(store);

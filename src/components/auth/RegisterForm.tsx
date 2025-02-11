@@ -1,19 +1,27 @@
-import { useNavigate } from 'react-router-dom';
-
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { SerializedError } from '@reduxjs/toolkit';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
-import { registerUser, loginUser } from '../../store/slices/authSlice';
+import { useAppDispatch } from '../../hooks/useStore';
+import { setCredentials } from '../../store/slices/authSlice';
+import { useLoginMutation, useRegisterMutation } from '../../services/authApi';
+import { RegisterCredentials, RegisterFormData, registerSchema } from '../../schemas/auth';
+import { useApiError } from '../../hooks/useApiError';
 
-import { registerSchema, RegisterFormData, LoginCredentials } from '../../schemas/auth';
-
+import AuthInput from '../common/authInput';
+import TextInput from '../common/TextInput';
+import CheckboxInput from '../common/CheckBox';
+import Button from '../common/Buttons';
 import Loader from '../common/Loader';
 
 export const RegisterForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isLoading, error } = useAppSelector((state) => state.auth);
+  const [registerUser, { isLoading: isRegistering }] = useRegisterMutation();
+  const [login, { isLoading: isLoggingIn }] = useLoginMutation();
+  const { error, handleError, clearError } = useApiError();
 
   const {
     register,
@@ -21,109 +29,77 @@ export const RegisterForm = () => {
     formState: { errors },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
-    defaultValues: {
-      venueManager: false,
-    },
   });
 
-  const onSubmit = async (data: RegisterFormData) => {
-    const { confirmPassword, ...credentials } = data;
-    const registerResult = await dispatch(registerUser(credentials));
+  const onSubmit = async (data: RegisterCredentials) => {
+    clearError();
 
-    if (registerUser.fulfilled.match(registerResult)) {
-      const loginCredentials: LoginCredentials = {
+    try {
+      const registerResult = await registerUser(data).unwrap();
+      const loginResult = await login({
         email: data.email,
         password: data.password,
-      };
-      const loginResult = await dispatch(loginUser(loginCredentials));
+      }).unwrap();
 
-      if (loginUser.fulfilled.match(loginResult)) {
-        navigate(`/profile/${loginResult.payload.name}`);
-      }
+      dispatch(
+        setCredentials({
+          accessToken: loginResult.accessToken,
+          userName: loginResult.name,
+        })
+      );
+
+      navigate(`/profile/${registerResult.name}`, { replace: true });
+    } catch (error: unknown) {
+      handleError(error as FetchBaseQueryError | SerializedError, 'Registration');
     }
   };
+  const isLoading = isRegistering || isLoggingIn;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      {error && (
+      {error.message && (
         <div className="bg-red-100 text-red-700 border border-red-400 px-4 py-3 rounded-md">
-          {error}
+          {error.message}
         </div>
       )}
 
-      <div>
-        <label htmlFor="name" className="block text-sm font-medium">
-          Username
-        </label>
-        <input
-          {...register('name')}
-          type="text"
-          id="name"
-          className="mt-1 block w-full  border-gray-300 shadow-sm"
-        />
-        {errors.name && <span className="text-red-500 text-sm">{errors.name.message}</span>}
-      </div>
+      <TextInput label="Username" name="name" register={register} error={errors.name?.message} />
+      <AuthInput
+        label="Email"
+        name="email"
+        type="email"
+        register={register}
+        error={errors.email?.message}
+      />
+      <AuthInput
+        label="Password"
+        name="password"
+        type="password"
+        register={register}
+        error={errors.password?.message}
+      />
 
-      <div>
-        <label htmlFor="email" className="block text-sm font-medium">
-          Email
-        </label>
-        <input
-          {...register('email')}
-          type="email"
-          id="email"
-          className="mt-1 block w-full  border-gray-300 shadow-sm"
-        />
-        {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
-      </div>
+      <AuthInput
+        label="Confirm Password"
+        name="confirmPassword"
+        type="password"
+        register={register}
+        error={errors.confirmPassword?.message}
+      />
 
-      <div>
-        <label htmlFor="password" className="block text-sm font-medium">
-          Password
-        </label>
-        <input
-          {...register('password')}
-          type="password"
-          id="password"
-          className="mt-1 block w-full  border-gray-300 shadow-sm"
-        />
-        {errors.password && <span className="text-red-500 text-sm">{errors.password.message}</span>}
-      </div>
+      <CheckboxInput
+        label="I want to become a venue manager"
+        name="venueManager"
+        register={register}
+      />
 
-      <div>
-        <label htmlFor="confirmPassword" className="block text-sm font-medium">
-          Confirm Password
-        </label>
-        <input
-          {...register('confirmPassword')}
-          type="password"
-          id="confirmPassword"
-          className="mt-1 block w-full  border-gray-300 shadow-sm"
-        />
-        {errors.confirmPassword && (
-          <span className="text-red-500 text-sm">{errors.confirmPassword.message}</span>
-        )}
-      </div>
-
-      <div className="flex items-center">
-        <input
-          {...register('venueManager')}
-          type="checkbox"
-          id="venueManager"
-          className=" border-gray-300"
-        />
-        <label htmlFor="venueManager" className="ml-2 block text-sm">
-          Register as Venue Manager
-        </label>
-      </div>
-
-      <button
+      <Button
         type="submit"
         disabled={isLoading}
-        className="w-full bg-blue-600 text-white py-2 px-4  hover:bg-blue-700 disabled:opacity-50"
+        className="w-full bg-blue-600 text-white py-2 px-4 hover:bg-blue-700 disabled:opacity-50"
       >
         {isLoading ? <Loader /> : 'Register'}
-      </button>
+      </Button>
     </form>
   );
 };

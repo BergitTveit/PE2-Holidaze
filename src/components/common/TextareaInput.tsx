@@ -1,12 +1,8 @@
-import { UseFormRegister, FieldValues, Path } from 'react-hook-form';
+import { FieldValues } from 'react-hook-form';
+import { BaseInputProps } from '../../types/baseInput';
 
-interface TextareaInputProps<T extends FieldValues> {
-  label: string;
-  name: Path<T>;
-  register: UseFormRegister<T>;
-  error?: string;
+interface TextareaInputProps<T extends FieldValues> extends BaseInputProps<T> {
   rows?: number;
-  className?: string;
 }
 
 const TextareaInput = <T extends FieldValues>({
