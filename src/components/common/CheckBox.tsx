@@ -1,12 +1,7 @@
-import { ReactNode } from 'react';
-import { UseFormRegister, FieldValues, Path } from 'react-hook-form';
+import { FieldValues } from 'react-hook-form';
+import { BaseInputProps } from '../../types/baseInput';
 
-interface CheckboxInputProps<T extends FieldValues> {
-  label: ReactNode;
-  name: Path<T>;
-  register: UseFormRegister<T>;
-  className?: string;
-}
+interface CheckboxInputProps<T extends FieldValues> extends Omit<BaseInputProps<T>, 'error'> {}
 
 const CheckboxInput = <T extends FieldValues>({
   label,

@@ -1,12 +1,8 @@
-import { UseFormRegister, FieldValues, Path } from 'react-hook-form';
+import { FieldValues } from 'react-hook-form';
+import { BaseInputProps } from '../../types/baseInput';
 
-interface AuthInputProps<T extends FieldValues> {
-  label: string;
-  name: Path<T>;
-  register: UseFormRegister<T>;
+interface AuthInputProps<T extends FieldValues> extends BaseInputProps<T> {
   type: 'email' | 'password' | 'confirmPassword';
-  error?: string;
-  className?: string;
 }
 
 const AuthInput = <T extends FieldValues>({

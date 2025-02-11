@@ -1,12 +1,5 @@
-import { UseFormRegister, FieldValues, Path } from 'react-hook-form';
-
-interface NumberInputProps<T extends FieldValues> {
-  label: string;
-  name: Path<T>;
-  register: UseFormRegister<T>;
-  error?: string;
-  className?: string;
-}
+import { FieldValues } from 'react-hook-form';
+import { BaseInputProps } from '../../types/baseInput';
 
 const NumberInput = <T extends FieldValues>({
   label,
@@ -14,7 +7,7 @@ const NumberInput = <T extends FieldValues>({
   register,
   error,
   className = '',
-}: NumberInputProps<T>) => {
+}: BaseInputProps<T>) => {
   return (
     <div className={className}>
       <label htmlFor={name} className="block text-sm font-medium">

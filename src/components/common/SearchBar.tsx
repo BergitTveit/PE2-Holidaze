@@ -7,11 +7,7 @@ import { SearchBarList } from './SearchBarList';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 import { useVenueSearch } from '../../hooks/useSearch';
 
-interface SearchBarProps {
-  navigate?: (url: string) => void;
-}
-
-const SearchBar = ({ navigate }: SearchBarProps) => {
+const SearchBar = ({ navigate }: { navigate?: (url: string) => void }) => {
   const searchRef = useRef<HTMLDivElement>(null);
   const {
     inputValue,
