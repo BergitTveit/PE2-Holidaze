@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { useGetProfileByNameQuery } from '../services/profileApi';
-
 import { UpdateProfileForm } from '../components/profile/UpdateProfileForm';
 import Profile from '../components/profile/Profile';
 import Modal from '../components/common/Modal';
+import VenueGrid from '../components/venues/VenueGrid';
+import BookingGrid from '../components/bookings/BookingGrid';
 
 const ProfilePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,6 +42,8 @@ const ProfilePage = () => {
         </div>
       )}
 
+      <VenueGrid venues={profile.venues || []} />
+      <BookingGrid bookings={profile.bookings} />
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Edit Profile">
         <UpdateProfileForm onSuccess={() => setIsModalOpen(false)} />
       </Modal>
