@@ -43,6 +43,7 @@ const ProfilePage = () => {
       )}
 
       <VenueGrid venues={profile.venues || []} />
+      <h2 className="text-xl font-bold mb-4">Upcoming bookings</h2>
       <BookingGrid bookings={profile.bookings} />
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Edit Profile">
         <UpdateProfileForm onSuccess={() => setIsModalOpen(false)} />
