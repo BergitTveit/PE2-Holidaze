@@ -87,7 +87,7 @@ export const venuesApi = baseApi.injectEndpoints({
         body: venue,
       }),
       transformResponse: (response: { data: IVenue }) => response.data,
-      invalidatesTags: [{ type: 'Venue', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Venue', id: 'LIST' }, { type: 'Profile' }],
     }),
 
     updateVenue: builder.mutation<IVenue, { id: string; venue: Partial<CreateVenueDTO> }>({
@@ -97,7 +97,7 @@ export const venuesApi = baseApi.injectEndpoints({
         body: venue,
       }),
       transformResponse: (response: { data: IVenue }) => response.data,
-      invalidatesTags: (_result, _error, { id }) => [{ type: 'Venue', id }],
+      invalidatesTags: (_result, _error, { id }) => [{ type: 'Venue', id }, { type: 'Profile' }],
     }),
 
     deleteVenue: builder.mutation<void, string>({
@@ -108,6 +108,7 @@ export const venuesApi = baseApi.injectEndpoints({
       invalidatesTags: (_result, _error, id) => [
         { type: 'Venue', id },
         { type: 'Venue', id: 'LIST' },
+        { type: 'Profile' },
       ],
     }),
 

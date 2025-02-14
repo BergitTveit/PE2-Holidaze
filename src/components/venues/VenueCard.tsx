@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Hotel } from 'lucide-react';
+import { Hotel, Pencil } from 'lucide-react';
 import { IVenue } from '../../types/venue';
 
 import ImageComponent from '../common/Image';
@@ -11,31 +11,51 @@ import VenueRating from './VenueRating';
 
 interface VenueCardProps {
   venue: IVenue;
+  isOwner: boolean;
 }
 
-const VenueCard = ({ venue }: VenueCardProps) => (
-  <Link to={`/venue/${venue.id}`} className="block">
-    <div>
-      {venue.media[0]?.url ? (
-        <ImageComponent
-          src={venue.media[0].url}
-          alt={venue.media[0].alt || venue.name}
-          className="w-full h-48 object-cover"
-        />
-      ) : (
-        <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
-          <Hotel className="w-12 h-12 text-orange-500" />
+const VenueCard = ({ venue, isOwner }: VenueCardProps) => {
+  return (
+    <div className="relative group bg-whiter shadow-sm hover:shadow-md transition-shadow">
+      {isOwner && (
+        <div className="absolute top-2 right-2 z-10">
+          <Link
+            to="/venues/create"
+            state={{ venue }}
+            className="p-2 bg-white rounded-full hover:bg-gray-100 shadow-sm flex items-center justify-center"
+          >
+            <Pencil className="h-4 w-4  text-gray-600" />
+          </Link>
         </div>
       )}
-      <div>
-        <VenueTitle title={venue.name} className="text-xl" as="h2" />
-        <VenuePrice price={venue.price} />
-        <VenueMaxGuests maxGuests={venue.maxGuests} />
-        <VenueMeta meta={venue.meta} />
-        <VenueRating rating={venue.rating} />
-      </div>
+
+      <Link to={`/venue/${venue.id}`} className="block">
+        <div className="relative">
+          <div className="aspect-w-16 aspect-h-9  overflow-hidden">
+            {venue.media[0]?.url ? (
+              <ImageComponent
+                src={venue.media[0].url}
+                alt={venue.media[0].alt || venue.name}
+                className="w-full h-48 object-cover"
+              />
+            ) : (
+              <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
+                <Hotel className="w-12 h-12 text-orange-500" />
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="p-4">
+          <VenueTitle title={venue.name} className="text-lg mb-2" />
+          <VenuePrice price={venue.price} />
+          <VenueMaxGuests maxGuests={venue.maxGuests} />
+          <VenueMeta meta={venue.meta} />
+          <VenueRating rating={venue.rating} />
+        </div>
+      </Link>
     </div>
-  </Link>
-);
+  );
+};
 
 export default VenueCard;
