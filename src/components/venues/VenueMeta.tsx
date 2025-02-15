@@ -1,15 +1,36 @@
-import { IMeta } from '../../types/venue'; 
+import { Wifi, Car, Coffee, Dog } from 'lucide-react';
+import { IMeta } from '../../types/venue';
 
 interface VenueMetaProps {
-  meta: IMeta; 
+  meta: IMeta;
 }
 
 const VenueMeta = ({ meta }: VenueMetaProps) => (
-  <div className="flex gap-4 mt-2">
-    {meta.wifi && <span className="text-sm">Wi-Fi Available</span>}
-    {meta.parking && <span className="text-sm">Parking Available</span>}
-    {meta.breakfast && <span className="text-sm">Breakfast Included</span>}
-    {meta.pets && <span className="text-sm">Pets Allowed</span>}
+  <div className="flex flex-wrap gap-4 mt-2">
+    {meta.wifi && (
+      <div className="flex items-center text-gray-700">
+        <Wifi className="w-4 h-4 mr-1" />
+        <span className="text-sm">Wi-Fi</span>
+      </div>
+    )}
+    {meta.parking && (
+      <div className="flex items-center text-gray-700">
+        <Car className="w-4 h-4 mr-1" />
+        <span className="text-sm">Parking</span>
+      </div>
+    )}
+    {meta.breakfast && (
+      <div className="flex items-center text-gray-700">
+        <Coffee className="w-4 h-4 mr-1" />
+        <span className="text-sm">Breakfast</span>
+      </div>
+    )}
+    {meta.pets && (
+      <div className="flex items-center text-gray-700">
+        <Dog className="w-4 h-4 mr-1" />
+        <span className="text-sm">Pets</span>
+      </div>
+    )}
   </div>
 );
 
