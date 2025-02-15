@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Hotel, Pencil } from 'lucide-react';
+import { Hotel, Pencil, Trash2 } from 'lucide-react';
 import { IVenue } from '../../types/venue';
 
 import ImageComponent from '../common/Image';
@@ -8,6 +8,10 @@ import VenuePrice from './VenuePrice';
 import VenueMaxGuests from './VenueMaxGuests';
 import VenueMeta from './VenueMeta';
 import VenueRating from './VenueRating';
+import Button from '../common/Buttons';
+import Modal from '../common/Modal';
+import { useState } from 'react';
+import { useDeleteVenueMutation } from '../../services/venuesApi';
 
 interface VenueCardProps {
   venue: IVenue;
@@ -15,17 +19,34 @@ interface VenueCardProps {
 }
 
 const VenueCard = ({ venue, isOwner }: VenueCardProps) => {
+  const [showDeleteModal, setShowDeleteModal] = useState(false); // Add this
+  const [deleteVenue, { isLoading }] = useDeleteVenueMutation();
+
+  const handleDelete = async () => {
+    try {
+      await deleteVenue(venue.id).unwrap();
+      setShowDeleteModal(false);
+    } catch (error) {
+      // Handle error
+    }
+  };
   return (
     <div className="relative group bg-whiter shadow-sm hover:shadow-md transition-shadow">
       {isOwner && (
         <div className="absolute top-2 right-2 z-10">
           <Link
-            to="/venues/create"
+            to={`/venues/${venue.id}/edit`}
             state={{ venue }}
             className="p-2 bg-white rounded-full hover:bg-gray-100 shadow-sm flex items-center justify-center"
           >
             <Pencil className="h-4 w-4  text-gray-600" />
           </Link>
+          <button
+            onClick={() => setShowDeleteModal(true)}
+            className="p-2 bg-white rounded-full hover:bg-gray-100 hover:text-red-600 shadow-sm flex items-center justify-center"
+          >
+            <Trash2 className="h-4 w-4" />
+          </button>
         </div>
       )}
 
@@ -54,6 +75,32 @@ const VenueCard = ({ venue, isOwner }: VenueCardProps) => {
           <VenueRating rating={venue.rating} />
         </div>
       </Link>
+
+      <Modal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        title="Delete Venue"
+      >
+        <div className="space-y-4">
+          <p>Are you sure you want to delete "{venue.name}"? This action cannot be undone.</p>
+
+          <div className="flex justify-end gap-3">
+            <Button
+              onClick={() => setShowDeleteModal(false)}
+              className="px-4 py-2 border border-gray-300 hover:bg-gray-50"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleDelete}
+              disabled={isLoading}
+              className="px-4 py-2 bg-red-600 text-white hover:bg-red-700"
+            >
+              {isLoading ? 'Deleting...' : 'Delete Venue'}
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
