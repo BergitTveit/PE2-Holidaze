@@ -22,13 +22,7 @@ export const bookingsApi = baseApi.injectEndpoints({
           limit: params?.limit,
         },
       }),
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.data.map(({ id }) => ({ type: 'Booking' as const, id })),
-              { type: 'Booking', id: 'LIST' },
-            ]
-          : [{ type: 'Booking', id: 'LIST' }],
+      providesTags: ['Booking'],
     }),
 
     getBookingById: builder.query<IBooking, string>({
@@ -48,11 +42,7 @@ export const bookingsApi = baseApi.injectEndpoints({
         method: 'POST',
         body: booking,
       }),
-      invalidatesTags: [
-        { type: 'Booking', id: 'LIST' },
-        { type: 'Profile' },
-        { type: 'Venue', id: 'LIST' },
-      ],
+      invalidatesTags: ['Booking', 'Venue'],
     }),
 
     updateBooking: builder.mutation<IBooking, { id: string; booking: Partial<IBookingCreate> }>({
@@ -61,12 +51,7 @@ export const bookingsApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: booking,
       }),
-      invalidatesTags: (_result, _error, { id }) => [
-        { type: 'Booking', id },
-        { type: 'Booking', id: 'LIST' },
-        { type: 'Profile' },
-        { type: 'Venue', id: 'LIST' },
-      ],
+      invalidatesTags: (_result, _error, { id }) => [{ type: 'Booking', id }],
     }),
 
     deleteBooking: builder.mutation<void, string>({
@@ -74,12 +59,7 @@ export const bookingsApi = baseApi.injectEndpoints({
         url: getBookingUrl(id),
         method: 'DELETE',
       }),
-      invalidatesTags: (_result, _error, id) => [
-        { type: 'Booking', id },
-        { type: 'Booking', id: 'LIST' },
-        { type: 'Profile' },
-        { type: 'Venue', id: 'LIST' },
-      ],
+      invalidatesTags: ['Booking'],
     }),
   }),
 });

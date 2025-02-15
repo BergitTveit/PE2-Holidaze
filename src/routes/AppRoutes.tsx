@@ -27,7 +27,6 @@ export const AppRoutes = () => {
 
         <Route element={<ProtectedRoutes requireManager />}>
           <Route path="venues/create" element={<CreateVenuePage />} />
-          <Route path="/venues/:id/edit" element={<CreateVenuePage />} />
           {/* <Route path="venues/:id/edit" element={<EditVenue />} />
             <Route path="venues/:id/bookings" element={<VenueBookings />} /> */}
         </Route>

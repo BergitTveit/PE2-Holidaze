@@ -24,24 +24,24 @@ const MediaInput = ({ value, onChange, error, label }: MediaInputProps) => {
   };
 
   return (
-    <div className="space-y-3">
-      {label && <label className="block text-sm font-medium text-gray-700">{label}</label>}
-      <div className="space-y-2">
-        <div className="flex gap-2">
+    <div className="space-y-6">
+      {label && <label className="block text-lg font-medium mb-2">{label}</label>}
+      <div className="grid gap-4">
+        <div className="flex justify-between items-center">
           <input
             type="url"
             placeholder="Media URL"
             value={value?.url || ''}
             onChange={handleChange('url')}
-            className="flex-1 h-9 px-3 rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm"
+            className="w-full h-10"
           />
           {value?.url && (
             <Button
               type="button"
               onClick={() => onChange(null)}
-              className="h-9 px-3 bg-red-50 hover:bg-red-100 text-red-600 text-sm font-medium rounded border border-red-200 transition-colors"
+              className="ml-2 px-4 h-10 bg-red-500 text-white"
             >
-              Remove
+              Remove Image
             </Button>
           )}
         </div>
@@ -50,24 +50,22 @@ const MediaInput = ({ value, onChange, error, label }: MediaInputProps) => {
           placeholder="Alt text"
           value={value?.alt || ''}
           onChange={handleChange('alt')}
-          className="w-full h-9 px-3 rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm"
+          className="w-full h-10"
         />
       </div>
       {value?.url && (
-        <div className="relative h-24 rounded overflow-hidden border border-gray-200">
+        <div className="relative h-64">
           <img
             src={value.url}
             alt={value.alt || 'Preview'}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover rounded"
           />
         </div>
       )}
-      {(error?.url || error?.alt) && (
-        <div className="space-y-1 text-xs">
-          {error?.url && <p className="text-red-500">{error.url}</p>}
-          {error?.alt && <p className="text-red-500">{error.alt}</p>}
-        </div>
-      )}
+      <div className="space-y-1">
+        {error?.url && <p className="text-red-500">{error.url}</p>}
+        {error?.alt && <p className="text-red-500">{error.alt}</p>}
+      </div>
     </div>
   );
 };

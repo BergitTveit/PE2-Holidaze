@@ -1,4 +1,4 @@
-import { IVenueLocation } from '../../types/venue';
+import { IVenueLocation } from '../../types/venue'; 
 
 interface VenueLocationProps {
   venueLocation: IVenueLocation;
@@ -11,7 +11,7 @@ const VenueLocation = ({ venueLocation }: VenueLocationProps) => {
 
   const { address, city, zip, country } = venueLocation;
   if (!address && !city && !zip && !country) {
-    return <p>Adress will be sent out with booking confirmation.</p>;
+    return <p>No location information available</p>;
   }
 
   const locationParts = [address, city, zip, country].filter(Boolean);

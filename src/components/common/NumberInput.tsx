@@ -10,7 +10,7 @@ const NumberInput = <T extends FieldValues>({
 }: BaseInputProps<T>) => {
   return (
     <div className={className}>
-      <label htmlFor={name} className="block text-sm font-medium ">
+      <label htmlFor={name} className="block text-sm font-medium">
         {label}
       </label>
       <input
@@ -21,7 +21,7 @@ const NumberInput = <T extends FieldValues>({
         })}
         type="number"
         id={name}
-        className={`mt-1 block w-full max-w-12 border-gray-300 ${error ? 'border-red-500' : ''}`}
+        className={`mt-1 block w-full border-gray-300 ${error ? 'border-red-500' : ''}`}
       />
 
       {error && <span className="text-sm text-red-500">{error}</span>}

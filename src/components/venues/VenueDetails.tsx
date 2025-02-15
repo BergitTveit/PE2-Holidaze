@@ -8,7 +8,7 @@ import VenueDescription from './VenueDescription';
 import VenuePrice from './VenuePrice';
 import VenueMaxGuests from './VenueMaxGuests';
 import VenueLocation from './VenueLocation';
-import BookingForm from '../bookings/BookingForm';
+import VenueCalendar from './VenueCalendar';
 
 const VenueDetails = () => {
   const { id } = useParams();
@@ -45,7 +45,7 @@ const VenueDetails = () => {
           <VenueLocation venueLocation={venue.location} />
         </section>
         <section className="mt-6">
-          <BookingForm venue={venue} />
+          <VenueCalendar bookings={venue.bookings} />
         </section>
       </main>
     </div>
