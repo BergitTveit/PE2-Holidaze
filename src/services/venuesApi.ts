@@ -67,7 +67,6 @@ export const venuesApi = baseApi.injectEndpoints({
             ]
           : [{ type: 'Venue', id: 'LIST' }],
     }),
-
     getVenueById: builder.query<IVenue, string>({
       query: (id) => ({
         url: getVenueUrl(id),
@@ -79,7 +78,6 @@ export const venuesApi = baseApi.injectEndpoints({
       transformResponse: (response: { data: IVenue }) => response.data,
       providesTags: (_result, _error, id) => [{ type: 'Venue', id }],
     }),
-
     createVenue: builder.mutation<IVenue, CreateVenueDTO>({
       query: (venue) => ({
         url: API_VENUES,
@@ -89,7 +87,6 @@ export const venuesApi = baseApi.injectEndpoints({
       transformResponse: (response: { data: IVenue }) => response.data,
       invalidatesTags: [{ type: 'Venue', id: 'LIST' }, { type: 'Profile' }],
     }),
-
     updateVenue: builder.mutation<IVenue, { id: string; venue: Partial<CreateVenueDTO> }>({
       query: ({ id, venue }) => ({
         url: getVenueUrl(id),
@@ -99,7 +96,6 @@ export const venuesApi = baseApi.injectEndpoints({
       transformResponse: (response: { data: IVenue }) => response.data,
       invalidatesTags: (_result, _error, { id }) => [{ type: 'Venue', id }, { type: 'Profile' }],
     }),
-
     deleteVenue: builder.mutation<void, string>({
       query: (id) => ({
         url: getVenueUrl(id),
@@ -111,7 +107,6 @@ export const venuesApi = baseApi.injectEndpoints({
         { type: 'Profile' },
       ],
     }),
-
     searchVenues: builder.query<ApiResponse<IVenue[]>, SearchVenuesParams>({
       query: ({ query, page = 1, limit = 12, sort = 'created', sortOrder = 'desc' }) => ({
         url: API_VENUES_SEARCH,
@@ -139,7 +134,6 @@ export const venuesApi = baseApi.injectEndpoints({
             ]
           : [{ type: 'Venue', id: 'LIST' }],
     }),
-
     getVenueSuggestions: builder.query<IVenue[], string>({
       query: (searchTerm) => ({
         url: API_VENUES_SEARCH,
