@@ -1,15 +1,7 @@
 import { UpdateProfileFormData } from '../schemas/updateProfile';
-// import { IBooking } from '../types/booking';
 import { IProfile } from '../types/profile';
-// import { IVenue } from '../types/venue';
 import { ApiResponse } from './venuesApi';
-import {
-  API_PROFILES,
-  API_PROFILE_SEARCH,
-  getProfileUrl,
-  // getProfileBookingsUrl,
-  // getProfileVenuesUrl,
-} from './apiConstants';
+import { API_PROFILES, API_PROFILE_SEARCH, getProfileUrl } from './apiConstants';
 import { baseApi } from './baseApi';
 
 export const profilesApi = baseApi.injectEndpoints({
@@ -51,14 +43,3 @@ export const {
   useGetProfileByNameQuery,
   useUpdateProfileMutation,
 } = profilesApi;
-// getProfileVenues: builder.query<ApiResponse<IVenue[]>, string>({
-//   query: (name) => getProfileVenuesUrl(name),
-//   transformResponse: (response: ApiResponse<IVenue[]>) => response,
-//   providesTags: ['Venue'],
-// }),
-// getProfileBookings: builder.query<ApiResponse<IBooking[]>, string>({
-//   query: (name) => getProfileBookingsUrl(name),
-//   transformResponse: (response: ApiResponse<IBooking[]>) => response,
-//   providesTags: ['Booking'],
-// }),  // useGetProfileVenuesQuery,
-// useGetProfileBookingsQuery,
