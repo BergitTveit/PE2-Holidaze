@@ -11,9 +11,11 @@ import BookingTotalPrice from './BookingTotalPrice';
 
 interface BookingCardProps {
   booking: IBooking;
+  isOwner: boolean; 
+  mode: 'userBooking' | 'venueBooking'; 
 }
 
-const BookingCard = ({ booking }: BookingCardProps) => {
+const BookingCard = ({ booking, isOwner }: BookingCardProps) => {
   const { venue } = booking;
 
   return (

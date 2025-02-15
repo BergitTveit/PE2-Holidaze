@@ -3,9 +3,10 @@ import BookingCard from './BookingCard';
 
 interface BookingGridProps {
   bookings: IBooking[];
+  isOwner: boolean;
 }
 
-const BookingGrid = ({ bookings }: BookingGridProps) => {
+const BookingGrid = ({ bookings, isOwner }: BookingGridProps) => {
   if (!bookings?.length) {
     return <div>No bookings available</div>;
   }
@@ -16,7 +17,7 @@ const BookingGrid = ({ bookings }: BookingGridProps) => {
      md:grid-cols-2 lg:grid-cols-3 gap-6"
     >
       {bookings.map((booking) => (
-        <BookingCard key={booking.id} booking={booking} />
+        <BookingCard key={booking.id} booking={booking} isOwner={isOwner} />
       ))}
     </div>
   );
