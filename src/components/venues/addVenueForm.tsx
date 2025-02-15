@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useCreateVenueMutation } from '../../services/venuesApi';
+import { useCreateVenueMutation, useUpdateVenueMutation } from '../../services/venuesApi';
 import { useApiError } from '../../hooks/useApiError';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
@@ -14,11 +14,21 @@ import MediaInput from '../common/MediaInput';
 import NumberInput from '../common/NumberInput';
 import TextareaInput from '../common/TextareaInput';
 import TextInput from '../common/TextInput';
+import { IVenue } from '../../types/venue';
 
-export const AddVenueForm = () => {
+interface VenueFormProps {
+  mode: 'create' | 'edit';
+  initialData?: IVenue;
+  onSuccess?: (venue: IVenue) => void;
+}
+
+export const AddVenueForm = ({ mode, initialData, onSuccess }: VenueFormProps) => {
   const navigate = useNavigate();
-  const [createVenue, { isLoading }] = useCreateVenueMutation();
+  const [createVenue, { isLoading: isCreating }] = useCreateVenueMutation();
+  const [updateVenue, { isLoading: isUpdating }] = useUpdateVenueMutation();
   const { error, handleError, clearError } = useApiError();
+
+  const isLoading = isCreating || isUpdating;
 
   const {
     register,
@@ -30,18 +40,22 @@ export const AddVenueForm = () => {
   } = useForm<CreateVenueDTO>({
     resolver: zodResolver(addVenueSchema),
     defaultValues: {
+      name: initialData?.name || '',
+      description: initialData?.description || '',
+      price: initialData?.price || 0,
+      maxGuests: initialData?.maxGuests || 1,
       meta: {
-        wifi: false,
-        parking: false,
-        breakfast: false,
-        pets: false,
+        wifi: initialData?.meta.wifi || false,
+        parking: initialData?.meta.parking || false,
+        breakfast: initialData?.meta.breakfast || false,
+        pets: initialData?.meta.pets || false,
       },
-      media: [{ url: '', alt: '' }],
+      media: initialData?.media || [{ url: '', alt: '' }],
       location: {
-        address: '',
-        city: '',
-        zip: '',
-        country: '',
+        address: initialData?.location.address || '',
+        city: initialData?.location.city || '',
+        zip: initialData?.location.zip || '',
+        country: initialData?.location.country || '',
       },
     },
   });
@@ -54,10 +68,22 @@ export const AddVenueForm = () => {
   const onSubmit = async (data: CreateVenueDTO) => {
     clearError();
     try {
-      const result = await createVenue(data).unwrap();
-      navigate(`/venue/${result.id}`);
+      let result;
+      if (mode === 'create') {
+        result = await createVenue(data).unwrap();
+      } else {
+        result = await updateVenue({ id: initialData!.id, venue: data }).unwrap();
+      }
+      if (onSuccess) {
+        onSuccess(result);
+      } else {
+        navigate(`/venue/${result.id}`);
+      }
     } catch (err) {
-      handleError(err as FetchBaseQueryError | SerializedError, 'Create Venue');
+      handleError(
+        err as FetchBaseQueryError | SerializedError,
+        `${mode === 'create' ? 'Create' : 'Update'} Venue`
+      );
     }
   };
 
@@ -200,7 +226,7 @@ export const AddVenueForm = () => {
         disabled={isLoading}
         className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50"
       >
-        {isLoading ? <Loader /> : 'Create Venue'}
+        {isLoading ? <Loader /> : mode === 'create' ? 'Create Venue' : 'Update Changes'}
       </Button>
     </form>
   );
