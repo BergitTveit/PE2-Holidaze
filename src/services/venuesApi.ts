@@ -2,7 +2,6 @@ import { baseApi } from './baseApi';
 import type { IVenue } from '../types/venue';
 import { CreateVenueDTO } from '../schemas/addVenue';
 import { API_VENUES, API_VENUES_SEARCH, getVenueUrl } from './apiConstants';
-import { IBooking } from '../types/booking';
 
 export interface ApiResponse<T> {
   data: T extends Array<any> ? T : T[];
