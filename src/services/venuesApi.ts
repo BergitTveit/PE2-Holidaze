@@ -78,6 +78,7 @@ export const venuesApi = baseApi.injectEndpoints({
       transformResponse: (response: { data: IVenue }) => response.data,
       providesTags: (_result, _error, id) => [{ type: 'Venue', id }],
     }),
+
     createVenue: builder.mutation<IVenue, CreateVenueDTO>({
       query: (venue) => ({
         url: API_VENUES,

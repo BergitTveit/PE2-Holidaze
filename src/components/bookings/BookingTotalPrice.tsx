@@ -1,4 +1,5 @@
 import { IBooking } from '../../types/booking';
+import { calculateNights } from '../../utils/calculateNights';
 import VenuePrice from '../venues/VenuePrice';
 
 interface PriceTotalProps {
@@ -7,11 +8,8 @@ interface PriceTotalProps {
 
 const BookingTotalPrice = ({ booking }: PriceTotalProps) => {
   const { dateFrom, dateTo, venue } = booking;
-  const nights = Math.ceil(
-    (new Date(dateTo).getTime() - new Date(dateFrom).getTime()) / (1000 * 60 * 60 * 24)
-  );
+  const nights = calculateNights(dateFrom, dateTo);
   const totalPrice = venue.price * nights;
-
   return (
     <div>
       <VenuePrice price={venue.price} />
