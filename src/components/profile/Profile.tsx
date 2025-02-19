@@ -3,7 +3,7 @@ import { IProfile } from '../../types/profile';
 import ProfileHeader from './ProfileHeader';
 import ProfileInfo from './ProfileInfo';
 import Button from '../common/Buttons';
-import LogoutButton from '../auth/LogoutButton';
+import { LogoutButton } from '../auth/LogoutButton';
 import { Pencil } from 'lucide-react';
 
 interface ProfileProps {
