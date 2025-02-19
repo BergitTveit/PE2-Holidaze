@@ -17,6 +17,7 @@ import LoginPrompt from '../auth/LoginPrompt';
 import NumberInput from '../common/NumberInput';
 import Button from '../common/Buttons';
 import BookingTotalPrice from './BookingTotalPrice';
+import { ErrorDisplay } from '../common/ErrorDisplay';
 
 interface BookingFormProps {
   venue: IVenue;
@@ -35,7 +36,7 @@ const BookingForm = ({ venue }: BookingFormProps) => {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<BookingFormData>({
-    resolver: zodResolver(bookingSchema),
+    resolver: zodResolver(bookingSchema(venue.maxGuests)),
     defaultValues: {
       venueId: venue.id,
       guests: 1,
@@ -80,14 +81,6 @@ const BookingForm = ({ venue }: BookingFormProps) => {
 
     if (start && end) {
       if (!isDateRangeAvailable(start, end)) {
-        clearError();
-        handleError(
-          {
-            status: 400,
-            data: { message: 'Selected dates are not available' },
-          } as FetchBaseQueryError,
-          'Date Selection'
-        );
         setDateRange([null, null]);
         setValue('dateFrom', '');
         setValue('dateTo', '');
@@ -96,10 +89,8 @@ const BookingForm = ({ venue }: BookingFormProps) => {
 
       setValue('dateFrom', startOfDay(start).toISOString());
       setValue('dateTo', endOfDay(end).toISOString());
-      clearError();
     }
   };
-
   const handleFormReset = useCallback(() => {
     reset();
     setDateRange([null, null]);
@@ -107,23 +98,12 @@ const BookingForm = ({ venue }: BookingFormProps) => {
   }, [reset, clearError]);
 
   const onSubmit = async (data: BookingFormData) => {
-    if (!accessToken) {
-      handleError(
-        {
-          status: 401,
-          data: { message: 'Please sign in to make a booking' },
-        } as FetchBaseQueryError,
-        'Authentication'
-      );
-      return;
-    }
-
     try {
       await createBooking(data).unwrap();
       handleFormReset();
       navigate(`/profile/${userName}`);
     } catch (err) {
-      handleError(err as FetchBaseQueryError | SerializedError, 'Create Booking');
+      handleError(err as FetchBaseQueryError | SerializedError);
     }
   };
 
@@ -131,15 +111,7 @@ const BookingForm = ({ venue }: BookingFormProps) => {
     <div className="space-y-6 border p-5" role="form" aria-label="Booking form">
       <h2 className="text-2xl font-medium">Book Your Stay at {venue.name}</h2>
 
-      {error.message && (
-        <div
-          className="bg-red-100 text-red-700 border border-red-400 px-4 py-3 rounded"
-          role="alert"
-          aria-live="polite"
-        >
-          {error.message}
-        </div>
-      )}
+      <ErrorDisplay error={error} />
 
       <div className="space-y-4">
         <h3 className="text-lg font-medium">Select Dates</h3>
