@@ -5,15 +5,14 @@ import { useCreateVenueMutation, useUpdateVenueMutation } from '../../services/v
 import { useApiError } from '../../hooks/useApiError';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
-import { Plus, Wifi, Car, Coffee, Dog } from 'lucide-react';
+import { Plus, Wifi, Car, Coffee, Dog, Loader } from 'lucide-react';
 import { addVenueSchema, CreateVenueDTO } from '../../schemas/addVenue';
-import Button from '../common/Buttons';
-import CheckboxInput from '../common/CheckBox';
-import Loader from '../common/Loader';
-import MediaInput from '../common/MediaInput';
-import NumberInput from '../common/NumberInput';
-import TextareaInput from '../common/TextareaInput';
-import TextInput from '../common/TextInput';
+import { Button } from '../common/Buttons';
+import { CheckboxInput } from '../common/input/CheckBox';
+import { MediaInput } from '../common/input/MediaInput';
+import { NumberInput } from '../common/input/NumberInput';
+import { TextareaInput } from '../common/input/TextareaInput';
+import { TextInput } from '../common/input/TextInput';
 import { ErrorDisplay } from '../common/ErrorDisplay';
 import { IVenue } from '../../types/venue';
 

@@ -1,11 +1,11 @@
 import { IVenue } from '../../types/venue';
-import VenueBookingCard from './VenueBookingCard';
+import { BookedVenueCard } from './BookedVenueCard';
 
 interface BookingManagementSectionProps {
   venues: IVenue[];
 }
 
-const BookingManagementSection = ({ venues }: BookingManagementSectionProps) => {
+export const BookingManagementSection = ({ venues }: BookingManagementSectionProps) => {
   return (
     <>
       {venues.map((venue) => (
@@ -15,7 +15,7 @@ const BookingManagementSection = ({ venues }: BookingManagementSectionProps) => 
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {venue.bookings.map((booking) => (
-              <VenueBookingCard key={booking.id} booking={booking} venue={venue} />
+              <BookedVenueCard key={booking.id} booking={booking} venue={venue} />
             ))}
           </div>
         </section>
@@ -23,5 +23,3 @@ const BookingManagementSection = ({ venues }: BookingManagementSectionProps) => 
     </>
   );
 };
-
-export default BookingManagementSection;

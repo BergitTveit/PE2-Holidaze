@@ -3,19 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import { useAppDispatch } from '../../hooks/useStore';
 import { setCredentials } from '../../store/slices/authSlice';
 import { useLoginMutation, useRegisterMutation } from '../../services/authApi';
 import { RegisterCredentials, RegisterFormData, registerSchema } from '../../schemas/auth';
 import { useApiError } from '../../hooks/useApiError';
-
-import AuthInput from '../common/authInput';
-import TextInput from '../common/TextInput';
-import CheckboxInput from '../common/CheckBox';
-import Button from '../common/Buttons';
-import Loader from '../common/Loader';
+import { AuthInput } from '../common/input/authInput';
+import { TextInput } from '../common/input/TextInput';
+import { CheckboxInput } from '../common/input/CheckBox';
+import { Button } from '../common/Buttons';
 import { ErrorDisplay } from '../common/ErrorDisplay';
+import { Loader } from 'lucide-react';
 
 export const RegisterForm = () => {
   const dispatch = useAppDispatch();

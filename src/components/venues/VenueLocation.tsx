@@ -4,7 +4,7 @@ interface VenueLocationProps {
   venueLocation: IVenueLocation;
 }
 
-const VenueLocation = ({ venueLocation }: VenueLocationProps) => {
+export const VenueLocation = ({ venueLocation }: VenueLocationProps) => {
   if (!venueLocation) {
     return <p>No location information available</p>;
   }
@@ -19,5 +19,3 @@ const VenueLocation = ({ venueLocation }: VenueLocationProps) => {
 
   return <p className="mt-4">{formattedLocation}</p>;
 };
-
-export default VenueLocation;

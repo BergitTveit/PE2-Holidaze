@@ -1,22 +1,20 @@
 import { Link } from 'react-router-dom';
 import { Hotel, Pencil } from 'lucide-react';
 import { IVenue } from '../../types/venue';
-
-import ImageComponent from '../common/Image';
-import VenueTitle from './VenueTitle';
-import VenuePrice from './VenuePrice';
-import VenueMaxGuests from './VenueMaxGuests';
-import VenueMeta from './VenueMeta';
-import VenueRating from './VenueRating';
-
-import DeleteVenueButton from './DeleteVenueButton';
+import { ImageComponent } from '../common/Image';
+import { VenueTitle } from './VenueTitle';
+import { VenuePrice } from './VenuePrice';
+import { VenueMaxGuests } from './VenueMaxGuests';
+import { VenueMeta } from './VenueMeta';
+import { VenueRating } from './VenueRating';
+import { DeleteVenueButton } from './DeleteVenueButton';
 
 interface VenueCardProps {
   venue: IVenue;
   isOwner: boolean;
 }
 
-const VenueCard = ({ venue, isOwner }: VenueCardProps) => {
+export const VenueCard = ({ venue, isOwner }: VenueCardProps) => {
   return (
     <div
       className="relative group bg-whiter shadow-sm hover:shadow-md transition-shadow"
@@ -73,5 +71,3 @@ const VenueCard = ({ venue, isOwner }: VenueCardProps) => {
     </div>
   );
 };
-
-export default VenueCard;

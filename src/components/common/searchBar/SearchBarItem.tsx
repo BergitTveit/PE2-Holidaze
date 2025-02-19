@@ -1,6 +1,6 @@
-import { IVenue } from '../../types/venue';
+import { IVenue } from '../../../types/venue';
 import { Hotel } from 'lucide-react';
-import ImageComponent from '../common/Image';
+import {ImageComponent} from '../../common/Image';
 
 interface SearchBarItemProps {
   venue: IVenue;
@@ -9,7 +9,7 @@ interface SearchBarItemProps {
   onHighlight: () => void;
 }
 
-const SearchBarItem = ({ venue, isHighlighted, onSelect, onHighlight }: SearchBarItemProps) => (
+export const SearchBarItem = ({ venue, isHighlighted, onSelect, onHighlight }: SearchBarItemProps) => (
   <li
     id={`venue-${venue.id}`}
     role="option"
@@ -40,5 +40,3 @@ const SearchBarItem = ({ venue, isHighlighted, onSelect, onHighlight }: SearchBa
     </div>
   </li>
 );
-
-export default SearchBarItem;

@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetProfileByNameQuery, useGetProfileVenuesQuery } from '../services/profileApi';
 import { UpdateProfileForm } from '../components/profile/UpdateProfileForm';
-import Profile from '../components/profile/Profile';
-import Modal from '../components/common/Modal';
-import BookingGrid from '../components/bookings/BookingGrid';
-import VenueManagementSection from '../components/venues/VenueManagementSection';
+import { Profile } from '../components/profile/Profile';
+import { Modal } from '../components/common/Modal';
+import { BookingGrid } from '../components/bookings/BookingGrid';
+import { VenueManagementSection } from '../components/venues/VenueManagementSection';
 import { useAppSelector } from '../hooks/useStore';
-import BookingManagementSection from '../components/bookings/BookingManagementSection';
+import { BookingManagementSection } from '../components/bookings/BookingManagementSection';
 
 const ProfilePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

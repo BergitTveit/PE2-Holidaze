@@ -1,19 +1,18 @@
 import { IBooking } from '../../types/booking';
-
-import VenueGallery from '../venues/VenueGallery';
-import VenueTitle from '../venues/VenueTitle';
-import VenueLocation from '../venues/VenueLocation';
-import VenueRating from '../venues/VenueRating';
-import VenueMeta from '../venues/VenueMeta';
-import BookedGuests from './BookedGuests';
-import BookedDates from './BookedDates';
-import BookingTotalPrice from './BookingTotalPrice';
+import {VenueGallery} from '../venues/VenueGallery';
+import {VenueTitle} from '../venues/VenueTitle';
+import {VenueLocation} from '../venues/VenueLocation';
+import {VenueRating} from '../venues/VenueRating';
+import {VenueMeta} from '../venues/VenueMeta';
+import {BookedGuests} from './BookedGuests';
+import {BookedDates} from './BookedDates';
+import {BookingTotalPrice} from './BookingTotalPrice';
 
 interface BookingCardProps {
   booking: IBooking;
 }
 
-const BookingCard = ({ booking }: BookingCardProps) => {
+export const BookingDisplayCard = ({ booking }: BookingCardProps) => {
   const { venue } = booking;
 
   return (
@@ -42,5 +41,3 @@ const BookingCard = ({ booking }: BookingCardProps) => {
     </div>
   );
 };
-
-export default BookingCard;

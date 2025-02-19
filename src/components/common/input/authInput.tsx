@@ -1,11 +1,11 @@
 import { FieldValues } from 'react-hook-form';
-import { BaseInputProps } from '../../types/baseInput';
+import { BaseInputProps } from '../../../types/baseInput';
 
 interface AuthInputProps<T extends FieldValues> extends BaseInputProps<T> {
   type: 'email' | 'password' | 'confirmPassword';
 }
 
-const AuthInput = <T extends FieldValues>({
+export const AuthInput = <T extends FieldValues>({
   label,
   name,
   register,
@@ -21,5 +21,3 @@ const AuthInput = <T extends FieldValues>({
     </div>
   );
 };
-
-export default AuthInput;

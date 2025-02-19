@@ -1,18 +1,18 @@
 import { useParams } from 'react-router-dom';
 import { useGetVenueByIdQuery } from '../../services/venuesApi';
-import Loader from '../common/Loader';
-import VenueTitle from './VenueTitle';
-import VenueGallery from './VenueGallery';
-import VenueMeta from './VenueMeta';
-import VenueDescription from './VenueDescription';
-import VenuePrice from './VenuePrice';
-import VenueMaxGuests from './VenueMaxGuests';
-import VenueLocation from './VenueLocation';
-import BookingForm from '../bookings/BookingForm';
+import { VenueTitle } from './VenueTitle';
+import { VenueGallery } from './VenueGallery';
+import { VenueMeta } from './VenueMeta';
+import { VenueDescription } from './VenueDescription';
+import { VenuePrice } from './VenuePrice';
+import { VenueMaxGuests } from './VenueMaxGuests';
+import { VenueLocation } from './VenueLocation';
+import { BookingForm } from '../bookings/BookingForm';
 import { useApiError } from '../../hooks/useApiError';
 import { ErrorDisplay } from '../common/ErrorDisplay';
+import { Loader } from 'lucide-react';
 
-const VenueDetails = () => {
+export const VenueDetails = () => {
   const { id } = useParams();
   const { error, handleError } = useApiError();
   const {
@@ -27,7 +27,6 @@ const VenueDetails = () => {
     handleError(queryError);
   }
 
-  //Style divs same as main outlet content
   if (isLoading)
     return (
       <div className="container mx-auto px-4 py-8">
@@ -70,5 +69,3 @@ const VenueDetails = () => {
     </div>
   );
 };
-
-export default VenueDetails;

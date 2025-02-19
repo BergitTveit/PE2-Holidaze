@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { Trash2 } from 'lucide-react';
+import { Loader, Trash2 } from 'lucide-react';
 import { useDeleteVenueMutation } from '../../services/venuesApi';
-import Modal from '../common/Modal';
-import Button from '../common/Buttons';
-import Loader from '../common/Loader';
+import {Modal} from '../common/Modal';
+import {Button} from '../common/Buttons';
 import { useApiError } from '../../hooks/useApiError';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
@@ -14,7 +13,7 @@ interface DeleteVenueButtonProps {
   venueName: string;
 }
 
-const DeleteVenueButton = ({ venueId, venueName }: DeleteVenueButtonProps) => {
+export const DeleteVenueButton = ({ venueId, venueName }: DeleteVenueButtonProps) => {
   const [showModal, setShowModal] = useState(false);
   const [deleteVenue, { isLoading }] = useDeleteVenueMutation();
   const { error, handleError } = useApiError();
@@ -73,5 +72,3 @@ const DeleteVenueButton = ({ venueId, venueName }: DeleteVenueButtonProps) => {
     </>
   );
 };
-
-export default DeleteVenueButton;

@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/useStore';
-import Button from '../common/Buttons';
+import {Button} from '../common/Buttons';
 import { logout } from '../../store/slices/authSlice';
 import { persistor } from '../../store/store';
-
 import { useState } from 'react';
-import Modal from '../common/Modal';
+import {Modal} from '../common/Modal';
 
 export const LogoutButton = () => {
   const [isOpen, setIsOpen] = useState(false);

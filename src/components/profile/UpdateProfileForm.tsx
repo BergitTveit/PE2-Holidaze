@@ -6,13 +6,14 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
 import { useGetProfileByNameQuery, useUpdateProfileMutation } from '../../services/profileApi';
 import { UpdateProfileFormData, updateProfileSchema } from '../../schemas/updateProfile';
-import Button from '../common/Buttons';
-import CheckboxInput from '../common/CheckBox';
-import Loader from '../common/Loader';
-import MediaInput from '../common/MediaInput';
-import TextareaInput from '../common/TextareaInput';
+import { Button } from '../common/Buttons';
+import { CheckboxInput } from '../common/input/CheckBox';
+
+import { MediaInput } from '../common/input/MediaInput';
+import { TextareaInput } from '../common/input/TextareaInput';
 import { useApiError } from '../../hooks/useApiError';
 import { ErrorDisplay } from '../common/ErrorDisplay';
+import { Loader } from 'lucide-react';
 
 interface UpdateProfileFormProps {
   onSuccess?: () => void;

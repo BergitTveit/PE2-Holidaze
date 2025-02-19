@@ -1,12 +1,12 @@
 import { Calendar } from 'lucide-react';
 import { IBooking } from '../../types/booking';
-import BookedNights from './BookedNights';
+import {BookedNights} from './BookedNights';
 
 interface DateDisplayProps {
   booking: IBooking;
 }
 
-const BookedDates = ({ booking }: DateDisplayProps) => {
+export const BookedDates = ({ booking }: DateDisplayProps) => {
   const { dateFrom, dateTo } = booking;
 
   return (
@@ -26,5 +26,3 @@ const BookedDates = ({ booking }: DateDisplayProps) => {
     </div>
   );
 };
-
-export default BookedDates;

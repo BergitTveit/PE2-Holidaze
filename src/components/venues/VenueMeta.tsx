@@ -5,7 +5,7 @@ interface VenueMetaProps {
   meta: IMeta;
 }
 
-const VenueMeta = ({ meta }: VenueMetaProps) => (
+export const VenueMeta = ({ meta }: VenueMetaProps) => (
   <div className="flex flex-wrap gap-4 mt-2">
     {meta.wifi && (
       <div className="flex items-center text-gray-700">
@@ -33,5 +33,3 @@ const VenueMeta = ({ meta }: VenueMetaProps) => (
     )}
   </div>
 );
-
-export default VenueMeta;

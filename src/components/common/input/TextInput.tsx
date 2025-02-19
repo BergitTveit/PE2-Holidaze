@@ -1,7 +1,7 @@
-import { FieldValues, } from 'react-hook-form';
-import { BaseInputProps } from '../../types/baseInput';
+import { FieldValues } from 'react-hook-form';
+import { BaseInputProps } from '../../../types/baseInput';
 
-const TextInput = <T extends FieldValues>({
+export const TextInput = <T extends FieldValues>({
   label,
   name,
   register,
@@ -23,5 +23,3 @@ const TextInput = <T extends FieldValues>({
     </div>
   );
 };
-
-export default TextInput;

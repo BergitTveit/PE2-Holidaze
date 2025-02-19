@@ -1,18 +1,18 @@
 import { Hotel, User } from 'lucide-react';
 import { IBooking } from '../../types/booking';
 import { IVenue } from '../../types/venue';
-import ImageComponent from '../common/Image';
-import BookingTotalPrice from './BookingTotalPrice';
-import BookedNights from './BookedNights';
-import BookedGuests from './BookedGuests';
-import BookedDates from './BookedDates';
+import {ImageComponent} from '../common/Image';
+import {BookingTotalPrice} from './BookingTotalPrice';
+import {BookedNights} from './BookedNights';
+import {BookedGuests} from './BookedGuests';
+import {BookedDates} from './BookedDates';
 
-interface VenueBookingCardProps {
+interface BookedVenueCardProps {
   booking: IBooking;
   venue: IVenue;
 }
 
-const VenueBookingCard = ({ booking, venue }: VenueBookingCardProps) => {
+export const BookedVenueCard = ({ booking, venue }: BookedVenueCardProps) => {
   const { customer } = booking;
 
   return (
@@ -71,4 +71,3 @@ const VenueBookingCard = ({ booking, venue }: VenueBookingCardProps) => {
   );
 };
 
-export default VenueBookingCard;

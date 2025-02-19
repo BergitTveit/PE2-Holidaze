@@ -4,7 +4,7 @@ interface VenueRatingProps {
   rating: number;
 }
 
-const VenueRating = ({ rating }: VenueRatingProps) => {
+export const VenueRating = ({ rating }: VenueRatingProps) => {
   const roundedRating = Math.round(rating * 2) / 2;
 
   return (
@@ -31,5 +31,3 @@ const VenueRating = ({ rating }: VenueRatingProps) => {
     </div>
   );
 };
-
-export default VenueRating;

@@ -5,7 +5,7 @@ interface BookingNightsProps {
   booking: Pick<IBooking, 'dateFrom' | 'dateTo'>;
 }
 
-const BookedNights = ({ booking }: BookingNightsProps) => {
+export const BookedNights = ({ booking }: BookingNightsProps) => {
   const { dateFrom, dateTo } = booking;
 
   const nights = calculateNights(dateFrom, dateTo);
@@ -16,5 +16,3 @@ const BookedNights = ({ booking }: BookingNightsProps) => {
     </p>
   );
 };
-
-export default BookedNights;

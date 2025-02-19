@@ -1,13 +1,13 @@
 import { Search } from 'lucide-react';
-import Button from './Buttons';
+import {Button} from '../Buttons';
 import { useCallback, useEffect, useRef } from 'react';
-import { IVenue } from '../../types/venue';
+import { IVenue } from '../../../types/venue';
 import { SearchInput } from './SearchInput';
 import { SearchBarList } from './SearchBarList';
-import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
-import { useVenueSearch } from '../../hooks/useSearch';
+import { useKeyboardNavigation } from '../../../hooks/useKeyboardNavigation';
+import { useVenueSearch } from '../../../hooks/useSearch';
 
-const SearchBar = ({ navigate }: { navigate?: (url: string) => void }) => {
+export const SearchBar = ({ navigate }: { navigate?: (url: string) => void }) => {
   const searchRef = useRef<HTMLDivElement>(null);
   const {
     inputValue,
@@ -95,5 +95,3 @@ const SearchBar = ({ navigate }: { navigate?: (url: string) => void }) => {
     </div>
   );
 };
-
-export default SearchBar;

@@ -13,17 +13,17 @@ import { SerializedError } from '@reduxjs/toolkit';
 import { Loader } from 'lucide-react';
 import { IVenue } from '../../types/venue';
 import { BookingFormData, bookingSchema } from '../../schemas/bookingSchema';
-import LoginPrompt from '../auth/LoginPrompt';
-import NumberInput from '../common/NumberInput';
-import Button from '../common/Buttons';
-import BookingTotalPrice from './BookingTotalPrice';
+import {LoginPrompt} from '../auth/LoginPrompt';
+import {NumberInput} from '../common/input/NumberInput';
+import {Button} from '../common/Buttons';
+import {BookingTotalPrice} from './BookingTotalPrice';
 import { ErrorDisplay } from '../common/ErrorDisplay';
 
 interface BookingFormProps {
   venue: IVenue;
 }
 
-const BookingForm = ({ venue }: BookingFormProps) => {
+export const BookingForm = ({ venue }: BookingFormProps) => {
   const navigate = useNavigate();
   const { accessToken, userName } = useAppSelector((state) => state.auth);
   const [createBooking] = useCreateBookingMutation();
@@ -193,5 +193,3 @@ const BookingForm = ({ venue }: BookingFormProps) => {
     </div>
   );
 };
-
-export default BookingForm;

@@ -1,9 +1,9 @@
 import { FieldValues } from 'react-hook-form';
-import { BaseInputProps } from '../../types/baseInput';
+import { BaseInputProps } from '../../../types/baseInput';
 
 interface CheckboxInputProps<T extends FieldValues> extends Omit<BaseInputProps<T>, 'error'> {}
 
-const CheckboxInput = <T extends FieldValues>({
+export const CheckboxInput = <T extends FieldValues>({
   label,
   name,
   register,
@@ -18,5 +18,3 @@ const CheckboxInput = <T extends FieldValues>({
     </div>
   );
 };
-
-export default CheckboxInput;

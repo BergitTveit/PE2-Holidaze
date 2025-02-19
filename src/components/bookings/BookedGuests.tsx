@@ -5,7 +5,7 @@ interface GuestDisplayProps {
   booking: IBooking;
 }
 
-const BookedGuests = ({ booking }: GuestDisplayProps) => (
+export const BookedGuests = ({ booking }: GuestDisplayProps) => (
   <div className="flex items-center">
     <Users className="w-5 h-5 mr-2" />
     <div>
@@ -18,5 +18,3 @@ const BookedGuests = ({ booking }: GuestDisplayProps) => (
     </div>
   </div>
 );
-
-export default BookedGuests;

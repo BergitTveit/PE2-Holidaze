@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { IMedia } from '../../types/media';
-import ImageComponent from '../common/Image';
-import Button from '../common/Buttons';
+import {ImageComponent} from '../common/Image';
+import {Button} from '../common/Buttons';
 
 interface VenueGalleryProps {
   images: IMedia[];
 }
 
-const VenueGallery = ({ images }: VenueGalleryProps) => {
+export const VenueGallery = ({ images }: VenueGalleryProps) => {
   const [currentImage, setCurrentImage] = useState(0);
 
   if (!images || images.length === 0) {
@@ -72,5 +72,3 @@ const VenueGallery = ({ images }: VenueGalleryProps) => {
     </div>
   );
 };
-
-export default VenueGallery;

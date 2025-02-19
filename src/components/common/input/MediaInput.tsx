@@ -1,6 +1,6 @@
 import React from 'react';
-import type { Media } from '../../schemas/shared/media';
-import Button from './Buttons';
+import type { Media } from '../../../schemas/shared/media';
+import { Button } from '../Buttons';
 
 interface MediaInputProps {
   value: Media | null;
@@ -12,7 +12,7 @@ interface MediaInputProps {
   label?: string;
 }
 
-const MediaInput = ({ value, onChange, error, label }: MediaInputProps) => {
+export const MediaInput = ({ value, onChange, error, label }: MediaInputProps) => {
   const handleChange = (field: keyof Media) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
 
@@ -71,5 +71,3 @@ const MediaInput = ({ value, onChange, error, label }: MediaInputProps) => {
     </div>
   );
 };
-
-export default MediaInput;

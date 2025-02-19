@@ -1,11 +1,11 @@
 import { FieldValues } from 'react-hook-form';
-import { BaseInputProps } from '../../types/baseInput';
+import { BaseInputProps } from '../../../types/baseInput';
 
 interface TextareaInputProps<T extends FieldValues> extends BaseInputProps<T> {
   rows?: number;
 }
 
-const TextareaInput = <T extends FieldValues>({
+export const TextareaInput = <T extends FieldValues>({
   label,
   name,
   register,
@@ -29,4 +29,3 @@ const TextareaInput = <T extends FieldValues>({
   );
 };
 
-export default TextareaInput;

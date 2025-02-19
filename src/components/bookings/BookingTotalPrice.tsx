@@ -1,12 +1,12 @@
 import { IBooking } from '../../types/booking';
 import { calculateNights } from '../../utils/calculateNights';
-import VenuePrice from '../venues/VenuePrice';
+import {VenuePrice} from '../venues/VenuePrice';
 
 interface PriceTotalProps {
   booking: Pick<IBooking, 'dateFrom' | 'dateTo' | 'venue'>;
 }
 
-const BookingTotalPrice = ({ booking }: PriceTotalProps) => {
+export const BookingTotalPrice = ({ booking }: PriceTotalProps) => {
   const { dateFrom, dateTo, venue } = booking;
   const nights = calculateNights(dateFrom, dateTo);
   const totalPrice = venue.price * nights;
@@ -17,5 +17,3 @@ const BookingTotalPrice = ({ booking }: PriceTotalProps) => {
     </div>
   );
 };
-
-export default BookingTotalPrice;

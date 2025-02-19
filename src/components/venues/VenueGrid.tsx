@@ -1,5 +1,5 @@
 import { IVenue } from '../../types/venue';
-import VenueCard from './VenueCard';
+import { VenueCard } from './VenueCard';
 
 interface VenueGridProps {
   venues: IVenue[];
@@ -7,7 +7,7 @@ interface VenueGridProps {
   showOwnerActions?: boolean;
 }
 
-const VenueGrid = ({ venues, showOwnerActions = false }: VenueGridProps) => {
+export const VenueGrid = ({ venues, showOwnerActions = false }: VenueGridProps) => {
   return (
     <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-4">
       {venues.map((venue) => (
@@ -16,4 +16,3 @@ const VenueGrid = ({ venues, showOwnerActions = false }: VenueGridProps) => {
     </div>
   );
 };
-export default VenueGrid;

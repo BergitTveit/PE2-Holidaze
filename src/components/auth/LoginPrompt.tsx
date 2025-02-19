@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import Button from '../common/Buttons';
+import {Button} from '../common/Buttons';
 
-const LoginPrompt = ({ selectedDates }: { selectedDates: boolean }) => {
+export const LoginPrompt = ({ selectedDates }: { selectedDates: boolean }) => {
   const navigate = useNavigate();
 
   return (
@@ -23,5 +23,3 @@ const LoginPrompt = ({ selectedDates }: { selectedDates: boolean }) => {
     </div>
   );
 };
-
-export default LoginPrompt;

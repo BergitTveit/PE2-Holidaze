@@ -5,7 +5,7 @@ interface ModalProps {
   title: string;
 }
 
-const Modal = ({ isOpen, onClose, children, title }: ModalProps) => {
+export const Modal = ({ isOpen, onClose, children, title }: ModalProps) => {
   if (!isOpen) return null;
 
   return (
@@ -22,5 +22,3 @@ const Modal = ({ isOpen, onClose, children, title }: ModalProps) => {
     </div>
   );
 };
-
-export default Modal;

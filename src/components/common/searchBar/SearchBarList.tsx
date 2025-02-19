@@ -1,5 +1,6 @@
-import { IVenue } from '../../types/venue';
-import SearchBarItem from './SearchBarItem';
+import { IVenue } from '../../../types/venue';
+import { SearchBarItem } from './SearchBarItem';
+
 
 interface SearchBarListProps {
   venues: IVenue[];

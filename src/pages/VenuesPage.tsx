@@ -1,9 +1,9 @@
 import { useSearchParams } from 'react-router-dom';
 import { useGetVenuesQuery, useSearchVenuesQuery } from '../services/venuesApi';
-import VenueGrid from '../components/venues/VenueGrid';
-import Loader from '../components/common/Loader';
-import SearchBar from '../components/common/SearchBar';
-import Button from '../components/common/Buttons';
+import { VenueGrid } from '../components/venues/VenueGrid';
+import { SearchBar } from '../components/common/searchBar/SearchBar';
+import { Button } from '../components/common/Buttons';
+import { Loader } from 'lucide-react';
 
 const VenuesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
