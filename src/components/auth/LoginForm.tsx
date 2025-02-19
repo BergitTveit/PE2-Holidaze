@@ -13,6 +13,7 @@ import { useApiError } from '../../hooks/useApiError';
 import AuthInput from '../common/authInput';
 import Button from '../common/Buttons';
 import Loader from '../common/Loader';
+import { ErrorDisplay } from '../common/ErrorDisplay';
 
 export const LoginForm = () => {
   const dispatch = useAppDispatch();
@@ -39,18 +40,14 @@ export const LoginForm = () => {
         })
       );
       navigate(`/profile/${loginResult.name}`, { replace: true });
-    } catch (error: unknown) {
-      handleError(error as FetchBaseQueryError | SerializedError, 'Login');
+    } catch (err) {
+      handleError(err as FetchBaseQueryError | SerializedError);
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      {error.message && (
-        <div className="bg-red-100 text-red-700 border border-red-400 px-4 py-3 rounded-md">
-          {error.message}
-        </div>
-      )}
+      <ErrorDisplay error={error} />
       <AuthInput
         label="Email"
         name="email"
