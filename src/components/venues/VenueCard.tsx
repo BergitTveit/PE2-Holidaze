@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Hotel, Pencil, Trash2 } from 'lucide-react';
+import { Hotel, Pencil } from 'lucide-react';
 import { IVenue } from '../../types/venue';
 
 import ImageComponent from '../common/Image';
@@ -8,10 +8,8 @@ import VenuePrice from './VenuePrice';
 import VenueMaxGuests from './VenueMaxGuests';
 import VenueMeta from './VenueMeta';
 import VenueRating from './VenueRating';
-import Button from '../common/Buttons';
-import Modal from '../common/Modal';
-import { useState } from 'react';
-import { useDeleteVenueMutation } from '../../services/venuesApi';
+
+import DeleteVenueButton from './DeleteVenueButton';
 
 interface VenueCardProps {
   venue: IVenue;
@@ -19,49 +17,46 @@ interface VenueCardProps {
 }
 
 const VenueCard = ({ venue, isOwner }: VenueCardProps) => {
-  const [showDeleteModal, setShowDeleteModal] = useState(false); // Add this
-  const [deleteVenue, { isLoading }] = useDeleteVenueMutation();
-
-  const handleDelete = async () => {
-    try {
-      await deleteVenue(venue.id).unwrap();
-      setShowDeleteModal(false);
-    } catch (error) {
-      // Handle error
-    }
-  };
   return (
-    <div className="relative group bg-whiter shadow-sm hover:shadow-md transition-shadow">
+    <div
+      className="relative group bg-whiter shadow-sm hover:shadow-md transition-shadow"
+      role="article"
+      aria-label={`Venue: ${venue.name}`}
+    >
       {isOwner && (
-        <div className="absolute top-2 right-2 z-10">
+        <div
+          className="absolute top-2 right-2 z-10"
+          role="group"
+          aria-label="Venue management actions"
+        >
           <Link
             to={`/venues/${venue.id}/edit`}
             state={{ venue }}
             className="p-2 bg-white rounded-full hover:bg-gray-100 shadow-sm flex items-center justify-center"
+            aria-label={`Edit ${venue.name}`}
           >
-            <Pencil className="h-4 w-4  text-gray-600" />
+            <Pencil className="h-4 w-4 text-gray-600" aria-hidden="true" />
           </Link>
-          <button
-            onClick={() => setShowDeleteModal(true)}
-            className="p-2 bg-white rounded-full hover:bg-gray-100 hover:text-red-600 shadow-sm flex items-center justify-center"
-          >
-            <Trash2 className="h-4 w-4" />
-          </button>
+          <DeleteVenueButton venueId={venue.id} venueName={venue.name} />
         </div>
       )}
 
-      <Link to={`/venue/${venue.id}`} className="block">
+      <Link
+        to={`/venue/${venue.id}`}
+        className="block"
+        aria-label={`View details of ${venue.name}`}
+      >
         <div className="relative">
           <div className="aspect-w-16 aspect-h-9  overflow-hidden">
             {venue.media[0]?.url ? (
               <ImageComponent
                 src={venue.media[0].url}
-                alt={venue.media[0].alt || venue.name}
+                alt={venue.media[0].alt || `Primary image of ${venue.name}`}
                 className="w-full h-48 object-cover"
               />
             ) : (
               <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
-                <Hotel className="w-12 h-12 text-orange-500" />
+                <Hotel className="w-12 h-12 text-orange-500" aria-hidden="true" />
               </div>
             )}
           </div>
@@ -75,32 +70,6 @@ const VenueCard = ({ venue, isOwner }: VenueCardProps) => {
           <VenueRating rating={venue.rating} />
         </div>
       </Link>
-
-      <Modal
-        isOpen={showDeleteModal}
-        onClose={() => setShowDeleteModal(false)}
-        title="Delete Venue"
-      >
-        <div className="space-y-4">
-          <p>Are you sure you want to delete "{venue.name}"? This action cannot be undone.</p>
-
-          <div className="flex justify-end gap-3">
-            <Button
-              onClick={() => setShowDeleteModal(false)}
-              className="px-4 py-2 border border-gray-300 hover:bg-gray-50"
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleDelete}
-              disabled={isLoading}
-              className="px-4 py-2 bg-red-600 text-white hover:bg-red-700"
-            >
-              {isLoading ? 'Deleting...' : 'Delete Venue'}
-            </Button>
-          </div>
-        </div>
-      </Modal>
     </div>
   );
 };
