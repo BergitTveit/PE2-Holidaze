@@ -1,11 +1,11 @@
 import { Hotel, User } from 'lucide-react';
-import { IBooking } from '../../types/booking';
-import { IVenue } from '../../types/venue';
-import {ImageComponent} from '../common/Image';
-import {BookingTotalPrice} from './BookingTotalPrice';
-import {BookedNights} from './BookedNights';
-import {BookedGuests} from './BookedGuests';
-import {BookedDates} from './BookedDates';
+import { IBooking } from '../../../types/booking';
+import { IVenue } from '../../../types/venue';
+import { ImageComponent } from '../../common/Image';
+import { BookingTotalPrice } from './BookingTotalPrice';
+import { BookedNights } from './BookedNights';
+import { BookedGuests } from './BookedGuests';
+import { BookedDates } from './BookedDates';
 
 interface BookedVenueCardProps {
   booking: IBooking;
@@ -70,4 +70,3 @@ export const BookedVenueCard = ({ booking, venue }: BookedVenueCardProps) => {
     </div>
   );
 };
-

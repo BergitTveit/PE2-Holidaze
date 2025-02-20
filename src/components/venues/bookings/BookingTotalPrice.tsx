@@ -1,6 +1,6 @@
-import { IBooking } from '../../types/booking';
-import { calculateNights } from '../../utils/calculateNights';
-import {VenuePrice} from '../venues/VenuePrice';
+import { IBooking } from '../../../types/booking';
+import { calculateNights } from '../../../utils/calculateNights';
+import { VenuePrice } from '../details/VenuePrice';
 
 interface PriceTotalProps {
   booking: Pick<IBooking, 'dateFrom' | 'dateTo' | 'venue'>;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { IMedia } from '../../types/media';
-import {ImageComponent} from '../common/Image';
-import {Button} from '../common/Buttons';
+import { IMedia } from '../../../types/media';
+import { ImageComponent } from '../../common/Image';
+import { Button } from '../../common/Buttons';
 
 interface VenueGalleryProps {
   images: IMedia[];

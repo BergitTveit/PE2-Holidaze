@@ -1,6 +1,6 @@
 import { Calendar } from 'lucide-react';
-import { IBooking } from '../../types/booking';
-import {BookedNights} from './BookedNights';
+import { IBooking } from '../../../types/booking';
+import { BookedNights } from './BookedNights';
 
 interface DateDisplayProps {
   booking: IBooking;

@@ -1,5 +1,5 @@
-import { IBooking } from '../../types/booking';
-import { calculateNights } from '../../utils/calculateNights';
+import { IBooking } from '../../../types/booking';
+import { calculateNights } from '../../../utils/calculateNights';
 
 interface BookingNightsProps {
   booking: Pick<IBooking, 'dateFrom' | 'dateTo'>;

@@ -1,5 +1,5 @@
 import { Wifi, Car, Coffee, Dog } from 'lucide-react';
-import { IMeta } from '../../types/venue';
+import { IMeta } from '../../../types/venue';
 
 interface VenueMetaProps {
   meta: IMeta;

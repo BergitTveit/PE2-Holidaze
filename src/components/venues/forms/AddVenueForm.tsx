@@ -1,20 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useCreateVenueMutation, useUpdateVenueMutation } from '../../services/venuesApi';
-import { useApiError } from '../../hooks/useApiError';
+import { useCreateVenueMutation, useUpdateVenueMutation } from '../../../services/venuesApi';
+import { useApiError } from '../../../hooks/useApiError';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
 import { Plus, Wifi, Car, Coffee, Dog, Loader } from 'lucide-react';
-import { addVenueSchema, CreateVenueDTO } from '../../schemas/addVenue';
-import { Button } from '../common/Buttons';
-import { CheckboxInput } from '../common/input/CheckBox';
-import { MediaInput } from '../common/input/MediaInput';
-import { NumberInput } from '../common/input/NumberInput';
-import { TextareaInput } from '../common/input/TextareaInput';
-import { TextInput } from '../common/input/TextInput';
-import { ErrorDisplay } from '../common/ErrorDisplay';
-import { IVenue } from '../../types/venue';
+import { addVenueSchema, CreateVenueDTO } from '../../../schemas/addVenue';
+import { Button } from '../../common/Buttons';
+import { CheckboxInput } from '../../common/input/CheckBox';
+import { MediaInput } from '../../common/input/MediaInput';
+import { NumberInput } from '../../common/input/NumberInput';
+import { TextareaInput } from '../../common/input/TextareaInput';
+import { TextInput } from '../../common/input/TextInput';
+import { ErrorDisplay } from '../../common/ErrorDisplay';
+import { IVenue } from '../../../types/venue';
 
 interface VenueFormProps {
   mode: 'create' | 'edit';

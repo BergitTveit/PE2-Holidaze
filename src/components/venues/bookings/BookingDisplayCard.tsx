@@ -1,12 +1,12 @@
-import { IBooking } from '../../types/booking';
-import {VenueGallery} from '../venues/VenueGallery';
-import {VenueTitle} from '../venues/VenueTitle';
-import {VenueLocation} from '../venues/VenueLocation';
-import {VenueRating} from '../venues/VenueRating';
-import {VenueMeta} from '../venues/VenueMeta';
-import {BookedGuests} from './BookedGuests';
-import {BookedDates} from './BookedDates';
-import {BookingTotalPrice} from './BookingTotalPrice';
+import { IBooking } from '../../../types/booking';
+import { VenueGallery } from '../details/VenueGallery';
+import { VenueTitle } from '../details/VenueTitle';
+import { VenueLocation } from '../details/VenueLocation';
+import { VenueRating } from '../details/VenueRating';
+import { VenueMeta } from '../details/VenueMeta';
+import { BookedGuests } from './BookedGuests';
+import { BookedDates } from './BookedDates';
+import { BookingTotalPrice } from './BookingTotalPrice';
 
 interface BookingCardProps {
   booking: IBooking;

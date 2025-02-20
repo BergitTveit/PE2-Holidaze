@@ -1,4 +1,4 @@
-import { IVenue } from '../../types/venue';
+import { IVenue } from '../../../types/venue';
 import { BookedVenueCard } from './BookedVenueCard';
 
 interface BookingManagementSectionProps {

@@ -1,5 +1,5 @@
 import { Users } from 'lucide-react';
-import { IBooking } from '../../types/booking';
+import { IBooking } from '../../../types/booking';
 
 interface GuestDisplayProps {
   booking: IBooking;

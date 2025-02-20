@@ -1,6 +1,5 @@
-import { IBooking } from '../../types/booking';
+import { IBooking } from '../../../types/booking';
 import { BookingDisplayCard } from './BookingDisplayCard';
-
 
 interface BookingGridProps {
   bookings: IBooking[];
