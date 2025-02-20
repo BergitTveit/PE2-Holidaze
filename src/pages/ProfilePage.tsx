@@ -4,15 +4,16 @@ import { useGetProfileByNameQuery, useGetProfileVenuesQuery } from '../services/
 import { UpdateProfileForm } from '../components/profile/UpdateProfileForm';
 import { Profile } from '../components/profile/Profile';
 import { Modal } from '../components/common/Modal';
-import { BookingGrid } from '../components/bookings/BookingGrid';
+import { BookingGrid } from '../components/venues/bookings/BookingGrid';
 import { VenueManagementSection } from '../components/venues/VenueManagementSection';
 import { useAppSelector } from '../hooks/useStore';
-import { BookingManagementSection } from '../components/bookings/BookingManagementSection';
+import { BookingManagementSection } from '../components/venues/bookings/BookingManagementSection';
 
 const ProfilePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { username } = useParams();
   const { userName } = useAppSelector((state) => state.auth);
+
   const {
     data: profile,
     isLoading,
@@ -29,10 +30,12 @@ const ProfilePage = () => {
   );
 
   if (isLoading || venuesLoading) return <div>Loading...</div>;
+
   if (error) {
     return <div>Error loading profile</div>;
   }
   if (!profile) return <div>No profile found</div>;
+//Make styled component for error and loader.
 
   const isOwnProfile = userName === profile.name;
 
