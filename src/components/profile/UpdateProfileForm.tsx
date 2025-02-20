@@ -8,12 +8,12 @@ import { useGetProfileByNameQuery, useUpdateProfileMutation } from '../../servic
 import { UpdateProfileFormData, updateProfileSchema } from '../../schemas/updateProfile';
 import { Button } from '../common/Buttons';
 import { CheckboxInput } from '../common/input/CheckBox';
-
 import { MediaInput } from '../common/input/MediaInput';
 import { TextareaInput } from '../common/input/TextareaInput';
 import { useApiError } from '../../hooks/useApiError';
-import { ErrorDisplay } from '../common/ErrorDisplay';
+import { ErrorDisplay } from '../common/feedback/ErrorDisplay';
 import { Loader } from 'lucide-react';
+import { MessageDisplay } from '../common/feedback/MessageDisplay';
 
 interface UpdateProfileFormProps {
   onSuccess?: () => void;
@@ -59,9 +59,22 @@ export const UpdateProfileForm = ({ onSuccess }: UpdateProfileFormProps) => {
     }
   }, [profile, reset]);
 
-  if (isProfileLoading || isSubmitting) return <Loader />;
-  if (isError) return <div role="alert">Error loading profile</div>;
-  if (!profile) return null;
+  if (isProfileLoading)
+    return (
+      <div className="p-4 flex justify-center">
+        <Loader />
+      </div>
+    );
+  if (isError) {
+    return (
+      <MessageDisplay title="Error" message="Could not load profile information" variant="error" />
+    );
+  }
+  if (!profile) {
+    return (
+      <MessageDisplay title="No Data" message="Profile information not available" variant="empty" />
+    );
+  }
 
   const onSubmit = async (data: UpdateProfileFormData) => {
     if (!username) return;

@@ -9,8 +9,8 @@ import { VenueMaxGuests } from './details/VenueMaxGuests';
 import { VenueLocation } from './details/VenueLocation';
 import { BookingForm } from './forms/BookingForm';
 import { useApiError } from '../../hooks/useApiError';
-import { ErrorDisplay } from '../common/ErrorDisplay';
-import { Loader } from 'lucide-react';
+import { ErrorDisplay } from '../common/feedback/ErrorDisplay';
+import { MessageDisplay } from '../common/feedback/MessageDisplay';
 
 export const VenueDetails = () => {
   const { id } = useParams();
@@ -23,26 +23,33 @@ export const VenueDetails = () => {
     skip: !id,
   });
 
-
-  //Research UseEffect for error handling
   if (queryError) {
     handleError(queryError);
   }
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <Loader />
+        <MessageDisplay
+          title="Loading venue"
+          message="Please wait while we fetch the venue details"
+          variant="loading"
+        />
       </div>
     );
+  }
 
-  if (!venue)
+  if (!venue) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div>Venue not found</div>;
+        <MessageDisplay
+          title="Venue not found"
+          message="The venue you're looking for doesn't exist"
+          variant="empty"
+        />
       </div>
     );
-
+  }
   return (
     <div className="container mx-auto px-4 py-8">
       <ErrorDisplay error={error} />

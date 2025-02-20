@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetVenueByIdQuery } from '../services/venuesApi';
 import { AddVenueForm } from '../components/venues/forms/AddVenueForm';
-import { Loader } from 'lucide-react';
+import { MessageDisplay } from '../components/common/feedback/MessageDisplay';
 
 const CreateVenuePage = () => {
   const { id } = useParams();
@@ -16,9 +16,35 @@ const CreateVenuePage = () => {
   });
   const navigate = useNavigate();
 
-  if (isEditMode && isLoading) return <Loader />;
-  if (isEditMode && error) return <div>Error loading venue</div>;
-  if (isEditMode && !venue) return <div>Venue not found</div>;
+  if (isEditMode && isLoading) {
+    return (
+      <MessageDisplay
+        title="Loading venue"
+        message="Please wait while we fetch the venue details"
+        variant="loading"
+      />
+    );
+  }
+
+  if (isEditMode && error) {
+    return (
+      <MessageDisplay
+        title="Error occurred"
+        message="There was a problem loading the venue"
+        variant="error"
+      />
+    );
+  }
+
+  if (isEditMode && !venue) {
+    return (
+      <MessageDisplay
+        title="Venue not found"
+        message="The venue you're trying to edit doesn't exist"
+        variant="empty"
+      />
+    );
+  }
 
   return (
     <div className="max-w-3xl mx-auto py-8 px-4">

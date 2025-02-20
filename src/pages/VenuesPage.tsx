@@ -2,9 +2,8 @@ import { useSearchParams } from 'react-router-dom';
 import { useGetVenuesQuery, useSearchVenuesQuery } from '../services/venuesApi';
 import { VenueGrid } from '../components/venues/VenueGrid';
 import { SearchBar } from '../components/common/searchBar/SearchBar';
-import { Loader } from 'lucide-react';
 import { Pagination } from '../components/common/pagination';
-import { NoVenuesFound } from '../components/common/NoVenuesFound';
+import { MessageDisplay } from '../components/common/feedback/MessageDisplay';
 
 const VenuesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -40,14 +39,34 @@ const VenuesPage = () => {
     setSearchParams(params);
   };
 
-  if (isLoading) return <Loader />;
-  if (error) return <div>Error occurred while loading venues</div>;
-//Make styled component for error and loader.
+  if (isLoading) {
+    return (
+      <MessageDisplay
+        title="Loading venues"
+        message="Please wait while we fetch the venues"
+        variant="loading"
+      />
+    );
+  }
+  if (error) {
+    return (
+      <MessageDisplay
+        title="Error occurred"
+        message="There was a problem loading venues"
+        variant="error"
+      />
+    );
+  }
+
   return (
     <div>
       <SearchBar />
       {venues?.data?.length === 0 ? (
-        <NoVenuesFound />
+        <MessageDisplay
+          title="No venues found"
+          message="Try adjusting your search or location filters"
+          variant="empty"
+        />
       ) : (
         <>
           <VenueGrid venues={venues?.data || []} />
