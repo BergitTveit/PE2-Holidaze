@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Loader, Trash2 } from 'lucide-react';
 import { useDeleteVenueMutation } from '../../services/venuesApi';
-import {Modal} from '../common/Modal';
-import {Button} from '../common/Buttons';
+import { Modal } from '../common/Modal';
+import { Button } from '../common/Buttons';
 import { useApiError } from '../../hooks/useApiError';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';

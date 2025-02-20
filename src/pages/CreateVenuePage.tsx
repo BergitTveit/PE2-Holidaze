@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { AddVenueForm } from '../components/venues/addVenueForm';
 import { useGetVenueByIdQuery } from '../services/venuesApi';
+import { AddVenueForm } from '../components/venues/forms/addVenueForm';
 import { Loader } from 'lucide-react';
 
 const CreateVenuePage = () => {
