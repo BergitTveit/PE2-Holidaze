@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useGetVenueByIdQuery } from '../../services/venuesApi';
-import { VenueTitle } from './VenueTitle';
-import { VenueGallery } from './VenueGallery';
-import { VenueMeta } from './VenueMeta';
-import { VenueDescription } from './VenueDescription';
-import { VenuePrice } from './VenuePrice';
-import { VenueMaxGuests } from './VenueMaxGuests';
-import { VenueLocation } from './VenueLocation';
-import { BookingForm } from '../bookings/BookingForm';
+import { VenueTitle } from './details/VenueTitle';
+import { VenueGallery } from './details/VenueGallery';
+import { VenueMeta } from './details/VenueMeta';
+import { VenueDescription } from './details/VenueDescription';
+import { VenuePrice } from './details/VenuePrice';
+import { VenueMaxGuests } from './details/VenueMaxGuests';
+import { VenueLocation } from './details/VenueLocation';
+import { BookingForm } from './forms/BookingForm';
 import { useApiError } from '../../hooks/useApiError';
 import { ErrorDisplay } from '../common/ErrorDisplay';
 import { Loader } from 'lucide-react';
@@ -23,6 +23,8 @@ export const VenueDetails = () => {
     skip: !id,
   });
 
+
+  //Research UseEffect for error handling
   if (queryError) {
     handleError(queryError);
   }
