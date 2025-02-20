@@ -5,7 +5,7 @@ import { AuthWrapper } from './components/auth/AuthWrapper';
 export default function App() {
   return (
     <BrowserRouter>
-        <AuthWrapper>
+      <AuthWrapper>
         <AppRoutes />
       </AuthWrapper>
     </BrowserRouter>

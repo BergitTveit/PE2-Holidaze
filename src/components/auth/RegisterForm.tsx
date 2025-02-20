@@ -12,7 +12,7 @@ import { AuthInput } from '../common/input/authInput';
 import { TextInput } from '../common/input/TextInput';
 import { CheckboxInput } from '../common/input/CheckBox';
 import { Button } from '../common/Buttons';
-import { ErrorDisplay } from '../common/ErrorDisplay';
+import { ErrorDisplay } from '../common/feedback/ErrorDisplay';
 import { Loader } from 'lucide-react';
 
 export const RegisterForm = () => {

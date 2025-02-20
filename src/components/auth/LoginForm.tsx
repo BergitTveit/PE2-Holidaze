@@ -8,10 +8,10 @@ import { setCredentials } from '../../store/slices/authSlice';
 import { useLoginMutation } from '../../services/authApi';
 import { LoginCredentials, loginSchema } from '../../schemas/auth';
 import { useApiError } from '../../hooks/useApiError';
-import {AuthInput} from '../common/input/authInput';
-import {Button} from '../common/Buttons';
+import { AuthInput } from '../common/input/authInput';
+import { Button } from '../common/Buttons';
 
-import { ErrorDisplay } from '../common/ErrorDisplay';
+import { ErrorDisplay } from '../common/feedback/ErrorDisplay';
 import { Loader } from 'lucide-react';
 
 export const LoginForm = () => {

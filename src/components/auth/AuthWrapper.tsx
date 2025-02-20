@@ -2,7 +2,7 @@ import { useAppSelector } from '../../hooks/useStore';
 import { useGetProfileByNameQuery } from '../../services/profileApi';
 import { Loader } from 'lucide-react';
 import { useApiError } from '../../hooks/useApiError';
-import { ErrorDisplay } from '../common/ErrorDisplay';
+import { ErrorDisplay } from '../common/feedback/ErrorDisplay';
 
 interface Props {
   children: React.ReactNode;

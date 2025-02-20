@@ -6,7 +6,7 @@ import { Button } from '../common/Buttons';
 import { useApiError } from '../../hooks/useApiError';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
-import { ErrorDisplay } from '../common/ErrorDisplay';
+import { ErrorDisplay } from '../common/feedback/ErrorDisplay';
 
 interface DeleteVenueButtonProps {
   venueId: string;

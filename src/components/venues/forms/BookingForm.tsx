@@ -17,7 +17,7 @@ import { LoginPrompt } from '../../auth/LoginPrompt';
 import { NumberInput } from '../../common/input/NumberInput';
 import { Button } from '../../common/Buttons';
 import { BookingTotalPrice } from '../bookings/BookingTotalPrice';
-import { ErrorDisplay } from '../../common/ErrorDisplay';
+import { ErrorDisplay } from '../../common/feedback/ErrorDisplay';
 
 interface BookingFormProps {
   venue: IVenue;

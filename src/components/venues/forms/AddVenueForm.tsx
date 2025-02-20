@@ -13,7 +13,7 @@ import { MediaInput } from '../../common/input/MediaInput';
 import { NumberInput } from '../../common/input/NumberInput';
 import { TextareaInput } from '../../common/input/TextareaInput';
 import { TextInput } from '../../common/input/TextInput';
-import { ErrorDisplay } from '../../common/ErrorDisplay';
+import { ErrorDisplay } from '../../common/feedback/ErrorDisplay';
 import { IVenue } from '../../../types/venue';
 
 interface VenueFormProps {
