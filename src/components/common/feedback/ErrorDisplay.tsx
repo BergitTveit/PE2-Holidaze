@@ -1,4 +1,4 @@
-import { ErrorState } from '../../hooks/useApiError';
+import { ErrorState } from '../../../hooks/useApiError';
 
 interface ErrorDisplayProps {
   error: ErrorState;
