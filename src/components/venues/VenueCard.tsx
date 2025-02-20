@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Hotel, Pencil } from 'lucide-react';
 import { IVenue } from '../../types/venue';
-import { ImageComponent } from '../common/Image';
-import { VenueTitle } from './VenueTitle';
-import { VenuePrice } from './VenuePrice';
-import { VenueMaxGuests } from './VenueMaxGuests';
-import { VenueMeta } from './VenueMeta';
-import { VenueRating } from './VenueRating';
-import { DeleteVenueButton } from './DeleteVenueButton';
+import { VenueTitle } from './details/VenueTitle';
+import { VenuePrice } from './details/VenuePrice';
+import { VenueMaxGuests } from './details/VenueMaxGuests';
+import { VenueMeta } from './details/VenueMeta';
+import { VenueRating } from './details/VenueRating';
+import { OwnerActions } from './details/OwnerActions';
+import { VenueCardImage } from './details/VenueCardImage';
 
 interface VenueCardProps {
   venue: IVenue;
@@ -21,45 +20,13 @@ export const VenueCard = ({ venue, isOwner }: VenueCardProps) => {
       role="article"
       aria-label={`Venue: ${venue.name}`}
     >
-      {isOwner && (
-        <div
-          className="absolute top-2 right-2 z-10"
-          role="group"
-          aria-label="Venue management actions"
-        >
-          <Link
-            to={`/venues/${venue.id}/edit`}
-            state={{ venue }}
-            className="p-2 bg-white rounded-full hover:bg-gray-100 shadow-sm flex items-center justify-center"
-            aria-label={`Edit ${venue.name}`}
-          >
-            <Pencil className="h-4 w-4 text-gray-600" aria-hidden="true" />
-          </Link>
-          <DeleteVenueButton venueId={venue.id} venueName={venue.name} />
-        </div>
-      )}
-
+      {isOwner && <OwnerActions venueId={venue.id} venueName={venue.name} />}
       <Link
         to={`/venue/${venue.id}`}
         className="block"
         aria-label={`View details of ${venue.name}`}
       >
-        <div className="relative">
-          <div className="aspect-w-16 aspect-h-9  overflow-hidden">
-            {venue.media[0]?.url ? (
-              <ImageComponent
-                src={venue.media[0].url}
-                alt={venue.media[0].alt || `Primary image of ${venue.name}`}
-                className="w-full h-48 object-cover"
-              />
-            ) : (
-              <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
-                <Hotel className="w-12 h-12 text-orange-500" aria-hidden="true" />
-              </div>
-            )}
-          </div>
-        </div>
-
+        <VenueCardImage media={venue.media} venueName={venue.name} />
         <div className="p-4">
           <VenueTitle title={venue.name} className="text-lg mb-2" />
           <VenuePrice price={venue.price} />
