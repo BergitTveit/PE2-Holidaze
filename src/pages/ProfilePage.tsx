@@ -8,6 +8,7 @@ import { BookingGrid } from '../components/venues/bookings/BookingGrid';
 import { VenueManagementSection } from '../components/venues/VenueManagementSection';
 import { useAppSelector } from '../hooks/useStore';
 import { BookingManagementSection } from '../components/venues/bookings/BookingManagementSection';
+import { Loader } from 'lucide-react';
 
 const ProfilePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,13 +30,13 @@ const ProfilePage = () => {
     }
   );
 
-  if (isLoading || venuesLoading) return <div>Loading...</div>;
+  if (isLoading || venuesLoading) return <Loader />;
 
   if (error) {
     return <div>Error loading profile</div>;
   }
   if (!profile) return <div>No profile found</div>;
-//Make styled component for error and loader.
+  //Make styled component for error and loader.
 
   const isOwnProfile = userName === profile.name;
 
