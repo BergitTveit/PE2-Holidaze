@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import SearchBar from '../components/common/SearchBar';
+import { SearchBar } from '../components/common/searchBar/SearchBar';
 
 const HomePage = () => {
   const navigate = useNavigate();

@@ -1,9 +1,9 @@
 import { useAppSelector } from '../../hooks/useStore';
 import { IProfile } from '../../types/profile';
-import ProfileHeader from './ProfileHeader';
-import ProfileInfo from './ProfileInfo';
-import Button from '../common/Buttons';
-import LogoutButton from '../auth/LogoutButton';
+import { ProfileHeader } from './ProfileHeader';
+import { ProfileInfo } from './ProfileInfo';
+import { Button } from '../common/Buttons';
+import { LogoutButton } from '../auth/LogoutButton';
 import { Pencil } from 'lucide-react';
 
 interface ProfileProps {
@@ -11,7 +11,7 @@ interface ProfileProps {
   onEditClick: () => void;
 }
 
-const Profile = ({ profile, onEditClick }: ProfileProps) => {
+export const Profile = ({ profile, onEditClick }: ProfileProps) => {
   const { userName } = useAppSelector((state) => state.auth);
   const isOwnProfile = userName === profile.name;
 
@@ -44,5 +44,3 @@ const Profile = ({ profile, onEditClick }: ProfileProps) => {
     </div>
   );
 };
-
-export default Profile;

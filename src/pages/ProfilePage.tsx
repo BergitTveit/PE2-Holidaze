@@ -2,17 +2,19 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetProfileByNameQuery, useGetProfileVenuesQuery } from '../services/profileApi';
 import { UpdateProfileForm } from '../components/profile/UpdateProfileForm';
-import Profile from '../components/profile/Profile';
-import Modal from '../components/common/Modal';
-import BookingGrid from '../components/bookings/BookingGrid';
-import VenueManagementSection from '../components/venues/VenueManagementSection';
+import { Profile } from '../components/profile/Profile';
+import { Modal } from '../components/common/Modal';
+import { BookingGrid } from '../components/venues/bookings/BookingGrid';
+import { VenueManagementSection } from '../components/venues/VenueManagementSection';
 import { useAppSelector } from '../hooks/useStore';
-import BookingManagementSection from '../components/bookings/BookingManagementSection';
+import { BookingManagementSection } from '../components/venues/bookings/BookingManagementSection';
+import { MessageDisplay } from '../components/common/feedback/MessageDisplay';
 
 const ProfilePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { username } = useParams();
   const { userName } = useAppSelector((state) => state.auth);
+
   const {
     data: profile,
     isLoading,
@@ -28,11 +30,34 @@ const ProfilePage = () => {
     }
   );
 
-  if (isLoading || venuesLoading) return <div>Loading...</div>;
-  if (error) {
-    return <div>Error loading profile</div>;
+  if (isLoading || venuesLoading) {
+    return (
+      <MessageDisplay
+        title="Loading profile"
+        message="Please wait while we fetch the profile details"
+        variant="loading"
+      />
+    );
   }
-  if (!profile) return <div>No profile found</div>;
+
+  if (error) {
+    return (
+      <MessageDisplay
+        title="Error occurred"
+        message="There was a problem loading the profile"
+        variant="error"
+      />
+    );
+  }
+  if (!profile) {
+    return (
+      <MessageDisplay
+        title="Profile not found"
+        message="The profile you're looking for doesn't exist"
+        variant="empty"
+      />
+    );
+  }
 
   const isOwnProfile = userName === profile.name;
 

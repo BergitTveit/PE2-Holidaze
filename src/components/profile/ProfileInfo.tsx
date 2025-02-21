@@ -1,6 +1,6 @@
-import ImageComponent from '../common/Image';
+import { ImageComponent } from '../common/Image';
 
-const ProfileInfo = ({ profile }: { profile: any }) => {
+export const ProfileInfo = ({ profile }: { profile: any }) => {
   return (
     <div className="flex items-center space-x-4">
       {profile.avatar && (
@@ -19,5 +19,3 @@ const ProfileInfo = ({ profile }: { profile: any }) => {
     </div>
   );
 };
-
-export default ProfileInfo;

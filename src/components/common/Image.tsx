@@ -6,7 +6,7 @@ interface ImageComponentProps {
   height?: string;
 }
 
-const ImageComponent = ({
+export const ImageComponent = ({
   src,
   alt,
   className = '',
@@ -24,4 +24,3 @@ const ImageComponent = ({
   );
 };
 
-export default ImageComponent;

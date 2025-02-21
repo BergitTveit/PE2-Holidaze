@@ -11,7 +11,7 @@ export const profilesApi = baseApi.injectEndpoints({
       query: () => API_PROFILES,
       transformResponse: (response: ApiResponse<IProfile[]>) => response,
     }),
-   getProfileByName: builder.query<IProfile, string>({
+    getProfileByName: builder.query<IProfile, string>({
       query: (name) => ({
         url: getProfileUrl(name),
         params: { _bookings: true, _venues: true },
@@ -20,7 +20,7 @@ export const profilesApi = baseApi.injectEndpoints({
       providesTags: (_result, _error, name) => [{ type: 'Profile', id: name }],
     }),
 
-   updateProfile: builder.mutation<IProfile, { name: string; data: UpdateProfileFormData }>({
+    updateProfile: builder.mutation<IProfile, { name: string; data: UpdateProfileFormData }>({
       query: ({ name, data }) => ({
         url: getProfileUrl(name),
         method: 'PUT',
@@ -32,17 +32,17 @@ export const profilesApi = baseApi.injectEndpoints({
       query: (username) => ({
         url: `${getProfileUrl(username)}/venues`,
         params: {
-          _bookings: true
-        }
+          _bookings: true,
+        },
       }),
       transformResponse: (response: { data: IVenue[] }) => response.data,
       providesTags: (result) =>
         result
           ? [
               ...result.map(({ id }) => ({ type: 'Venue' as const, id })),
-              { type: 'Venue', id: 'LIST' }
+              { type: 'Venue', id: 'LIST' },
             ]
-          : [{ type: 'Venue', id: 'LIST' }]
+          : [{ type: 'Venue', id: 'LIST' }],
     }),
 
     searchProfiles: builder.query<ApiResponse<IProfile[]>, string>({
@@ -52,8 +52,6 @@ export const profilesApi = baseApi.injectEndpoints({
       }),
       transformResponse: (response: ApiResponse<IProfile[]>) => response,
     }),
- 
- 
   }),
   overrideExisting: false,
 });

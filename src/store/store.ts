@@ -1,4 +1,3 @@
-// store.ts
 import { configureStore } from '@reduxjs/toolkit';
 
 import {
@@ -18,8 +17,12 @@ import { baseApi } from '../services/baseApi';
 const persistConfig = {
   key: 'auth',
   storage,
-  whitelist: ['accessToken', 'userName'],
+  whitelist: ['accessToken', 'userName'] ,
 };
+
+if (!storage) {
+  throw new Error('No storage mechanism found for redux-persist');
+}
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 

@@ -1,13 +1,16 @@
 import { Link } from 'react-router-dom';
 import { IVenue } from '../../types/venue';
-import VenueGrid from './VenueGrid';
+import { VenueGrid } from './VenueGrid';
 
 interface VenueManagementSectionProps {
   venues: IVenue[];
   showOwnerActions: boolean;
 }
 
-const VenueManagementSection = ({ venues, showOwnerActions }: VenueManagementSectionProps) => {
+export const VenueManagementSection = ({
+  venues,
+  showOwnerActions,
+}: VenueManagementSectionProps) => {
   return (
     <section className="mt-8 p-4 border-t border-gray-200">
       <div className="flex justify-between items-center mb-6">
@@ -18,10 +21,9 @@ const VenueManagementSection = ({ venues, showOwnerActions }: VenueManagementSec
         >
           Create New Venue
         </Link>
+
+        <VenueGrid venues={venues} showOwnerActions={showOwnerActions} />
       </div>
-      <VenueGrid venues={venues} showOwnerActions={showOwnerActions} />
     </section>
   );
 };
-
-export default VenueManagementSection;

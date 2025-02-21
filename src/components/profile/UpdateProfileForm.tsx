@@ -6,12 +6,14 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
 import { useGetProfileByNameQuery, useUpdateProfileMutation } from '../../services/profileApi';
 import { UpdateProfileFormData, updateProfileSchema } from '../../schemas/updateProfile';
+import { Button } from '../common/Buttons';
+import { CheckboxInput } from '../common/input/CheckBox';
+import { MediaInput } from '../common/input/MediaInput';
+import { TextareaInput } from '../common/input/TextareaInput';
 import { useApiError } from '../../hooks/useApiError';
-import Button from '../common/Buttons';
-import CheckboxInput from '../common/CheckBox';
-import Loader from '../common/Loader';
-import MediaInput from '../common/MediaInput';
-import TextareaInput from '../common/TextareaInput';
+import { ErrorDisplay } from '../common/feedback/ErrorDisplay';
+import { Loader } from 'lucide-react';
+import { MessageDisplay } from '../common/feedback/MessageDisplay';
 
 interface UpdateProfileFormProps {
   onSuccess?: () => void;
@@ -19,7 +21,7 @@ interface UpdateProfileFormProps {
 
 export const UpdateProfileForm = ({ onSuccess }: UpdateProfileFormProps) => {
   const { username } = useParams();
-  const { error, handleError, clearError } = useApiError();
+  const { error, handleError } = useApiError();
   const {
     data: profile,
     isLoading: isProfileLoading,
@@ -57,70 +59,101 @@ export const UpdateProfileForm = ({ onSuccess }: UpdateProfileFormProps) => {
     }
   }, [profile, reset]);
 
-  if (isProfileLoading || isSubmitting) return <Loader />;
-  if (isError) return <div>Error loading profile</div>;
-  if (!profile) return null;
+  if (isProfileLoading)
+    return (
+      <div className="p-4 flex justify-center">
+        <Loader />
+      </div>
+    );
+  if (isError) {
+    return (
+      <MessageDisplay title="Error" message="Could not load profile information" variant="error" />
+    );
+  }
+  if (!profile) {
+    return (
+      <MessageDisplay title="No Data" message="Profile information not available" variant="empty" />
+    );
+  }
 
   const onSubmit = async (data: UpdateProfileFormData) => {
     if (!username) return;
-    clearError();
+
     try {
       await updateProfile({ name: username, data }).unwrap();
       onSuccess?.();
     } catch (err) {
-      handleError(err as FetchBaseQueryError | SerializedError, 'Profile Update');
+      handleError(err as FetchBaseQueryError | SerializedError);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      {error.message && (
-        <div className="bg-red-100 text-red-700 border border-red-400 px-4 py-3 rounded-md">
-          {error.message}
-        </div>
-      )}
+    <div className="max-h-screen overflow-y-auto p-4">
+      <div className="space-y-3" role="form" aria-label="Update profile form">
+        <h2 className="text-xl font-medium" id="profile-form-title">
+          Update Your Profile
+        </h2>
 
-      <TextareaInput<UpdateProfileFormData>
-        label="Bio"
-        name="bio"
-        register={register}
-        error={errors.bio?.message}
-        rows={4}
-      />
+        <ErrorDisplay error={error} />
 
-      <MediaInput
-        label="Avatar"
-        value={watch('avatar') || { url: '', alt: '' }}
-        onChange={(value) => setValue('avatar', value || { url: '', alt: '' })}
-        error={{
-          url: errors.avatar?.url?.message,
-          alt: errors.avatar?.alt?.message,
-        }}
-      />
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+          <TextareaInput<UpdateProfileFormData>
+            label="Bio"
+            name="bio"
+            register={register}
+            error={errors.bio?.message}
+            rows={4}
+            aria-label="Your biography"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <MediaInput
+              label="Avatar"
+              value={watch('avatar') || { url: '', alt: '' }}
+              onChange={(value) => setValue('avatar', value || { url: '', alt: '' })}
+              error={{
+                url: errors.avatar?.url?.message,
+                alt: errors.avatar?.alt?.message,
+              }}
+              aria-label="Upload avatar image"
+            />
 
-      <MediaInput
-        label="Banner"
-        value={watch('banner') || { url: '', alt: '' }}
-        onChange={(value) => setValue('banner', value || { url: '', alt: '' })}
-        error={{
-          url: errors.banner?.url?.message,
-          alt: errors.banner?.alt?.message,
-        }}
-      />
+            <MediaInput
+              label="Banner"
+              value={watch('banner') || { url: '', alt: '' }}
+              onChange={(value) => setValue('banner', value || { url: '', alt: '' })}
+              error={{
+                url: errors.banner?.url?.message,
+                alt: errors.banner?.alt?.message,
+              }}
+              aria-label="Upload banner image"
+            />
+          </div>
+          <CheckboxInput<UpdateProfileFormData>
+            label="I want to be a venue manager"
+            name="venueManager"
+            register={register}
+            aria-label="Become a venue manager"
+          />
 
-      <CheckboxInput<UpdateProfileFormData>
-        label="I want to be a venue manager"
-        name="venueManager"
-        register={register}
-      />
-
-      <Button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-      >
-        {isSubmitting ? <Loader /> : 'Update Profile'}
-      </Button>
-    </form>
+          <div className="flex gap-2" role="group" aria-label="Form actions">
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-blue-500 text-white py-2 px-4  hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              aria-busy={isSubmitting}
+            >
+              {isSubmitting ? (
+                <div className="flex items-center justify-center gap-2">
+                  <Loader aria-hidden="true" />
+                  <span>Updating Profile</span>
+                </div>
+              ) : (
+                'Update Profile'
+              )}
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };

@@ -1,6 +1,6 @@
-import ImageComponent from '../common/Image';
+import {ImageComponent} from '../common/Image';
 
-const ProfileHeader = ({ profile }: { profile: any }) => {
+export const ProfileHeader = ({ profile }: { profile: any }) => {
   return (
     <>
       {profile.banner && (
@@ -15,5 +15,3 @@ const ProfileHeader = ({ profile }: { profile: any }) => {
     </>
   );
 };
-
-export default ProfileHeader;
