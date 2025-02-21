@@ -1,6 +1,6 @@
-import { Hotel } from 'lucide-react';
 import { ImageComponent } from '../../common/Image';
 import { IVenue } from '../../../types/venue';
+import { PlaceholderRoomImage } from '../../common/PlaceholderRoomImage';
 
 export const VenueCardImage = ({
   media,
@@ -15,12 +15,13 @@ export const VenueCardImage = ({
         <ImageComponent
           src={media[0].url}
           alt={media[0].alt || `Primary image of ${venueName}`}
-          className="w-full h-48 object-cover"
+          className="w-full h-52 object-cover"
         />
       ) : (
-        <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
-          <Hotel className="w-12 h-12 text-orange-500" aria-hidden="true" />
-        </div>
+        <PlaceholderRoomImage
+          imagePath="/src/assets/placeholder.jpg"
+          altText={`Placeholder image for ${venueName}`}
+        />
       )}
     </div>
   </div>
