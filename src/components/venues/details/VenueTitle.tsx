@@ -7,8 +7,7 @@ interface VenueTitleProps {
 export const VenueTitle = ({ title, className = '', as = 'h2' }: VenueTitleProps) => {
   const Component = as;
   return (
-    <div className="bg-neutral-light border-b-2 border-primary-dark py-1">
-      {' '}
+    <div className="bg-neutral-light border-b-2 border-primary-dark">
       <Component className={`text-neutral px-4 text-lg ${className}`}>{title}</Component>
     </div>
   );

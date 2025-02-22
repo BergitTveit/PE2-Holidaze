@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetVenueByIdQuery } from '../services/venuesApi';
-import { AddVenueForm } from '../components/venues/forms/AddVenueForm';
+import { AddVenueForm } from '../components/venues/venues/AddVenueForm';
 import { MessageDisplay } from '../components/common/feedback/MessageDisplay';
 
 const CreateVenuePage = () => {
