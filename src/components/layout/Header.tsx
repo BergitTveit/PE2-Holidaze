@@ -8,14 +8,16 @@ export const Header = () => {
       className="bg-neutral shadow relative"
       style={{
         backgroundImage: `url('/src/assets/placeholder.jpg')`,
-        backgroundSize: 'cover', // Adjust this to control how much of the image you want visible
-        backgroundPosition: 'center', // Position the image in the center
-        height: '50px', // Set height of the header, adjust as needed
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        height: '50px',
       }}
     >
       <div className="absolute top-0 left-0 w-full h-full bg-neutral opacity-90"></div>
       <nav className="container mx-auto px-4 py-4 relative z-10">
-        <Link to="/" className="ml-4 text-white">HOLIDAZE</Link>
+        <Link to="/" className="ml-4 text-white">
+          HOLIDAZE
+        </Link>
         <Link to="/venues" className="ml-4 text-white">
           Venues
         </Link>
