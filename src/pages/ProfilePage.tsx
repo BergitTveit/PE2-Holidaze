@@ -92,24 +92,6 @@ const ProfilePage = () => {
       </Modal>
     </div>
   );
-  // return (
-  //   <div className="container mx-auto px-4">
-  //     <Profile profile={profile} onEditClick={() => setIsModalOpen(true)} />
-
-  //     {profile.venueManager && (
-  //       <>
-  //         <VenueManagementSection venues={profile.venues || []} showOwnerActions={isOwnProfile} />
-  //         <BookingManagementSection venues={venuesWithBookings || []} />
-  //       </>
-  //     )}
-
-  //     <BookingGrid bookings={profile.bookings} />
-
-  //     <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Edit Profile">
-  //       <UpdateProfileForm onSuccess={() => setIsModalOpen(false)} />
-  //     </Modal>
-  //   </div>
-  // );
 };
 
 export default ProfilePage;
