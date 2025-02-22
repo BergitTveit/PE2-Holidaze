@@ -4,14 +4,17 @@ import { useGetProfileByNameQuery, useGetProfileVenuesQuery } from '../services/
 import { UpdateProfileForm } from '../components/profile/UpdateProfileForm';
 import { Profile } from '../components/profile/Profile';
 import { Modal } from '../components/common/Modal';
-import { BookingGrid } from '../components/venues/bookings/BookingGrid';
-import { VenueManagementSection } from '../components/venues/VenueManagementSection';
+import { BookingGrid } from '../components/venues/bookings/UserBookingGrid';
+import { VenueManagementSection } from '../components/venues/venues/VenueManagementSection';
 import { useAppSelector } from '../hooks/useStore';
 import { BookingManagementSection } from '../components/venues/bookings/BookingManagementSection';
 import { MessageDisplay } from '../components/common/feedback/MessageDisplay';
+import { ProfileNav } from '../components/profile/ProfileNav';
+import { ProfileSection } from '../components/profile/ProfileNav';
 
 const ProfilePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentSection, setCurrentSection] = useState<ProfileSection>('bookings');
   const { username } = useParams();
   const { userName } = useAppSelector((state) => state.auth);
 
@@ -60,25 +63,53 @@ const ProfilePage = () => {
   }
 
   const isOwnProfile = userName === profile.name;
-
   return (
     <div className="container mx-auto px-4">
       <Profile profile={profile} onEditClick={() => setIsModalOpen(true)} />
 
-      {profile.venueManager && (
-        <>
-          <VenueManagementSection venues={profile.venues || []} showOwnerActions={isOwnProfile} />
-          <BookingManagementSection venues={venuesWithBookings || []} />
-        </>
-      )}
+      <ProfileNav
+        isVenueManager={profile.venueManager}
+        currentSection={currentSection}
+        onSectionChange={setCurrentSection}
+      />
 
-      <BookingGrid bookings={profile.bookings} />
+      {profile.venueManager ? (
+        <>
+          {currentSection === 'venues' && (
+            <VenueManagementSection venues={profile.venues || []} showOwnerActions={isOwnProfile} />
+          )}
+          {currentSection === 'bookings' && <BookingGrid bookings={profile.bookings} />}
+          {currentSection === 'venueBookings' && (
+            <BookingManagementSection venues={venuesWithBookings || []} />
+          )}
+        </>
+      ) : (
+        <BookingGrid bookings={profile.bookings} />
+      )}
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Edit Profile">
         <UpdateProfileForm onSuccess={() => setIsModalOpen(false)} />
       </Modal>
     </div>
   );
+  // return (
+  //   <div className="container mx-auto px-4">
+  //     <Profile profile={profile} onEditClick={() => setIsModalOpen(true)} />
+
+  //     {profile.venueManager && (
+  //       <>
+  //         <VenueManagementSection venues={profile.venues || []} showOwnerActions={isOwnProfile} />
+  //         <BookingManagementSection venues={venuesWithBookings || []} />
+  //       </>
+  //     )}
+
+  //     <BookingGrid bookings={profile.bookings} />
+
+  //     <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Edit Profile">
+  //       <UpdateProfileForm onSuccess={() => setIsModalOpen(false)} />
+  //     </Modal>
+  //   </div>
+  // );
 };
 
 export default ProfilePage;
