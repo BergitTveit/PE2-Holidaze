@@ -4,8 +4,9 @@ import { useGetVenuesQuery, useSearchVenuesQuery } from '../services/venuesApi';
 import { SearchBar } from '../components/common/searchBar/SearchBar';
 import { Pagination } from '../components/common/pagination';
 import { MessageDisplay } from '../components/common/feedback/MessageDisplay';
-import { Heading } from 'lucide-react';
+
 import { VenueGrid } from '../components/venues/venues/VenueGrid';
+import { Heading } from '../components/common/Heading';
 
 
 const VenuesPage = () => {
