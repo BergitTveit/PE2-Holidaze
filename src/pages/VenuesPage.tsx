@@ -1,13 +1,11 @@
+import { Helmet } from 'react-helmet-async';
 import { useSearchParams } from 'react-router-dom';
 import { useGetVenuesQuery, useSearchVenuesQuery } from '../services/venuesApi';
-
 import { SearchBar } from '../components/common/searchBar/SearchBar';
 import { Pagination } from '../components/common/pagination';
 import { MessageDisplay } from '../components/common/feedback/MessageDisplay';
-
 import { VenueGrid } from '../components/venues/venues/VenueGrid';
 import { Heading } from '../components/common/Heading';
-
 
 const VenuesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,6 +32,13 @@ const VenuesPage = () => {
         sortOrder: 'desc',
       });
 
+  const getTitle = () => {
+    if (isLoading) return 'Loading Venues';
+    if (error) return 'Error Loading Venues';
+    if (!venues?.data?.length) return 'No Venues Found';
+    return searchTerm ? `Search Results: ${searchTerm}` : 'Browse All Venues';
+  };
+
   const handlePageChange = (newPage: number) => {
     const params = new URLSearchParams(searchParams);
     if (searchTerm) {
@@ -43,29 +48,35 @@ const VenuesPage = () => {
     setSearchParams(params);
   };
 
-  if (isLoading) {
-    return (
-      <MessageDisplay
-        title="Loading venues"
-        message="Please wait while we fetch the venues"
-        variant="loading"
-      />
-    );
-  }
-  if (error) {
-    return (
-      <MessageDisplay
-        title="Error occurred"
-        message="There was a problem loading venues"
-        variant="error"
-      />
-    );
-  }
-
   return (
     <>
+      <Helmet>
+        <title>{`${getTitle()} - Holidaze`}</title>
+        <meta
+          name="description"
+          content={
+            searchTerm
+              ? `Search results for "${searchTerm}" - Find your perfect venue on Holidaze`
+              : 'Browse all available venues for your next stay on Holidaze'
+          }
+        />
+      </Helmet>
+
       <SearchBar />
-      {venues?.data?.length === 0 ? (
+
+      {isLoading ? (
+        <MessageDisplay
+          title="Loading venues"
+          message="Please wait while we fetch the venues"
+          variant="loading"
+        />
+      ) : error ? (
+        <MessageDisplay
+          title="Error occurred"
+          message="There was a problem loading venues"
+          variant="error"
+        />
+      ) : venues?.data?.length === 0 ? (
         <MessageDisplay
           title="No venues found"
           message="Try adjusting your search or location filters"

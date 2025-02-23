@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetProfileByNameQuery, useGetProfileVenuesQuery } from '../services/profileApi';
@@ -33,65 +34,75 @@ const ProfilePage = () => {
     }
   );
 
-  if (isLoading || venuesLoading) {
-    return (
-      <MessageDisplay
-        title="Loading profile"
-        message="Please wait while we fetch the profile details"
-        variant="loading"
-      />
-    );
-  }
-
-  if (error) {
-    return (
-      <MessageDisplay
-        title="Error occurred"
-        message="There was a problem loading the profile"
-        variant="error"
-      />
-    );
-  }
-  if (!profile) {
-    return (
-      <MessageDisplay
-        title="Profile not found"
-        message="The profile you're looking for doesn't exist"
-        variant="empty"
-      />
-    );
-  }
-
-  const isOwnProfile = userName === profile.name;
+  const getTitle = () => {
+    if (isLoading) return 'Loading Profile';
+    if (error) return 'Error Loading Profile';
+    if (!profile) return 'Profile Not Found';
+    return `${profile.name}'s Profile`;
+  };
 
   return (
-    <div className="container mx-auto px-4">
-      <Profile profile={profile} onEditClick={() => setIsModalOpen(true)} />
+    <>
+      <Helmet>
+        <title>{`${getTitle()} - Holidaze`}</title>
+        <meta
+          name="description"
+          content={
+            profile
+              ? `View ${profile.name}'s profile, bookings and venues on Holidaze`
+              : 'View user profile on Holidaze'
+          }
+        />
+      </Helmet>
 
-      <ProfileNav
-        isVenueManager={profile.venueManager}
-        currentSection={currentSection}
-        onSectionChange={onSectionChange}
-      />
-
-      {profile.venueManager ? (
-        <>
-          {currentSection === 'venues' && (
-            <VenueManagementSection venues={profile.venues || []} showOwnerActions={isOwnProfile} />
-          )}
-          {currentSection === 'bookings' && <BookingGrid bookings={profile.bookings} />}
-          {currentSection === 'venueBookings' && (
-            <BookingManagementSection venues={venuesWithBookings || []} />
-          )}
-        </>
+      {isLoading || venuesLoading ? (
+        <MessageDisplay
+          title="Loading profile"
+          message="Please wait while we fetch the profile details"
+          variant="loading"
+        />
+      ) : error ? (
+        <MessageDisplay
+          title="Error occurred"
+          message="There was a problem loading the profile"
+          variant="error"
+        />
+      ) : !profile ? (
+        <MessageDisplay
+          title="Profile not found"
+          message="The profile you're looking for doesn't exist"
+          variant="empty"
+        />
       ) : (
-        <BookingGrid bookings={profile.bookings} />
+        <div className="container mx-auto px-4">
+          <Profile profile={profile} onEditClick={() => setIsModalOpen(true)} />
+          <ProfileNav
+            isVenueManager={profile.venueManager}
+            currentSection={currentSection}
+            onSectionChange={onSectionChange}
+          />
+          {profile.venueManager ? (
+            <>
+              {currentSection === 'venues' && (
+                <VenueManagementSection
+                  venues={profile.venues || []}
+                  showOwnerActions={userName === profile.name}
+                />
+              )}
+              {currentSection === 'bookings' && <BookingGrid bookings={profile.bookings} />}
+              {currentSection === 'venueBookings' && (
+                <BookingManagementSection venues={venuesWithBookings || []} />
+              )}
+            </>
+          ) : (
+            <BookingGrid bookings={profile.bookings} />
+          )}
+          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Edit Profile">
+            <UpdateProfileForm onSuccess={() => setIsModalOpen(false)} />
+          </Modal>
+        </div>
       )}
-
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Edit Profile">
-        <UpdateProfileForm onSuccess={() => setIsModalOpen(false)} />
-      </Modal>
-    </div>
+    </>
   );
 };
 
