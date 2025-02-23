@@ -17,7 +17,7 @@ export const TextInput = <T extends FieldValues>({
         {...register(name)}
         type="text"
         id={name}
-        className={`mt-1 block w-full border-gray-300 ${error ? 'border-red-500' : ''}`}
+        className={`mt-1 block w-full border-2 border-primary ${error ? 'border-red-500' : ''}`}
       />
       {error && <span className="text-red-500 text-sm">{error}</span>}
     </div>

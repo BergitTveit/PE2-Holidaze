@@ -22,7 +22,7 @@ export const TextareaInput = <T extends FieldValues>({
         {...register(name)}
         id={name}
         rows={rows}
-        className={`mt-1 block w-full${error ? 'border-red-500' : ''}`}
+        className={`mt-1 block w-full border-2 border-primary${error ? 'border-red-500' : ''}`}
       />
       {error && <span className="text-red-500 text-sm">{error}</span>}
     </div>

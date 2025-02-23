@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { BaseFeedbackProps } from './MessageDisplay';
-import { XCircle, CheckCircle, Info } from 'lucide-react';
+import { XCircle, CheckCircle } from 'lucide-react';
 
-export type ToastType = 'success' | 'error' | 'info';
+export type ToastType = 'success';
 
 export interface ToastProps extends BaseFeedbackProps {
   type: ToastType;
@@ -10,15 +10,11 @@ export interface ToastProps extends BaseFeedbackProps {
 }
 
 const iconMap: Record<ToastType, typeof XCircle> = {
-  error: XCircle,
   success: CheckCircle,
-  info: Info,
 };
 
 const typeStyles: Record<ToastType, string> = {
   success: 'bg-primary-dark text-white shadow-lg rounded-lg',
-  error: 'bg-red-500 text-white shadow-lg rounded-lg',
-  info: 'bg-neutral text-white shadow-lg rounded-lg',
 };
 
 export const Toast = ({ message, type, onClose }: ToastProps) => {

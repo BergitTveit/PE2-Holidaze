@@ -9,7 +9,7 @@ declare global {
 
 const useHotjar = (hjid: number, hjsv: number = 6): void => {
   useEffect(() => {
-    if (window.hj) return; // Prevent multiple script injections
+    if (window.hj) return; 
 
     window._hjSettings = { hjid, hjsv };
 

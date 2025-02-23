@@ -12,20 +12,29 @@ interface BaseVenueCardProps {
   showExpand?: boolean;
   children?: React.ReactNode;
 }
+/**
+ * BaseVenueCard component for displaying venue details with optional expandable content.
+ *
+ * @param {Object} props - Component props.
+ * @param {IVenue} props.venue - The venue data to be displayed.
+ * @param {boolean} [props.isExpanded=false] - Whether the card's expandable section is open.
+ * @param {() => void} [props.onToggle] - Function to toggle the expanded state.
+ * @param {boolean} [props.showExpand=false] - Whether to show the expand/collapse button.
+ * @param {React.ReactNode} [props.children] - Additional content to display when expanded.
+ *
+ * @returns {JSX.Element} - The rendered BaseVenueCard component.
+ */
 export const BaseVenueCard = ({
   venue,
   isExpanded = false,
   onToggle,
   showExpand = false,
   children,
-}: BaseVenueCardProps) => {
+}: BaseVenueCardProps): JSX.Element => {
   return (
     <div className={`w-full md:py-6 mb-6 md:mb-0 ${isExpanded ? 'mb-8' : ''}`}>
       <div className="relative">
-        <div
-          className={`bg-neutral-light transition-all duration-300 ease-in-out h-16
-          ${isExpanded ? 'h-auto' : ''}`}
-        >
+        <div className={`h-auto bg-neutral-light transition-all duration-300 ease-in-out md:h-16`}>
           <div className="p-4 md:hidden w-full">
             <div className="flex justify-between items-center">
               <VenueTitle title={venue.name} as="h3" className="bg-white text-xl text-neutral" />
@@ -66,10 +75,7 @@ export const BaseVenueCard = ({
         >
           <div className="flex flex-col md:flex-row">
             <div className="hidden md:block md:w-[260px]" />
-            <div className="flex-1 p-4 md:p-4">
-              <div className="md:hidden h-48" />
-              {children}
-            </div>
+            <div className="flex-1 p-4 md:p-4">{children}</div>
           </div>
         </div>
       </div>

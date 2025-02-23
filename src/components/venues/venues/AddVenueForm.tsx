@@ -15,6 +15,7 @@ import { TextareaInput } from '../../common/input/TextareaInput';
 import { TextInput } from '../../common/input/TextInput';
 import { ErrorDisplay } from '../../common/feedback/ErrorDisplay';
 import { IVenue } from '../../../types/venue';
+import { useToast } from '../../../hooks/useToast';
 
 interface VenueFormProps {
   mode: 'create' | 'edit';
@@ -26,6 +27,7 @@ export const AddVenueForm = ({ mode, initialData, onSuccess }: VenueFormProps) =
   const navigate = useNavigate();
   const [createVenue, { isLoading: isCreating }] = useCreateVenueMutation();
   const [updateVenue, { isLoading: isUpdating }] = useUpdateVenueMutation();
+  const { showSuccess } = useToast();
   const { error, handleError } = useApiError();
 
   const isLoading = isCreating || isUpdating;
@@ -70,8 +72,10 @@ export const AddVenueForm = ({ mode, initialData, onSuccess }: VenueFormProps) =
       let result;
       if (mode === 'create') {
         result = await createVenue(data).unwrap();
+        showSuccess('Venue created successfully!');
       } else {
         result = await updateVenue({ id: initialData!.id, venue: data }).unwrap();
+        showSuccess('Venue updated successfully!');
       }
       if (onSuccess) {
         onSuccess(result);
@@ -261,16 +265,20 @@ export const AddVenueForm = ({ mode, initialData, onSuccess }: VenueFormProps) =
           />
         </div>
       </div>
-
-      <Button
-        type="submit"
-        disabled={isLoading}
-        className="w-full disabled:opacity-50"
-        aria-busy={isLoading}
-        aria-label={`${isLoading ? 'Processing' : mode === 'create' ? 'Create new venue' : 'Save venue changes'}`}
-      >
-        {isLoading ? <Loader /> : mode === 'create' ? 'Create Venue' : 'Update Changes'}
-      </Button>
+      <div className="flex gap-4">
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className="flex-1 disabled:opacity-50"
+          aria-busy={isLoading}
+          aria-label={`${isLoading ? 'Processing' : mode === 'create' ? 'Create new venue' : 'Save venue changes'}`}
+        >
+          {isLoading ? <Loader /> : mode === 'create' ? 'Create Venue' : 'Update Changes'}
+        </Button>
+        <Button type="button" variant="secondary" onClick={() => navigate(-1)} className="flex-1">
+          Cancel
+        </Button>
+      </div>
     </form>
   );
 };

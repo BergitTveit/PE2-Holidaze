@@ -34,9 +34,9 @@ export const ProfileInfo = ({
           className={`absolute top-24 left-12 w-px h-32 ${isVenueManager ? 'bg-primary' : 'bg-neutral'}`}
         />
 
-        <div className="absolute top-28 left-16 text-sm font-medium">
+        <div className="absolute top-26 left-4 font-medium origin-left rotate-90 ">
           {isVenueManager ? (
-            <div className="text-primary">
+            <div className="text-primary ">
               <div>MANAGER</div>
               <div>&amp; traveller</div>
             </div>
@@ -65,7 +65,7 @@ export const ProfileInfo = ({
       </div>
 
       {profile.bio && (
-        <div className="mt-40 ml-28">
+        <div className="h-40 ml-28">
           <p className="text-neutral">{profile.bio}</p>
         </div>
       )}

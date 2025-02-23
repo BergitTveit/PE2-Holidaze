@@ -4,7 +4,6 @@ import { VenueTitle } from '../details/VenueTitle';
 import { VenuePrice } from '../details/VenuePrice';
 import { VenueMaxGuests } from '../details/VenueMaxGuests';
 import { VenueMeta } from '../details/VenueMeta';
-// import { VenueRating } from './details/VenueRating';
 import { OwnerActions } from '../details/OwnerActions';
 import { VenueCardImage } from '../details/VenueCardImage';
 

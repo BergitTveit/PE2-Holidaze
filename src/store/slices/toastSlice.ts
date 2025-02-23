@@ -1,4 +1,3 @@
-// src/store/slices/toastSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ToastType } from '../../components/common/feedback/Toast';
 

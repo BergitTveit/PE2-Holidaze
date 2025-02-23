@@ -7,12 +7,7 @@ export interface IProfile {
   email: string;
   bio: string;
   avatar: IMedia;
-  banner: IMedia;
   venueManager: boolean;
   venues: IVenue[];
   bookings: IBooking[];
-  _count: {
-    venues: number;
-    bookings: number;
-  };
 }
