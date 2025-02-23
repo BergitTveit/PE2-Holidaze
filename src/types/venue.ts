@@ -13,7 +13,6 @@ export interface IVenue {
   updated: string;
   meta: IMeta;
   location: IVenueLocation;
-  owner: IVenueOwner;
   bookings: IBooking[];
   _count: {
     bookings: number;
@@ -32,15 +31,4 @@ export interface IVenueLocation {
   city: string;
   zip: string;
   country: string;
-  continent: string;
-  lat: number;
-  lng: number;
-}
-
-export interface IVenueOwner {
-  name: string;
-  email: string;
-  bio: string;
-  avatar: IMedia;
-  banner: IMedia;
 }

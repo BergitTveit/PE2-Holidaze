@@ -1,16 +1,11 @@
 import { UpdateProfileFormData } from '../schemas/updateProfile';
 import { IProfile } from '../types/profile';
-import { ApiResponse } from './venuesApi';
-import { API_PROFILES, API_PROFILE_SEARCH, getProfileUrl } from './apiConstants';
+import { getProfileUrl } from './apiConstants';
 import { baseApi } from './baseApi';
 import { IVenue } from '../types/venue';
 
 export const profilesApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getProfiles: builder.query<ApiResponse<IProfile[]>, void>({
-      query: () => API_PROFILES,
-      transformResponse: (response: ApiResponse<IProfile[]>) => response,
-    }),
     getProfileByName: builder.query<IProfile, string>({
       query: (name) => ({
         url: getProfileUrl(name),
@@ -28,6 +23,7 @@ export const profilesApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: (_result, _error, { name }) => [{ type: 'Profile', id: name }],
     }),
+
     getProfileVenues: builder.query<IVenue[], string>({
       query: (username) => ({
         url: `${getProfileUrl(username)}/venues`,
@@ -44,22 +40,9 @@ export const profilesApi = baseApi.injectEndpoints({
             ]
           : [{ type: 'Venue', id: 'LIST' }],
     }),
-
-    searchProfiles: builder.query<ApiResponse<IProfile[]>, string>({
-      query: (query) => ({
-        url: API_PROFILE_SEARCH,
-        params: { q: query },
-      }),
-      transformResponse: (response: ApiResponse<IProfile[]>) => response,
-    }),
   }),
   overrideExisting: false,
 });
 
-export const {
-  useGetProfilesQuery,
-  useSearchProfilesQuery,
-  useGetProfileByNameQuery,
-  useGetProfileVenuesQuery,
-  useUpdateProfileMutation,
-} = profilesApi;
+export const { useGetProfileByNameQuery, useGetProfileVenuesQuery, useUpdateProfileMutation } =
+  profilesApi;

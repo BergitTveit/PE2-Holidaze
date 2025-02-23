@@ -10,10 +10,11 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { baseApi } from '../services/baseApi';
 import authReducer from './slices/authSlice';
 import profileReducer from './slices/profileSlice';
-import { baseApi } from '../services/baseApi';
 import toastReducer from './slices/toastSlice';
+
 const authPersistConfig = {
   key: 'auth',
   storage,
