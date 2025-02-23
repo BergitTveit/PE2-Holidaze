@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 const Layout = () => {
   const location = useLocation();
-  const noFramePages = ['/register', '/login', '/venues/create'];
+  const noFramePages = ['/register', '/login'];
   const shouldHaveFrame = !noFramePages.includes(location.pathname);
 
   return (
