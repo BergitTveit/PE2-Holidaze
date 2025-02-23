@@ -14,7 +14,7 @@ export const ProfileVenuesLayout = ({
   return (
     <section className={`mt-8 mb-8 p-4 ${className}`}>
       <div className="mt-8 space-y-28">{children}</div>
-      {actionButtons && <div className="flex justify-center py-6">{actionButtons}</div>}
+      {actionButtons && <div className="flex justify-center py-24  ">{actionButtons}</div>}
     </section>
   );
 };

@@ -22,10 +22,7 @@ export const BaseVenueCard = ({
   return (
     <div className={`w-full md:py-6 mb-6 md:mb-0 ${isExpanded ? 'mb-8' : ''}`}>
       <div className="relative">
-        <div
-          className={`bg-neutral-light transition-all duration-300 ease-in-out h-16
-          ${isExpanded ? 'h-auto' : ''}`}
-        >
+        <div className={`h-auto bg-neutral-light transition-all duration-300 ease-in-out md:h-16`}>
           <div className="p-4 md:hidden w-full">
             <div className="flex justify-between items-center">
               <VenueTitle title={venue.name} as="h3" className="bg-white text-xl text-neutral" />
@@ -66,10 +63,7 @@ export const BaseVenueCard = ({
         >
           <div className="flex flex-col md:flex-row">
             <div className="hidden md:block md:w-[260px]" />
-            <div className="flex-1 p-4 md:p-4">
-              <div className="md:hidden h-48" />
-              {children}
-            </div>
+            <div className="flex-1 p-4 md:p-4">{children}</div>
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { userName } = useAppSelector((state) => state.auth);
-  const { isVenueManager, currentSection, onSectionChange } = useProfile();
+  const { isVenueManager, onSectionChange } = useProfile();
 
   const handleNavigation = (path: string, section?: ProfileSection) => {
     setIsOpen(false);
@@ -44,7 +44,7 @@ export const Header = () => {
             onClick={() => handleNavigation(`/profile/${userName}`, 'bookings')}
             className="ml-4 text-white"
           >
-            {currentSection === 'venues' ? 'My Venues' : 'Profile'}
+            Profile
           </button>
         ) : (
           <>
