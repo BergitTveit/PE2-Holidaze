@@ -12,13 +12,25 @@ interface BaseVenueCardProps {
   showExpand?: boolean;
   children?: React.ReactNode;
 }
+/**
+ * BaseVenueCard component for displaying venue details with optional expandable content.
+ *
+ * @param {Object} props - Component props.
+ * @param {IVenue} props.venue - The venue data to be displayed.
+ * @param {boolean} [props.isExpanded=false] - Whether the card's expandable section is open.
+ * @param {() => void} [props.onToggle] - Function to toggle the expanded state.
+ * @param {boolean} [props.showExpand=false] - Whether to show the expand/collapse button.
+ * @param {React.ReactNode} [props.children] - Additional content to display when expanded.
+ *
+ * @returns {JSX.Element} - The rendered BaseVenueCard component.
+ */
 export const BaseVenueCard = ({
   venue,
   isExpanded = false,
   onToggle,
   showExpand = false,
   children,
-}: BaseVenueCardProps) => {
+}: BaseVenueCardProps): JSX.Element => {
   return (
     <div className={`w-full md:py-6 mb-6 md:mb-0 ${isExpanded ? 'mb-8' : ''}`}>
       <div className="relative">

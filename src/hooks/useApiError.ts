@@ -46,14 +46,30 @@ const getErrorMessages = (error: FetchBaseQueryError | SerializedError): string[
   return ['An unexpected error occurred'];
 };
 
+/**
+ * Custom hook for handling API errors and managing error state.
+ *
+ * @returns {Object} An object containing:
+ * - `error` {ErrorState} - The current error state with messages.
+ * - `handleError` {(error: FetchBaseQueryError | SerializedError) => void} - Function to process and store API error messages.
+ * - `clearError` {() => void} - Function to clear the error state.
+ */
 export const useApiError = () => {
   const [error, setError] = useState<ErrorState>({ messages: [] });
 
+  /**
+   * Handles an API error and updates the error state.
+   *
+   * @param {FetchBaseQueryError | SerializedError} error - The API error to process.
+   */
   const handleError = (error: FetchBaseQueryError | SerializedError) => {
     const messages = getErrorMessages(error);
     setError({ messages });
   };
 
+  /**
+   * Clears the current error state.
+   */
   const clearError = () => setError({ messages: [] });
 
   return {

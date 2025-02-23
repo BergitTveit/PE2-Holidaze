@@ -5,6 +5,14 @@ import { useAppDispatch, useAppSelector } from './useStore';
 import { setCurrentSection } from '../store/slices/profileSlice';
 import { useEffect } from 'react';
 
+/**
+ * Custom hook to manage user profile data and section state.
+ *
+ * @returns {Object} An object containing:
+ * - `currentSection` {ProfileSection} - The currently selected profile section.
+ * - `onSectionChange` {(section: ProfileSection) => void} - Function to update the current section.
+ * - `isVenueManager` {boolean} - Boolean indicating if the user is a venue manager.
+ */
 export const useProfile = () => {
   const { username } = useParams();
   const dispatch = useAppDispatch();
@@ -17,6 +25,11 @@ export const useProfile = () => {
     }
   }, [profile?.venueManager, currentSection, dispatch]);
 
+  /**
+   * Updates the currently active section in the profile.
+   *
+   * @param {ProfileSection} section - The profile section to set.
+   */
   const onSectionChange = (section: ProfileSection) => {
     dispatch(setCurrentSection(section));
   };
