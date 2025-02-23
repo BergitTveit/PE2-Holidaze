@@ -51,7 +51,7 @@ export const VenueGallery = ({ images }: VenueGalleryProps) => {
               <ChevronRight />
             </Button>
           </>
-        )}{' '}
+        )}
       </div>
 
       <div className="flex gap-2 overflow-x-auto overflow-y-hidden mt-4">
@@ -59,7 +59,7 @@ export const VenueGallery = ({ images }: VenueGalleryProps) => {
           <Button
             key={index}
             onClick={() => setCurrentImage(index)}
-            className={`flex-shrink-0 w-20 h-20 p-0 ${currentImage === index ? 'scale-105 shadow-lg' : ''}`}
+            className={`flex-shrink-0 w-20 h-20 !p-0 ${currentImage === index ? 'scale-105 shadow-lg' : ''}`}
           >
             <ImageComponent
               src={image.url}
