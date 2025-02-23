@@ -56,7 +56,6 @@ export const UpdateProfileForm = ({ onSuccess }: UpdateProfileFormProps) => {
         bio: profile.bio,
         venueManager: profile.venueManager,
         avatar: profile.avatar,
-        banner: profile.banner,
       });
     }
   }, [profile, reset]);
@@ -118,17 +117,6 @@ export const UpdateProfileForm = ({ onSuccess }: UpdateProfileFormProps) => {
                 alt: errors.avatar?.alt?.message,
               }}
               aria-label="Upload avatar image"
-            />
-
-            <MediaInput
-              label="Banner"
-              value={watch('banner') || { url: '', alt: '' }}
-              onChange={(value) => setValue('banner', value || { url: '', alt: '' })}
-              error={{
-                url: errors.banner?.url?.message,
-                alt: errors.banner?.alt?.message,
-              }}
-              aria-label="Upload banner image"
             />
           </div>
           <CheckboxInput<UpdateProfileFormData>
