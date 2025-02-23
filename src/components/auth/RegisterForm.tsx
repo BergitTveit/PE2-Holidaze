@@ -9,11 +9,10 @@ import { useLoginMutation, useRegisterMutation } from '../../services/authApi';
 import { RegisterCredentials, RegisterFormData, registerSchema } from '../../schemas/auth';
 import { useApiError } from '../../hooks/useApiError';
 import { AuthInput } from '../common/input/authInput';
-import { TextInput } from '../common/input/TextInput';
-import { CheckboxInput } from '../common/input/CheckBox';
 import { Button } from '../common/Buttons';
 import { ErrorDisplay } from '../common/feedback/ErrorDisplay';
 import { Loader } from 'lucide-react';
+import { SwitchInput } from '../common/input/SwitchInput';
 
 export const RegisterForm = () => {
   const dispatch = useAppDispatch();
@@ -59,8 +58,13 @@ export const RegisterForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <ErrorDisplay error={error} />
-
-      <TextInput label="Username" name="name" register={register} error={errors.name?.message} />
+      <AuthInput
+        type="text"
+        label="Username"
+        name="name"
+        register={register}
+        error={errors.name?.message}
+      />
       <AuthInput
         label="Email"
         name="email"
@@ -75,7 +79,6 @@ export const RegisterForm = () => {
         register={register}
         error={errors.password?.message}
       />
-
       <AuthInput
         label="Confirm Password"
         name="confirmPassword"
@@ -83,13 +86,12 @@ export const RegisterForm = () => {
         register={register}
         error={errors.confirmPassword?.message}
       />
-
-      <CheckboxInput
+      <SwitchInput
         label="I want to become a venue manager"
         name="venueManager"
         register={register}
+        className="text-xl text-primary font-bold"
       />
-
       <Button
         type="submit"
         disabled={isLoading}
