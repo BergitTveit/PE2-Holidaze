@@ -32,3 +32,9 @@ export interface IVenueLocation {
   zip: string;
   country: string;
 }
+export interface IVenueOwner {
+  name: string;
+  email: string;
+  bio: string;
+  avatar: IMedia;
+}
