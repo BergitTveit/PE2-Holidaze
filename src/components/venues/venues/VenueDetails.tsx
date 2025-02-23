@@ -60,20 +60,29 @@ export const VenueDetails = () => {
         <section>
           <VenueGallery images={venue.media} />
         </section>
-        <section>
-          <VenueMeta meta={venue.meta} variant="details" />
-          <VenueDescription description={venue.description} />
-          <div className="mt-4">
-            <VenuePrice price={venue.price} />
-            <VenueMaxGuests maxGuests={venue.maxGuests} />
+        <div className="mt-6 flex flex-col lg:flex-row lg:gap-8">
+          <div className="flex-1">
+            <VenueDescription description={venue.description} />
+            <div className="mt-4">
+              <VenuePrice price={venue.price} />
+              <VenueMaxGuests maxGuests={venue.maxGuests} />
+            </div>
+            <div className="relative mt-6">
+              <div className="absolute left-[50%] right-[50%] mx-[-50vw] w-screen h-48 bg-neutral" />{' '}
+              <div className="relative">
+                <VenueMeta meta={venue.meta} variant="details" />
+                <div className="mt-12">
+                  <VenueLocation venueLocation={venue.location} />
+                </div>
+              </div>
+            </div>
           </div>
-        </section>
-        <section>
-          <VenueLocation venueLocation={venue.location} />
-        </section>
-        <section className="mt-6">
-          <BookingForm venue={venue} />
-        </section>
+          <div className="lg:w-[400px] mt-6 lg:mt-0">
+            <div className="bg-white rounded-lg p-6">
+              <BookingForm venue={venue} />
+            </div>
+          </div>
+        </div>
       </main>
     </div>
   );
