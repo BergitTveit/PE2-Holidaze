@@ -10,11 +10,11 @@ import { useAppSelector } from '../hooks/useStore';
 import { BookingManagementSection } from '../components/venues/bookings/BookingManagementSection';
 import { MessageDisplay } from '../components/common/feedback/MessageDisplay';
 import { ProfileNav } from '../components/profile/ProfileNav';
-import { ProfileSection } from '../components/profile/ProfileNav';
+import { useProfile } from '../hooks/useProfile';
 
 const ProfilePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentSection, setCurrentSection] = useState<ProfileSection>('bookings');
+  const { currentSection, onSectionChange } = useProfile();
   const { username } = useParams();
   const { userName } = useAppSelector((state) => state.auth);
 
@@ -63,6 +63,7 @@ const ProfilePage = () => {
   }
 
   const isOwnProfile = userName === profile.name;
+
   return (
     <div className="container mx-auto px-4">
       <Profile profile={profile} onEditClick={() => setIsModalOpen(true)} />
@@ -70,7 +71,7 @@ const ProfilePage = () => {
       <ProfileNav
         isVenueManager={profile.venueManager}
         currentSection={currentSection}
-        onSectionChange={setCurrentSection}
+        onSectionChange={onSectionChange}
       />
 
       {profile.venueManager ? (
