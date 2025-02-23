@@ -29,7 +29,6 @@ For Venue Managers
     Tailwind CSS
     React Hook Form + Zod
     React Router
-    Axios
     Vite
     Lucide React
     Inter (base) & Playfair Display (headings)
@@ -72,29 +71,10 @@ The application features a modern, luxurious design with:
 
     Clean and minimalistic user interface
     Modern iconography using Lucide React
-    Elegant typography with Inter & Playfair Display
     Responsive layout for all devices
     Accessible design patterns
     Consistent brand styling and visual hierarchy
 
-🛠 Project Structure
-
-src/
-├── assets/
-├── components/
-│ ├── common/ # Shared components
-│ ├── auth/ # Authentication related components
-│ ├── venues/ # Venue related components
-│ └── bookings/ # Booking related components
-├── features/
-│ ├── auth/ # Authentication redux slice
-│ ├── venues/ # Venues redux slice
-│ └── bookings/ # Bookings redux slice
-├── pages/ # Page components
-├── services/ # API services
-├── store/ # Redux store configuration
-├── types/ # TypeScript types
-└── utils/ # Utility functions
 
 🚀 Deployment
 
