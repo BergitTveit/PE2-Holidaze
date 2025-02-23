@@ -78,7 +78,7 @@ The application features a modern, luxurious design with:
 
 🚀 Deployment
 
-The project is deployed on Netlify. View the live site at [your-project-url].
+The project is deployed on Netlify. View the live site at holidaze-rentals.netlify.app.
 
 👥 Contact
 
