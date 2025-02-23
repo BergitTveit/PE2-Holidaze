@@ -1,5 +1,4 @@
 import { IBooking } from '../../../types/booking';
-import { VenueMeta } from '../details/VenueMeta';
 import { BookedGuests } from '../details/BookedGuests';
 import { BookedDates } from '../details/BookedDates';
 import { BookingTotal } from '../details/BookingTotal';
@@ -28,7 +27,7 @@ export const BookingDisplayCard = ({ booking }: BookingCardProps) => {
         </div>
         <div className="flex justify-between items-center border-t pt-4">
           <BookingTotal booking={booking} />
-          <VenueMeta meta={venue.meta} />
+
         </div>
       </div>
     </BaseVenueCard>

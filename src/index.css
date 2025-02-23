@@ -24,7 +24,7 @@
 .react-datepicker {
   background-color: white !important;
   border: 2px solid var(--tw-color-primary-dark) !important;
-  border-radius: 0 !important;  
+  border-radius: 0 !important;
 }
 
 .react-datepicker__day--today.react-datepicker__day--selected {
