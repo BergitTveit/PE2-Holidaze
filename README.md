@@ -24,14 +24,28 @@ For Venue Managers
 
 💻 Tech Stack
 
-    React + TypeScript
-    Redux Toolkit
-    Tailwind CSS
-    React Hook Form + Zod
-    React Router
-    Vite
-    Lucide React
-    Inter (base) & Playfair Display (headings)
+
+
+### Core
+- React 18
+- TypeScript
+- Vite
+- Redux Toolkit (RTK) with RTK Query for API state management
+- Redux Persist for state persistence
+
+### Routing & Forms
+- React Router v7
+- React Hook Form with Zod validation
+
+### Styling & UI
+- TailwindCSS
+- Headless UI
+- Lucide React icons
+
+### Development
+- ESLint
+- Prettier
+- TypeScript ESLint
 
 🚀 Getting Started
 Prerequisites
