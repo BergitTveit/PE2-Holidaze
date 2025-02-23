@@ -1,6 +1,7 @@
 import { ImageComponent } from '../../common/Image';
 import { IVenue } from '../../../types/venue';
 import { PlaceholderRoomImage } from '../../common/PlaceholderRoomImage';
+import placeholder from '../../../../public/placeholder.jpg';
 
 export const VenueCardImage = ({
   media,
@@ -19,7 +20,7 @@ export const VenueCardImage = ({
         />
       ) : (
         <PlaceholderRoomImage
-          imagePath="/src/assets/placeholder.jpg"
+          imagePath={placeholder}
           altText={`Placeholder image for ${venueName}`}
         />
       )}
