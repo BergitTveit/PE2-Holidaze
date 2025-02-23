@@ -1,6 +1,6 @@
 import { Pencil } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { DeleteVenueButton } from '../DeleteVenueButton';
+import { DeleteVenueButton } from '../venues/DeleteVenueButton';
 
 interface OwnerActionsProps {
   venueId: string;

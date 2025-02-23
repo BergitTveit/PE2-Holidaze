@@ -6,5 +6,9 @@ interface VenueTitleProps {
 
 export const VenueTitle = ({ title, className = '', as = 'h2' }: VenueTitleProps) => {
   const Component = as;
-  return <Component className={className}>{title}</Component>;
+  return (
+    <div className="bg-neutral-light border-b-2 border-primary-dark">
+      <Component className={`text-neutral px-4 text-lg ${className}`}>{title}</Component>
+    </div>
+  );
 };

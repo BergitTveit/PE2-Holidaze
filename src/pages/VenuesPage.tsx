@@ -1,9 +1,13 @@
 import { useSearchParams } from 'react-router-dom';
 import { useGetVenuesQuery, useSearchVenuesQuery } from '../services/venuesApi';
-import { VenueGrid } from '../components/venues/VenueGrid';
+
 import { SearchBar } from '../components/common/searchBar/SearchBar';
 import { Pagination } from '../components/common/pagination';
 import { MessageDisplay } from '../components/common/feedback/MessageDisplay';
+
+import { VenueGrid } from '../components/venues/venues/VenueGrid';
+import { Heading } from '../components/common/Heading';
+
 
 const VenuesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -59,7 +63,7 @@ const VenuesPage = () => {
   }
 
   return (
-    <div>
+    <>
       <SearchBar />
       {venues?.data?.length === 0 ? (
         <MessageDisplay
@@ -69,6 +73,7 @@ const VenuesPage = () => {
         />
       ) : (
         <>
+          <Heading />
           <VenueGrid venues={venues?.data || []} />
           {venues?.meta && (
             <Pagination
@@ -82,7 +87,7 @@ const VenuesPage = () => {
           )}
         </>
       )}
-    </div>
+    </>
   );
 };
 

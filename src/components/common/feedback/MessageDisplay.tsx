@@ -1,6 +1,6 @@
-import { SearchX, XCircle, CheckCircle, LucideIcon, Loader } from 'lucide-react';
+import { SearchX, XCircle, CheckCircle, LucideIcon, Loader, Hotel } from 'lucide-react';
 
-export type FeedbackVariant = 'error' | 'success' | 'empty' | 'loading';
+export type FeedbackVariant = 'error' | 'success' | 'empty' | 'loading' | 'noData';
 
 export interface BaseFeedbackProps {
   className?: string;
@@ -17,6 +17,7 @@ const iconMap: Record<FeedbackVariant, LucideIcon> = {
   success: CheckCircle,
   empty: SearchX,
   loading: Loader,
+  noData: Hotel,
 };
 
 const variantStyles: Record<FeedbackVariant, string> = {
@@ -24,6 +25,7 @@ const variantStyles: Record<FeedbackVariant, string> = {
   success: 'text-green-600',
   empty: 'text-gray-400',
   loading: 'text-blue-600',
+  noData: 'text-gray-400',
 };
 
 export const MessageDisplay = ({

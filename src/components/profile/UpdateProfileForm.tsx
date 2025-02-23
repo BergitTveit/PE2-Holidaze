@@ -14,6 +14,7 @@ import { useApiError } from '../../hooks/useApiError';
 import { ErrorDisplay } from '../common/feedback/ErrorDisplay';
 import { Loader } from 'lucide-react';
 import { MessageDisplay } from '../common/feedback/MessageDisplay';
+import { useToast } from '../../hooks/useToast';
 
 interface UpdateProfileFormProps {
   onSuccess?: () => void;
@@ -22,6 +23,7 @@ interface UpdateProfileFormProps {
 export const UpdateProfileForm = ({ onSuccess }: UpdateProfileFormProps) => {
   const { username } = useParams();
   const { error, handleError } = useApiError();
+  const { showSuccess } = useToast();
   const {
     data: profile,
     isLoading: isProfileLoading,
@@ -81,6 +83,7 @@ export const UpdateProfileForm = ({ onSuccess }: UpdateProfileFormProps) => {
 
     try {
       await updateProfile({ name: username, data }).unwrap();
+      showSuccess('Profile updated successfully!');
       onSuccess?.();
     } catch (err) {
       handleError(err as FetchBaseQueryError | SerializedError);

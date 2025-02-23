@@ -16,7 +16,7 @@ import { BookingFormData, bookingSchema } from '../../../schemas/bookingSchema';
 import { LoginPrompt } from '../../auth/LoginPrompt';
 import { NumberInput } from '../../common/input/NumberInput';
 import { Button } from '../../common/Buttons';
-import { BookingTotalPrice } from '../bookings/BookingTotalPrice';
+import { BookingTotal } from '../details/BookingTotal';
 import { ErrorDisplay } from '../../common/feedback/ErrorDisplay';
 
 interface BookingFormProps {
@@ -108,7 +108,7 @@ export const BookingForm = ({ venue }: BookingFormProps) => {
   };
 
   return (
-    <div className="space-y-6 border p-5" role="form" aria-label="Booking form">
+    <div className="space-y-6  p-5" role="form" aria-label="Booking form">
       <h2 className="text-2xl font-medium">Book Your Stay at {venue.name}</h2>
 
       <ErrorDisplay error={error} />
@@ -125,6 +125,7 @@ export const BookingForm = ({ venue }: BookingFormProps) => {
           excludeDates={bookedDates}
           className="w-full"
           aria-label="Select date range"
+          calendarClassName="bg-neutral border-2 border-primary-dark "
         />
       </div>
 
@@ -150,7 +151,7 @@ export const BookingForm = ({ venue }: BookingFormProps) => {
                 </span>
               </div>
 
-              <BookingTotalPrice
+              <BookingTotal
                 booking={{
                   dateFrom: startDate.toISOString(),
                   dateTo: endDate.toISOString(),
@@ -160,9 +161,9 @@ export const BookingForm = ({ venue }: BookingFormProps) => {
 
               <div className="flex gap-4">
                 <Button
+                variant='primary'
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
                   aria-busy={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -176,9 +177,9 @@ export const BookingForm = ({ venue }: BookingFormProps) => {
                 </Button>
 
                 <Button
+                variant='secondary'
                   type="button"
                   onClick={handleFormReset}
-                  className="px-4 py-2 border rounded-md hover:bg-gray-50"
                   disabled={isSubmitting}
                 >
                   Reset

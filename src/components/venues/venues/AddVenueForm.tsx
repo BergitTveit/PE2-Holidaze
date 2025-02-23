@@ -5,7 +5,7 @@ import { useCreateVenueMutation, useUpdateVenueMutation } from '../../../service
 import { useApiError } from '../../../hooks/useApiError';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
-import { Plus, Wifi, Car, Coffee, Dog, Loader } from 'lucide-react';
+import { Plus, Wifi, Car, Coffee, Dog, Loader, Minus } from 'lucide-react';
 import { addVenueSchema, CreateVenueDTO } from '../../../schemas/addVenue';
 import { Button } from '../../common/Buttons';
 import { CheckboxInput } from '../../common/input/CheckBox';
@@ -150,13 +150,27 @@ export const AddVenueForm = ({ mode, initialData, onSuccess }: VenueFormProps) =
               />
             </div>
           ))}
-          <Button
-            type="button"
-            onClick={() => append({ url: '', alt: '' })}
-            aria-label="Add new image"
-          >
-            <Plus className="h-4 w-4" aria-hidden="true" /> Add Media
-          </Button>
+
+          <div className="flex gap-2">
+            {fields.length > 1 && (
+              <Button
+                variant="round"
+                type="button"
+                onClick={() => remove(fields.length - 1)}
+                aria-label="Remove image"
+              >
+                <Minus className="h-4 w-4" aria-hidden="true" />
+              </Button>
+            )}
+            <Button
+              variant="round"
+              type="button"
+              onClick={() => append({ url: '', alt: '' })}
+              aria-label="Add new image"
+            >
+              <Plus className="h-4 w-4" aria-hidden="true" />
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -251,7 +265,7 @@ export const AddVenueForm = ({ mode, initialData, onSuccess }: VenueFormProps) =
       <Button
         type="submit"
         disabled={isLoading}
-        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50"
+        className="w-full disabled:opacity-50"
         aria-busy={isLoading}
         aria-label={`${isLoading ? 'Processing' : mode === 'create' ? 'Create new venue' : 'Save venue changes'}`}
       >

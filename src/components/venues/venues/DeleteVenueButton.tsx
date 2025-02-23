@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Loader, Trash2 } from 'lucide-react';
-import { useDeleteVenueMutation } from '../../services/venuesApi';
-import { Modal } from '../common/Modal';
-import { Button } from '../common/Buttons';
-import { useApiError } from '../../hooks/useApiError';
+import { useDeleteVenueMutation } from '../../../services/venuesApi';
+import { Modal } from '../../common/Modal';
+import { Button } from '../../common/Buttons';
+import { useApiError } from '../../../hooks/useApiError';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
-import { ErrorDisplay } from '../common/feedback/ErrorDisplay';
+import { ErrorDisplay } from '../../common/feedback/ErrorDisplay';
 
 interface DeleteVenueButtonProps {
   venueId: string;
@@ -30,8 +30,8 @@ export const DeleteVenueButton = ({ venueId, venueName }: DeleteVenueButtonProps
   return (
     <>
       <Button
+        variant="secondary"
         onClick={() => setShowModal(true)}
-        className="p-2 bg-white rounded-full hover:bg-gray-100 hover:text-red-600 shadow-sm flex items-center justify-center"
         aria-label={`Delete venue ${venueName}`}
       >
         <Trash2 className="h-4 w-4" aria-hidden="true" />
@@ -44,16 +44,16 @@ export const DeleteVenueButton = ({ venueId, venueName }: DeleteVenueButtonProps
 
           <div className="flex justify-end gap-3" role="group" aria-label="Confirmation actions">
             <Button
+              variant="secondary"
               onClick={() => setShowModal(false)}
-              className="px-4 py-2 border border-gray-300 hover:bg-gray-50"
               aria-label="Cancel deletion"
             >
               Cancel
             </Button>
             <Button
+              variant="primary"
               onClick={handleDelete}
               disabled={isLoading}
-              className="px-4 py-2 bg-red-600 text-white hover:bg-red-700"
               aria-label="Confirm deletion"
               aria-busy={isLoading}
             >

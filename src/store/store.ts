@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-
 import {
   persistStore,
   persistReducer,
@@ -12,23 +11,33 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import authReducer from './slices/authSlice';
+import profileReducer from './slices/profileSlice';
 import { baseApi } from '../services/baseApi';
-
-const persistConfig = {
+import toastReducer from './slices/toastSlice';
+const authPersistConfig = {
   key: 'auth',
   storage,
-  whitelist: ['accessToken', 'userName'] ,
+  whitelist: ['accessToken', 'userName'],
+};
+
+const profilePersistConfig = {
+  key: 'profile',
+  storage,
+  whitelist: ['currentSection'],
 };
 
 if (!storage) {
   throw new Error('No storage mechanism found for redux-persist');
 }
 
-const persistedAuthReducer = persistReducer(persistConfig, authReducer);
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+const persistedProfileReducer = persistReducer(profilePersistConfig, profileReducer);
 
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
+    profile: persistedProfileReducer,
+    toast: toastReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -40,6 +49,5 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

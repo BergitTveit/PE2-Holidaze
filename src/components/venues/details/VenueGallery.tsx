@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { IMedia } from '../../../types/media';
 import { ImageComponent } from '../../common/Image';
 import { Button } from '../../common/Buttons';
-
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 interface VenueGalleryProps {
   images: IMedia[];
 }
@@ -35,21 +35,23 @@ export const VenueGallery = ({ images }: VenueGalleryProps) => {
         {images.length > 1 && (
           <>
             <Button
+              variant="round"
               onClick={handlePrevious}
               className="absolute left-4 top-[50%] -translate-y-1/2  text-white p-2 rounded-full hover:bg-opacity-75"
               aria-label="Previous image"
             >
-              ←
+              <ChevronLeft />
             </Button>
             <Button
+              variant="round"
               onClick={handleNext}
               className="absolute right-4 top-[50%] -translate-y-1/2  text-white p-2 rounded-full hover:bg-opacity-75"
               aria-label="Next image"
             >
-              →
+              <ChevronRight />
             </Button>
           </>
-        )}{' '}
+        )}
       </div>
 
       <div className="flex gap-2 overflow-x-auto overflow-y-hidden mt-4">
@@ -57,7 +59,7 @@ export const VenueGallery = ({ images }: VenueGalleryProps) => {
           <Button
             key={index}
             onClick={() => setCurrentImage(index)}
-            className={`flex-shrink-0 w-20 h-20 p-0 ${currentImage === index ? 'scale-105 shadow-lg' : ''}`}
+            className={`flex-shrink-0 w-20 h-20 !p-0 ${currentImage === index ? 'scale-105 shadow-lg' : ''}`}
           >
             <ImageComponent
               src={image.url}

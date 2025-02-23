@@ -10,10 +10,7 @@ export const BookedGuests = ({ booking }: GuestDisplayProps) => (
     <Users className="w-5 h-5 mr-2" />
     <div>
       <p className="font-medium">
-        {booking.guests} guest{booking.guests !== 1 ? 's' : ''}
-      </p>
-      <p className="text-sm">
-        Max {booking.venue.maxGuests} guest{booking.venue.maxGuests !== 1 ? 's' : ''} allowed
+        {booking.guests} guest{booking.guests !== 1 ? 's' : ''} arriving.
       </p>
     </div>
   </div>
