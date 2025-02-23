@@ -13,7 +13,7 @@ import storage from 'redux-persist/lib/storage';
 import authReducer from './slices/authSlice';
 import profileReducer from './slices/profileSlice';
 import { baseApi } from '../services/baseApi';
-
+import toastReducer from './slices/toastSlice';
 const authPersistConfig = {
   key: 'auth',
   storage,
@@ -37,6 +37,7 @@ export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
     profile: persistedProfileReducer,
+    toast: toastReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

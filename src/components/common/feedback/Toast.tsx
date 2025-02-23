@@ -16,9 +16,9 @@ const iconMap: Record<ToastType, typeof XCircle> = {
 };
 
 const typeStyles: Record<ToastType, string> = {
-  success: 'bg-green-500 text-white',
-  error: 'bg-red-500 text-white',
-  info: 'bg-blue-500 text-white',
+  success: 'bg-primary-dark text-white shadow-lg rounded-lg',
+  error: 'bg-red-500 text-white shadow-lg rounded-lg',
+  info: 'bg-neutral text-white shadow-lg rounded-lg',
 };
 
 export const Toast = ({ message, type, onClose }: ToastProps) => {
@@ -31,7 +31,7 @@ export const Toast = ({ message, type, onClose }: ToastProps) => {
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center bg-black/50" // Full screen overlay
+      className="fixed inset-0 flex items-center justify-center bg-black/50"
       style={{ zIndex: 100000 }}
       role="alert"
     >

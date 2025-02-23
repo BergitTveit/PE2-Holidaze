@@ -1,29 +1,22 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
+import { useAppDispatch, useAppSelector } from './useStore';
+import { setToast, clearToast } from '../store/slices/toastSlice';
 import { ToastType } from '../components/common/feedback/Toast';
-interface Toast {
-  id: string;
-  message: string;
-  type: ToastType;
-}
 
 export const useToast = () => {
-  const [toast, setToast] = useState<Toast | null>(null);
+  const dispatch = useAppDispatch();
+  const toast = useAppSelector((state) => state.toast.toast);
 
-  console.log('Toast state:', toast);
+  const showToast = useCallback(
+    (message: string, type: ToastType) => {
+      dispatch(setToast({ message, type }));
+    },
+    [dispatch]
+  );
 
-  const showToast = useCallback((message: string, type: ToastType) => {
-    console.log('Setting toast state:', { message, type });
-    setToast({ id: Date.now().toString(), message, type });
-  }, []);
-    const hideToast = useCallback(() => {
-      console.log('Hiding toast');
-    setToast(null);
-  }, []);
-
-  useEffect(() => {
-    console.log('Toast state changed:', toast);
-  }, [toast]);
-
+  const hideToast = useCallback(() => {
+    dispatch(clearToast());
+  }, [dispatch]);
 
   return {
     toast,
