@@ -1,108 +1,119 @@
-Holidaze
-## Deployed Site
+# Holidaze
 
-You can view the deployed site at: [Holidaze-rentals](https://holidaze-rentals.netlify.app/)
+![Holidaze Screenshot](./Project_Exam_2.png)
 
 Holidaze is a modern accommodation booking platform that connects property managers with travelers. Built with React, TypeScript, and Tailwind CSS, this application provides a seamless experience for booking and managing venues.
-🌟 Features
-For Travelers
 
-    Browse and search available venues
-    View detailed venue information with photo galleries
-    Check venue availability through an interactive calendar
-    Create and manage bookings
-    View booking history
-    User profile management
+## Deployed Site
+You can view the deployed site at: [Holidaze-rentals](https://holidaze-rentals.netlify.app/)
 
-For Venue Managers
+## Table of Contents
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Getting Started](#-getting-started)
+- [API Documentation](#-api-documentation)
+- [Design](#-design)
+- [Available Scripts](#available-scripts)
+- [Deployment](#-deployment)
+- [Contributing](#contributing)
+- [Contact](#-contact)
+- [License](#-license)
+- [Acknowledgments](#-acknowledgments)
 
-    Create and list new venues
-    Manage venue details and availability
-    View and handle booking requests
-    Track venue performance
-    Manage multiple properties
+## 🌟 Features
 
-💻 Tech Stack
+### For Travelers
+- Browse and search available venues
+- View detailed venue information with photo galleries
+- Check venue availability through an interactive calendar
+- Create and manage bookings
+- View booking history
+- User profile management
 
+### For Venue Managers
+- Create and list new venues
+- Manage venue details and availability
+- View and handle booking requests
+- Track venue performance
+- Manage multiple properties
 
-
-### Core
-- React 18
-- TypeScript
+## 💻 Tech Stack
+- React + TypeScript
+- Redux Toolkit
+- Tailwind CSS
+- React Hook Form + Zod
+- React Router
 - Vite
-- Redux Toolkit (RTK) with RTK Query for API state management
-- Redux Persist for state persistence
+- Lucide React
 
-### Routing & Forms
-- React Router v7
-- React Hook Form with Zod validation
+## 🚀 Getting Started
 
-### Styling & UI
-- TailwindCSS
-- Headless UI
-- Lucide React icons
+### Prerequisites
+- Node.js (version 14 or higher)
+- npm or yarn
+- Git
 
-### Development
-- ESLint
-- Prettier
-- TypeScript ESLint
-
-🚀 Getting Started
-Prerequisites
-
-    Node.js (version 14 or higher)
-    npm or yarn
-    Git
-
-Installation
-
-    Clone the repository
-
+### Installation
+1. Clone the repository
+```bash
 git clone https://github.com/BergitTveit/PE2-Holidaze.git
+```
 
-    Install dependencies
-
+2. Install dependencies
+```bash
 npm install
+```
 
-    Create .env file based on .env.example
+3. Create .env file based on .env.example
+```
+VITE_API_URL=https://api.noroff.dev/api/v2/holidaze
+```
 
-VITE_API_URL=https://api.noroff.dev/api/v1/holidaze
-
-    Start the development server
-
+4. Start the development server
+```bash
 npm run dev
+```
 
-📝 API Documentation
+## Available Scripts
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+- `npm test` - Run tests
 
+## 📝 API Documentation
 This project uses the Noroff API. Documentation can be found at:
+- [API Documentation](https://api.noroff.dev/api/v2/holidaze)
+- [Swagger Documentation](https://api.noroff.dev/docs)
 
-    API Documentation
-    Swagger Documentation
-
-🎨 Design
-
+## 🎨 Design
 The application features a modern, luxurious design with:
+- Clean and minimalistic user interface
+- Modern iconography using Lucide React
+- Responsive layout for all devices
+- Accessible design patterns
+- Consistent brand styling and visual hierarchy
 
-    Clean and minimalistic user interface
-    Modern iconography using Lucide React
-    Responsive layout for all devices
-    Accessible design patterns
-    Consistent brand styling and visual hierarchy
+## 🚀 Deployment
+The project is deployed on Netlify. View the live site at [Holidaze-rentals](https://holidaze-rentals.netlify.app/).
 
+## Contributing
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-🚀 Deployment
+## 👥 Contact
+Email: [bergittveit@yahoo.com](mailto:bergittveit@yahoo.com)
 
-The project is deployed on Netlify. View the live site at holidaze-rentals.netlify.app.
+Project Link: [https://github.com/BergitTveit/PE2-Holidaze](https://github.com/BergitTveit/PE2-Holidaze)
 
-👥 Contact
+## 📜 License
+This project is licensed under the MIT License - see the LICENSE.md file for details
 
-Your Name - [bergittveit@yahoo.com] Project Link: https://github.com/BergitTveit/PE2-Holidaze
-
-🙏 Acknowledgments
-
-    Noroff School of Technology
-    React Documentation
-    Tailwind CSS
-    Lucide Icons
-    Inter Font
-    Playfair Display Font
+## 🙏 Acknowledgments
+- Noroff School of Technology
+- React Documentation
+- Tailwind CSS
+- Lucide Icons
